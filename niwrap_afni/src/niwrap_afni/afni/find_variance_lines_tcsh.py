@@ -5,16 +5,16 @@ import typing
 import pathlib
 from styxdefs import *
 
-FIND_VARIANCE_LINES_METADATA = Metadata(
-    id="46cc1bbfa68d9508d98e3c8d1703d0d91c133340.boutiques",
-    name="find_variance_lines",
+FIND_VARIANCE_LINES_TCSH_METADATA = Metadata(
+    id="9fa94416b9a9d640828d9ed8f46da535853bee78.boutiques",
+    name="find_variance_lines.tcsh",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
 )
 
 
-FindVarianceLinesParameters = typing.TypedDict('FindVarianceLinesParameters', {
-    "@type": typing.Literal["afni.find_variance_lines"],
+FindVarianceLinesTcshParameters = typing.TypedDict('FindVarianceLinesTcshParameters', {
+    "@type": typing.Literal["afni.find_variance_lines.tcsh"],
     "input_files": list[InputPathType],
     "mask": typing.NotRequired[str | None],
     "min_cvox": typing.NotRequired[int | None],
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "afni.find_variance_lines": find_variance_lines_cargs,
+        "afni.find_variance_lines.tcsh": find_variance_lines_tcsh_cargs,
     }.get(t)
 
 
@@ -61,13 +61,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "afni.find_variance_lines": find_variance_lines_outputs,
+        "afni.find_variance_lines.tcsh": find_variance_lines_tcsh_outputs,
     }.get(t)
 
 
-class FindVarianceLinesOutputs(typing.NamedTuple):
+class FindVarianceLinesTcshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `find_variance_lines(...)`.
+    Output object returned when calling `find_variance_lines_tcsh(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +81,7 @@ class FindVarianceLinesOutputs(typing.NamedTuple):
     """JPEG images showing locations of high variance"""
 
 
-def find_variance_lines_params(
+def find_variance_lines_tcsh_params(
     input_files: list[InputPathType],
     mask: str | None = None,
     min_cvox: int | None = None,
@@ -97,7 +97,7 @@ def find_variance_lines_params(
     help_: bool = False,
     hist: bool = False,
     ver: bool = False,
-) -> FindVarianceLinesParameters:
+) -> FindVarianceLinesTcshParameters:
     """
     Build parameters.
     
@@ -121,7 +121,7 @@ def find_variance_lines_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.find_variance_lines",
+        "@type": "afni.find_variance_lines.tcsh",
         "input_files": input_files,
         "echo": echo,
         "help": help_,
@@ -151,8 +151,8 @@ def find_variance_lines_params(
     return params
 
 
-def find_variance_lines_cargs(
-    params: FindVarianceLinesParameters,
+def find_variance_lines_tcsh_cargs(
+    params: FindVarianceLinesTcshParameters,
     execution: Execution,
 ) -> list[str]:
     """
@@ -228,10 +228,10 @@ def find_variance_lines_cargs(
     return cargs
 
 
-def find_variance_lines_outputs(
-    params: FindVarianceLinesParameters,
+def find_variance_lines_tcsh_outputs(
+    params: FindVarianceLinesTcshParameters,
     execution: Execution,
-) -> FindVarianceLinesOutputs:
+) -> FindVarianceLinesTcshOutputs:
     """
     Build outputs object containing output file paths and possibly stdout/stderr.
     
@@ -241,7 +241,7 @@ def find_variance_lines_outputs(
     Returns:
         Outputs object.
     """
-    ret = FindVarianceLinesOutputs(
+    ret = FindVarianceLinesTcshOutputs(
         root=execution.output_file("."),
         variance_maps=execution.output_file(params.get("output_dir") + "/variance_map_run*.nii.gz") if (params.get("output_dir") is not None) else None,
         scaled_variance_maps=execution.output_file(params.get("output_dir") + "/scaled_variance_map_run*.nii.gz") if (params.get("output_dir") is not None) else None,
@@ -251,12 +251,12 @@ def find_variance_lines_outputs(
     return ret
 
 
-def find_variance_lines_execute(
-    params: FindVarianceLinesParameters,
+def find_variance_lines_tcsh_execute(
+    params: FindVarianceLinesTcshParameters,
     runner: Runner | None = None,
-) -> FindVarianceLinesOutputs:
+) -> FindVarianceLinesTcshOutputs:
     """
-    find_variance_lines
+    find_variance_lines.tcsh
     
     Look for bars of high variance that might suggest scanner interference in
     EPI datasets.
@@ -269,18 +269,18 @@ def find_variance_lines_execute(
         params: The parameters.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `FindVarianceLinesOutputs`).
+        NamedTuple of outputs (described in `FindVarianceLinesTcshOutputs`).
     """
     runner = runner or get_global_runner()
-    execution = runner.start_execution(FIND_VARIANCE_LINES_METADATA)
+    execution = runner.start_execution(FIND_VARIANCE_LINES_TCSH_METADATA)
     params = execution.params(params)
-    cargs = find_variance_lines_cargs(params, execution)
-    ret = find_variance_lines_outputs(params, execution)
+    cargs = find_variance_lines_tcsh_cargs(params, execution)
+    ret = find_variance_lines_tcsh_outputs(params, execution)
     execution.run(cargs)
     return ret
 
 
-def find_variance_lines(
+def find_variance_lines_tcsh(
     input_files: list[InputPathType],
     mask: str | None = None,
     min_cvox: int | None = None,
@@ -297,9 +297,9 @@ def find_variance_lines(
     hist: bool = False,
     ver: bool = False,
     runner: Runner | None = None,
-) -> FindVarianceLinesOutputs:
+) -> FindVarianceLinesTcshOutputs:
     """
-    find_variance_lines
+    find_variance_lines.tcsh
     
     Look for bars of high variance that might suggest scanner interference in
     EPI datasets.
@@ -326,9 +326,9 @@ def find_variance_lines(
         ver: Show the current version.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `FindVarianceLinesOutputs`).
+        NamedTuple of outputs (described in `FindVarianceLinesTcshOutputs`).
     """
-    params = find_variance_lines_params(
+    params = find_variance_lines_tcsh_params(
         input_files=input_files,
         mask=mask,
         min_cvox=min_cvox,
@@ -345,14 +345,14 @@ def find_variance_lines(
         hist=hist,
         ver=ver,
     )
-    return find_variance_lines_execute(params, runner)
+    return find_variance_lines_tcsh_execute(params, runner)
 
 
 __all__ = [
-    "FIND_VARIANCE_LINES_METADATA",
-    "FindVarianceLinesOutputs",
-    "FindVarianceLinesParameters",
-    "find_variance_lines",
-    "find_variance_lines_execute",
-    "find_variance_lines_params",
+    "FIND_VARIANCE_LINES_TCSH_METADATA",
+    "FindVarianceLinesTcshOutputs",
+    "FindVarianceLinesTcshParameters",
+    "find_variance_lines_tcsh",
+    "find_variance_lines_tcsh_execute",
+    "find_variance_lines_tcsh_params",
 ]

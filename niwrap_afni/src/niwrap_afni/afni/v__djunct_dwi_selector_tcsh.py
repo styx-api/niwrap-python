@@ -5,16 +5,16 @@ import typing
 import pathlib
 from styxdefs import *
 
-V__DJUNCT_DWI_SELECTOR_METADATA = Metadata(
-    id="5ab9f2d175d71ed28465ef305cf31b5079bd3841.boutiques",
-    name="@djunct_dwi_selector",
+V__DJUNCT_DWI_SELECTOR_TCSH_METADATA = Metadata(
+    id="4f22b66604fa3c50e883353b69e9abbdd55179a2.boutiques",
+    name="@djunct_dwi_selector.tcsh",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
 )
 
 
-VDjunctDwiSelectorParameters = typing.TypedDict('VDjunctDwiSelectorParameters', {
-    "@type": typing.Literal["afni.@djunct_dwi_selector"],
+VDjunctDwiSelectorTcshParameters = typing.TypedDict('VDjunctDwiSelectorTcshParameters', {
+    "@type": typing.Literal["afni.@djunct_dwi_selector.tcsh"],
     "dwi": InputPathType,
     "png": InputPathType,
     "outfile": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "afni.@djunct_dwi_selector": v__djunct_dwi_selector_cargs,
+        "afni.@djunct_dwi_selector.tcsh": v__djunct_dwi_selector_tcsh_cargs,
     }.get(t)
 
 
@@ -49,13 +49,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "afni.@djunct_dwi_selector": v__djunct_dwi_selector_outputs,
+        "afni.@djunct_dwi_selector.tcsh": v__djunct_dwi_selector_tcsh_outputs,
     }.get(t)
 
 
-class VDjunctDwiSelectorOutputs(typing.NamedTuple):
+class VDjunctDwiSelectorTcshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__djunct_dwi_selector(...)`.
+    Output object returned when calling `v__djunct_dwi_selector_tcsh(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,11 +63,11 @@ class VDjunctDwiSelectorOutputs(typing.NamedTuple):
     """The main output file"""
 
 
-def v__djunct_dwi_selector_params(
+def v__djunct_dwi_selector_tcsh_params(
     dwi: InputPathType,
     png: InputPathType,
     outfile: str,
-) -> VDjunctDwiSelectorParameters:
+) -> VDjunctDwiSelectorTcshParameters:
     """
     Build parameters.
     
@@ -79,7 +79,7 @@ def v__djunct_dwi_selector_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@djunct_dwi_selector",
+        "@type": "afni.@djunct_dwi_selector.tcsh",
         "dwi": dwi,
         "png": png,
         "outfile": outfile,
@@ -87,8 +87,8 @@ def v__djunct_dwi_selector_params(
     return params
 
 
-def v__djunct_dwi_selector_cargs(
-    params: VDjunctDwiSelectorParameters,
+def v__djunct_dwi_selector_tcsh_cargs(
+    params: VDjunctDwiSelectorTcshParameters,
     execution: Execution,
 ) -> list[str]:
     """
@@ -108,10 +108,10 @@ def v__djunct_dwi_selector_cargs(
     return cargs
 
 
-def v__djunct_dwi_selector_outputs(
-    params: VDjunctDwiSelectorParameters,
+def v__djunct_dwi_selector_tcsh_outputs(
+    params: VDjunctDwiSelectorTcshParameters,
     execution: Execution,
-) -> VDjunctDwiSelectorOutputs:
+) -> VDjunctDwiSelectorTcshOutputs:
     """
     Build outputs object containing output file paths and possibly stdout/stderr.
     
@@ -121,19 +121,19 @@ def v__djunct_dwi_selector_outputs(
     Returns:
         Outputs object.
     """
-    ret = VDjunctDwiSelectorOutputs(
+    ret = VDjunctDwiSelectorTcshOutputs(
         root=execution.output_file("."),
         outfile=execution.output_file(params.get("outfile")),
     )
     return ret
 
 
-def v__djunct_dwi_selector_execute(
-    params: VDjunctDwiSelectorParameters,
+def v__djunct_dwi_selector_tcsh_execute(
+    params: VDjunctDwiSelectorTcshParameters,
     runner: Runner | None = None,
-) -> VDjunctDwiSelectorOutputs:
+) -> VDjunctDwiSelectorTcshOutputs:
     """
-    @djunct_dwi_selector
+    @djunct_dwi_selector.tcsh
     
     Selects DWI data and creates a representative image.
     
@@ -145,25 +145,25 @@ def v__djunct_dwi_selector_execute(
         params: The parameters.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `VDjunctDwiSelectorOutputs`).
+        NamedTuple of outputs (described in `VDjunctDwiSelectorTcshOutputs`).
     """
     runner = runner or get_global_runner()
-    execution = runner.start_execution(V__DJUNCT_DWI_SELECTOR_METADATA)
+    execution = runner.start_execution(V__DJUNCT_DWI_SELECTOR_TCSH_METADATA)
     params = execution.params(params)
-    cargs = v__djunct_dwi_selector_cargs(params, execution)
-    ret = v__djunct_dwi_selector_outputs(params, execution)
+    cargs = v__djunct_dwi_selector_tcsh_cargs(params, execution)
+    ret = v__djunct_dwi_selector_tcsh_outputs(params, execution)
     execution.run(cargs)
     return ret
 
 
-def v__djunct_dwi_selector(
+def v__djunct_dwi_selector_tcsh(
     dwi: InputPathType,
     png: InputPathType,
     outfile: str,
     runner: Runner | None = None,
-) -> VDjunctDwiSelectorOutputs:
+) -> VDjunctDwiSelectorTcshOutputs:
     """
-    @djunct_dwi_selector
+    @djunct_dwi_selector.tcsh
     
     Selects DWI data and creates a representative image.
     
@@ -177,21 +177,21 @@ def v__djunct_dwi_selector(
         outfile: Path to the output file.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `VDjunctDwiSelectorOutputs`).
+        NamedTuple of outputs (described in `VDjunctDwiSelectorTcshOutputs`).
     """
-    params = v__djunct_dwi_selector_params(
+    params = v__djunct_dwi_selector_tcsh_params(
         dwi=dwi,
         png=png,
         outfile=outfile,
     )
-    return v__djunct_dwi_selector_execute(params, runner)
+    return v__djunct_dwi_selector_tcsh_execute(params, runner)
 
 
 __all__ = [
-    "VDjunctDwiSelectorOutputs",
-    "VDjunctDwiSelectorParameters",
-    "V__DJUNCT_DWI_SELECTOR_METADATA",
-    "v__djunct_dwi_selector",
-    "v__djunct_dwi_selector_execute",
-    "v__djunct_dwi_selector_params",
+    "VDjunctDwiSelectorTcshOutputs",
+    "VDjunctDwiSelectorTcshParameters",
+    "V__DJUNCT_DWI_SELECTOR_TCSH_METADATA",
+    "v__djunct_dwi_selector_tcsh",
+    "v__djunct_dwi_selector_tcsh_execute",
+    "v__djunct_dwi_selector_tcsh_params",
 ]

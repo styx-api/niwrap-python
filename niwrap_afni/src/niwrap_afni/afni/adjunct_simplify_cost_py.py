@@ -5,16 +5,16 @@ import typing
 import pathlib
 from styxdefs import *
 
-ADJUNCT_SIMPLIFY_COST_METADATA = Metadata(
-    id="0291c293f6b2eaf6626f15fdc0c7c7079ef500e7.boutiques",
-    name="adjunct_simplify_cost",
+ADJUNCT_SIMPLIFY_COST_PY_METADATA = Metadata(
+    id="2d1ab7e94fcc0e16f85ff2939b8b417337e58985.boutiques",
+    name="adjunct_simplify_cost.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
 )
 
 
-AdjunctSimplifyCostParameters = typing.TypedDict('AdjunctSimplifyCostParameters', {
-    "@type": typing.Literal["afni.adjunct_simplify_cost"],
+AdjunctSimplifyCostPyParameters = typing.TypedDict('AdjunctSimplifyCostPyParameters', {
+    "@type": typing.Literal["afni.adjunct_simplify_cost.py"],
     "cost_function": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "afni.adjunct_simplify_cost": adjunct_simplify_cost_cargs,
+        "afni.adjunct_simplify_cost.py": adjunct_simplify_cost_py_cargs,
     }.get(t)
 
 
@@ -50,17 +50,17 @@ def dyn_outputs(
     }.get(t)
 
 
-class AdjunctSimplifyCostOutputs(typing.NamedTuple):
+class AdjunctSimplifyCostPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `adjunct_simplify_cost(...)`.
+    Output object returned when calling `adjunct_simplify_cost_py(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
 
 
-def adjunct_simplify_cost_params(
+def adjunct_simplify_cost_py_params(
     cost_function: str,
-) -> AdjunctSimplifyCostParameters:
+) -> AdjunctSimplifyCostPyParameters:
     """
     Build parameters.
     
@@ -70,14 +70,14 @@ def adjunct_simplify_cost_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.adjunct_simplify_cost",
+        "@type": "afni.adjunct_simplify_cost.py",
         "cost_function": cost_function,
     }
     return params
 
 
-def adjunct_simplify_cost_cargs(
-    params: AdjunctSimplifyCostParameters,
+def adjunct_simplify_cost_py_cargs(
+    params: AdjunctSimplifyCostPyParameters,
     execution: Execution,
 ) -> list[str]:
     """
@@ -95,10 +95,10 @@ def adjunct_simplify_cost_cargs(
     return cargs
 
 
-def adjunct_simplify_cost_outputs(
-    params: AdjunctSimplifyCostParameters,
+def adjunct_simplify_cost_py_outputs(
+    params: AdjunctSimplifyCostPyParameters,
     execution: Execution,
-) -> AdjunctSimplifyCostOutputs:
+) -> AdjunctSimplifyCostPyOutputs:
     """
     Build outputs object containing output file paths and possibly stdout/stderr.
     
@@ -108,18 +108,18 @@ def adjunct_simplify_cost_outputs(
     Returns:
         Outputs object.
     """
-    ret = AdjunctSimplifyCostOutputs(
+    ret = AdjunctSimplifyCostPyOutputs(
         root=execution.output_file("."),
     )
     return ret
 
 
-def adjunct_simplify_cost_execute(
-    params: AdjunctSimplifyCostParameters,
+def adjunct_simplify_cost_py_execute(
+    params: AdjunctSimplifyCostPyParameters,
     runner: Runner | None = None,
-) -> AdjunctSimplifyCostOutputs:
+) -> AdjunctSimplifyCostPyOutputs:
     """
-    adjunct_simplify_cost
+    adjunct_simplify_cost.py
     
     Simplifies a cost function name by removing the '+' and anything following
     it.
@@ -132,23 +132,23 @@ def adjunct_simplify_cost_execute(
         params: The parameters.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `AdjunctSimplifyCostOutputs`).
+        NamedTuple of outputs (described in `AdjunctSimplifyCostPyOutputs`).
     """
     runner = runner or get_global_runner()
-    execution = runner.start_execution(ADJUNCT_SIMPLIFY_COST_METADATA)
+    execution = runner.start_execution(ADJUNCT_SIMPLIFY_COST_PY_METADATA)
     params = execution.params(params)
-    cargs = adjunct_simplify_cost_cargs(params, execution)
-    ret = adjunct_simplify_cost_outputs(params, execution)
+    cargs = adjunct_simplify_cost_py_cargs(params, execution)
+    ret = adjunct_simplify_cost_py_outputs(params, execution)
     execution.run(cargs)
     return ret
 
 
-def adjunct_simplify_cost(
+def adjunct_simplify_cost_py(
     cost_function: str,
     runner: Runner | None = None,
-) -> AdjunctSimplifyCostOutputs:
+) -> AdjunctSimplifyCostPyOutputs:
     """
-    adjunct_simplify_cost
+    adjunct_simplify_cost.py
     
     Simplifies a cost function name by removing the '+' and anything following
     it.
@@ -161,19 +161,19 @@ def adjunct_simplify_cost(
         cost_function: The cost function name to be simplified.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `AdjunctSimplifyCostOutputs`).
+        NamedTuple of outputs (described in `AdjunctSimplifyCostPyOutputs`).
     """
-    params = adjunct_simplify_cost_params(
+    params = adjunct_simplify_cost_py_params(
         cost_function=cost_function,
     )
-    return adjunct_simplify_cost_execute(params, runner)
+    return adjunct_simplify_cost_py_execute(params, runner)
 
 
 __all__ = [
-    "ADJUNCT_SIMPLIFY_COST_METADATA",
-    "AdjunctSimplifyCostOutputs",
-    "AdjunctSimplifyCostParameters",
-    "adjunct_simplify_cost",
-    "adjunct_simplify_cost_execute",
-    "adjunct_simplify_cost_params",
+    "ADJUNCT_SIMPLIFY_COST_PY_METADATA",
+    "AdjunctSimplifyCostPyOutputs",
+    "AdjunctSimplifyCostPyParameters",
+    "adjunct_simplify_cost_py",
+    "adjunct_simplify_cost_py_execute",
+    "adjunct_simplify_cost_py_params",
 ]

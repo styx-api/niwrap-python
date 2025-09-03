@@ -5,16 +5,16 @@ import typing
 import pathlib
 from styxdefs import *
 
-GEN_SS_REVIEW_SCRIPTS_METADATA = Metadata(
-    id="19293a431a3099e1044a725ff53be407555c7b79.boutiques",
-    name="gen_ss_review_scripts",
+GEN_SS_REVIEW_SCRIPTS_PY_METADATA = Metadata(
+    id="c1202dafac421d6aa7453f68b0f0e833de6e7f7c.boutiques",
+    name="gen_ss_review_scripts.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
 )
 
 
-GenSsReviewScriptsParameters = typing.TypedDict('GenSsReviewScriptsParameters', {
-    "@type": typing.Literal["afni.gen_ss_review_scripts"],
+GenSsReviewScriptsPyParameters = typing.TypedDict('GenSsReviewScriptsPyParameters', {
+    "@type": typing.Literal["afni.gen_ss_review_scripts.py"],
     "subject_id": typing.NotRequired[str | None],
     "rm_trs": typing.NotRequired[float | None],
     "num_stim": typing.NotRequired[float | None],
@@ -49,7 +49,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "afni.gen_ss_review_scripts": gen_ss_review_scripts_cargs,
+        "afni.gen_ss_review_scripts.py": gen_ss_review_scripts_py_cargs,
     }.get(t)
 
 
@@ -65,13 +65,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "afni.gen_ss_review_scripts": gen_ss_review_scripts_outputs,
+        "afni.gen_ss_review_scripts.py": gen_ss_review_scripts_py_outputs,
     }.get(t)
 
 
-class GenSsReviewScriptsOutputs(typing.NamedTuple):
+class GenSsReviewScriptsPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `gen_ss_review_scripts(...)`.
+    Output object returned when calling `gen_ss_review_scripts_py(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +83,7 @@ class GenSsReviewScriptsOutputs(typing.NamedTuple):
     """Driver commands script output"""
 
 
-def gen_ss_review_scripts_params(
+def gen_ss_review_scripts_py_params(
     subject_id: str | None = None,
     rm_trs: float | None = None,
     num_stim: float | None = None,
@@ -103,7 +103,7 @@ def gen_ss_review_scripts_params(
     verbosity: float | None = None,
     uvars_json: InputPathType | None = None,
     init_uvars_json: InputPathType | None = None,
-) -> GenSsReviewScriptsParameters:
+) -> GenSsReviewScriptsPyParameters:
     """
     Build parameters.
     
@@ -131,7 +131,7 @@ def gen_ss_review_scripts_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.gen_ss_review_scripts",
+        "@type": "afni.gen_ss_review_scripts.py",
     }
     if subject_id is not None:
         params["subject_id"] = subject_id
@@ -174,8 +174,8 @@ def gen_ss_review_scripts_params(
     return params
 
 
-def gen_ss_review_scripts_cargs(
-    params: GenSsReviewScriptsParameters,
+def gen_ss_review_scripts_py_cargs(
+    params: GenSsReviewScriptsPyParameters,
     execution: Execution,
 ) -> list[str]:
     """
@@ -287,10 +287,10 @@ def gen_ss_review_scripts_cargs(
     return cargs
 
 
-def gen_ss_review_scripts_outputs(
-    params: GenSsReviewScriptsParameters,
+def gen_ss_review_scripts_py_outputs(
+    params: GenSsReviewScriptsPyParameters,
     execution: Execution,
-) -> GenSsReviewScriptsOutputs:
+) -> GenSsReviewScriptsPyOutputs:
     """
     Build outputs object containing output file paths and possibly stdout/stderr.
     
@@ -300,7 +300,7 @@ def gen_ss_review_scripts_outputs(
     Returns:
         Outputs object.
     """
-    ret = GenSsReviewScriptsOutputs(
+    ret = GenSsReviewScriptsPyOutputs(
         root=execution.output_file("."),
         basic_review=execution.output_file("./@ss_review_basic"),
         driver_review=execution.output_file("./@ss_review_driver"),
@@ -309,12 +309,12 @@ def gen_ss_review_scripts_outputs(
     return ret
 
 
-def gen_ss_review_scripts_execute(
-    params: GenSsReviewScriptsParameters,
+def gen_ss_review_scripts_py_execute(
+    params: GenSsReviewScriptsPyParameters,
     runner: Runner | None = None,
-) -> GenSsReviewScriptsOutputs:
+) -> GenSsReviewScriptsPyOutputs:
     """
-    gen_ss_review_scripts
+    gen_ss_review_scripts.py
     
     Generate single subject analysis review scripts.
     
@@ -326,18 +326,18 @@ def gen_ss_review_scripts_execute(
         params: The parameters.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `GenSsReviewScriptsOutputs`).
+        NamedTuple of outputs (described in `GenSsReviewScriptsPyOutputs`).
     """
     runner = runner or get_global_runner()
-    execution = runner.start_execution(GEN_SS_REVIEW_SCRIPTS_METADATA)
+    execution = runner.start_execution(GEN_SS_REVIEW_SCRIPTS_PY_METADATA)
     params = execution.params(params)
-    cargs = gen_ss_review_scripts_cargs(params, execution)
-    ret = gen_ss_review_scripts_outputs(params, execution)
+    cargs = gen_ss_review_scripts_py_cargs(params, execution)
+    ret = gen_ss_review_scripts_py_outputs(params, execution)
     execution.run(cargs)
     return ret
 
 
-def gen_ss_review_scripts(
+def gen_ss_review_scripts_py(
     subject_id: str | None = None,
     rm_trs: float | None = None,
     num_stim: float | None = None,
@@ -358,9 +358,9 @@ def gen_ss_review_scripts(
     uvars_json: InputPathType | None = None,
     init_uvars_json: InputPathType | None = None,
     runner: Runner | None = None,
-) -> GenSsReviewScriptsOutputs:
+) -> GenSsReviewScriptsPyOutputs:
     """
-    gen_ss_review_scripts
+    gen_ss_review_scripts.py
     
     Generate single subject analysis review scripts.
     
@@ -390,9 +390,9 @@ def gen_ss_review_scripts(
         init_uvars_json: Initialize user variables from the given JSON file.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `GenSsReviewScriptsOutputs`).
+        NamedTuple of outputs (described in `GenSsReviewScriptsPyOutputs`).
     """
-    params = gen_ss_review_scripts_params(
+    params = gen_ss_review_scripts_py_params(
         subject_id=subject_id,
         rm_trs=rm_trs,
         num_stim=num_stim,
@@ -413,14 +413,14 @@ def gen_ss_review_scripts(
         uvars_json=uvars_json,
         init_uvars_json=init_uvars_json,
     )
-    return gen_ss_review_scripts_execute(params, runner)
+    return gen_ss_review_scripts_py_execute(params, runner)
 
 
 __all__ = [
-    "GEN_SS_REVIEW_SCRIPTS_METADATA",
-    "GenSsReviewScriptsOutputs",
-    "GenSsReviewScriptsParameters",
-    "gen_ss_review_scripts",
-    "gen_ss_review_scripts_execute",
-    "gen_ss_review_scripts_params",
+    "GEN_SS_REVIEW_SCRIPTS_PY_METADATA",
+    "GenSsReviewScriptsPyOutputs",
+    "GenSsReviewScriptsPyParameters",
+    "gen_ss_review_scripts_py",
+    "gen_ss_review_scripts_py_execute",
+    "gen_ss_review_scripts_py_params",
 ]

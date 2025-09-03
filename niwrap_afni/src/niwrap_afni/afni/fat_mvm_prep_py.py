@@ -5,16 +5,16 @@ import typing
 import pathlib
 from styxdefs import *
 
-FAT_MVM_PREP_METADATA = Metadata(
-    id="be0a3158fe3df52caf8c7307710e4bd60769efcd.boutiques",
-    name="fat_mvm_prep",
+FAT_MVM_PREP_PY_METADATA = Metadata(
+    id="0c22f3858e28e7ce9c5b403fa3a5edd50daad48f.boutiques",
+    name="fat_mvm_prep.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
 )
 
 
-FatMvmPrepParameters = typing.TypedDict('FatMvmPrepParameters', {
-    "@type": typing.Literal["afni.fat_mvm_prep"],
+FatMvmPrepPyParameters = typing.TypedDict('FatMvmPrepPyParameters', {
+    "@type": typing.Literal["afni.fat_mvm_prep.py"],
     "prefix": str,
     "csv_file": InputPathType,
     "matrix_files": typing.NotRequired[str | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "afni.fat_mvm_prep": fat_mvm_prep_cargs,
+        "afni.fat_mvm_prep.py": fat_mvm_prep_py_cargs,
     }.get(t)
 
 
@@ -53,13 +53,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "afni.fat_mvm_prep": fat_mvm_prep_outputs,
+        "afni.fat_mvm_prep.py": fat_mvm_prep_py_outputs,
     }.get(t)
 
 
-class FatMvmPrepOutputs(typing.NamedTuple):
+class FatMvmPrepPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fat_mvm_prep(...)`.
+    Output object returned when calling `fat_mvm_prep_py(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +69,7 @@ class FatMvmPrepOutputs(typing.NamedTuple):
     """Log file detailing subject matching and ROI list."""
 
 
-def fat_mvm_prep_params(
+def fat_mvm_prep_py_params(
     prefix: str,
     csv_file: InputPathType,
     matrix_files: str | None = None,
@@ -77,7 +77,7 @@ def fat_mvm_prep_params(
     unionize_rois: bool = False,
     na_warn_off: bool = False,
     extern_labels_no: bool = False,
-) -> FatMvmPrepParameters:
+) -> FatMvmPrepPyParameters:
     """
     Build parameters.
     
@@ -98,7 +98,7 @@ def fat_mvm_prep_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.fat_mvm_prep",
+        "@type": "afni.fat_mvm_prep.py",
         "prefix": prefix,
         "csv_file": csv_file,
         "unionize_rois": unionize_rois,
@@ -112,8 +112,8 @@ def fat_mvm_prep_params(
     return params
 
 
-def fat_mvm_prep_cargs(
-    params: FatMvmPrepParameters,
+def fat_mvm_prep_py_cargs(
+    params: FatMvmPrepPyParameters,
     execution: Execution,
 ) -> list[str]:
     """
@@ -154,10 +154,10 @@ def fat_mvm_prep_cargs(
     return cargs
 
 
-def fat_mvm_prep_outputs(
-    params: FatMvmPrepParameters,
+def fat_mvm_prep_py_outputs(
+    params: FatMvmPrepPyParameters,
     execution: Execution,
-) -> FatMvmPrepOutputs:
+) -> FatMvmPrepPyOutputs:
     """
     Build outputs object containing output file paths and possibly stdout/stderr.
     
@@ -167,7 +167,7 @@ def fat_mvm_prep_outputs(
     Returns:
         Outputs object.
     """
-    ret = FatMvmPrepOutputs(
+    ret = FatMvmPrepPyOutputs(
         root=execution.output_file("."),
         mvmtbl=execution.output_file(params.get("prefix") + "_MVMtbl.txt"),
         mvmprep_log=execution.output_file(params.get("prefix") + "_MVMprep.log"),
@@ -175,12 +175,12 @@ def fat_mvm_prep_outputs(
     return ret
 
 
-def fat_mvm_prep_execute(
-    params: FatMvmPrepParameters,
+def fat_mvm_prep_py_execute(
+    params: FatMvmPrepPyParameters,
     runner: Runner | None = None,
-) -> FatMvmPrepOutputs:
+) -> FatMvmPrepPyOutputs:
     """
-    fat_mvm_prep
+    fat_mvm_prep.py
     
     Combine FATCAT output with CSV data for statistical modeling.
     
@@ -192,18 +192,18 @@ def fat_mvm_prep_execute(
         params: The parameters.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `FatMvmPrepOutputs`).
+        NamedTuple of outputs (described in `FatMvmPrepPyOutputs`).
     """
     runner = runner or get_global_runner()
-    execution = runner.start_execution(FAT_MVM_PREP_METADATA)
+    execution = runner.start_execution(FAT_MVM_PREP_PY_METADATA)
     params = execution.params(params)
-    cargs = fat_mvm_prep_cargs(params, execution)
-    ret = fat_mvm_prep_outputs(params, execution)
+    cargs = fat_mvm_prep_py_cargs(params, execution)
+    ret = fat_mvm_prep_py_outputs(params, execution)
     execution.run(cargs)
     return ret
 
 
-def fat_mvm_prep(
+def fat_mvm_prep_py(
     prefix: str,
     csv_file: InputPathType,
     matrix_files: str | None = None,
@@ -212,9 +212,9 @@ def fat_mvm_prep(
     na_warn_off: bool = False,
     extern_labels_no: bool = False,
     runner: Runner | None = None,
-) -> FatMvmPrepOutputs:
+) -> FatMvmPrepPyOutputs:
     """
-    fat_mvm_prep
+    fat_mvm_prep.py
     
     Combine FATCAT output with CSV data for statistical modeling.
     
@@ -237,9 +237,9 @@ def fat_mvm_prep(
             the *.grid/*.netcc files.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `FatMvmPrepOutputs`).
+        NamedTuple of outputs (described in `FatMvmPrepPyOutputs`).
     """
-    params = fat_mvm_prep_params(
+    params = fat_mvm_prep_py_params(
         prefix=prefix,
         csv_file=csv_file,
         matrix_files=matrix_files,
@@ -248,14 +248,14 @@ def fat_mvm_prep(
         na_warn_off=na_warn_off,
         extern_labels_no=extern_labels_no,
     )
-    return fat_mvm_prep_execute(params, runner)
+    return fat_mvm_prep_py_execute(params, runner)
 
 
 __all__ = [
-    "FAT_MVM_PREP_METADATA",
-    "FatMvmPrepOutputs",
-    "FatMvmPrepParameters",
-    "fat_mvm_prep",
-    "fat_mvm_prep_execute",
-    "fat_mvm_prep_params",
+    "FAT_MVM_PREP_PY_METADATA",
+    "FatMvmPrepPyOutputs",
+    "FatMvmPrepPyParameters",
+    "fat_mvm_prep_py",
+    "fat_mvm_prep_py_execute",
+    "fat_mvm_prep_py_params",
 ]

@@ -5,16 +5,16 @@ import typing
 import pathlib
 from styxdefs import *
 
-APQC_MAKE_HTML_METADATA = Metadata(
-    id="a958dc9e454decaf99b430f63930ca86b1108a1f.boutiques",
-    name="apqc_make_html",
+APQC_MAKE_HTML_PY_METADATA = Metadata(
+    id="5a0a0655640ca3011ee8b320cb3dec8f45de5e54.boutiques",
+    name="apqc_make_html.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
 )
 
 
-ApqcMakeHtmlParameters = typing.TypedDict('ApqcMakeHtmlParameters', {
-    "@type": typing.Literal["afni.apqc_make_html"],
+ApqcMakeHtmlPyParameters = typing.TypedDict('ApqcMakeHtmlPyParameters', {
+    "@type": typing.Literal["afni.apqc_make_html.py"],
     "qc_dir": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "afni.apqc_make_html": apqc_make_html_cargs,
+        "afni.apqc_make_html.py": apqc_make_html_py_cargs,
     }.get(t)
 
 
@@ -50,17 +50,17 @@ def dyn_outputs(
     }.get(t)
 
 
-class ApqcMakeHtmlOutputs(typing.NamedTuple):
+class ApqcMakeHtmlPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `apqc_make_html(...)`.
+    Output object returned when calling `apqc_make_html_py(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
 
 
-def apqc_make_html_params(
+def apqc_make_html_py_params(
     qc_dir: str,
-) -> ApqcMakeHtmlParameters:
+) -> ApqcMakeHtmlPyParameters:
     """
     Build parameters.
     
@@ -70,14 +70,14 @@ def apqc_make_html_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.apqc_make_html",
+        "@type": "afni.apqc_make_html.py",
         "qc_dir": qc_dir,
     }
     return params
 
 
-def apqc_make_html_cargs(
-    params: ApqcMakeHtmlParameters,
+def apqc_make_html_py_cargs(
+    params: ApqcMakeHtmlPyParameters,
     execution: Execution,
 ) -> list[str]:
     """
@@ -98,10 +98,10 @@ def apqc_make_html_cargs(
     return cargs
 
 
-def apqc_make_html_outputs(
-    params: ApqcMakeHtmlParameters,
+def apqc_make_html_py_outputs(
+    params: ApqcMakeHtmlPyParameters,
     execution: Execution,
-) -> ApqcMakeHtmlOutputs:
+) -> ApqcMakeHtmlPyOutputs:
     """
     Build outputs object containing output file paths and possibly stdout/stderr.
     
@@ -111,18 +111,18 @@ def apqc_make_html_outputs(
     Returns:
         Outputs object.
     """
-    ret = ApqcMakeHtmlOutputs(
+    ret = ApqcMakeHtmlPyOutputs(
         root=execution.output_file("."),
     )
     return ret
 
 
-def apqc_make_html_execute(
-    params: ApqcMakeHtmlParameters,
+def apqc_make_html_py_execute(
+    params: ApqcMakeHtmlPyParameters,
     runner: Runner | None = None,
-) -> ApqcMakeHtmlOutputs:
+) -> ApqcMakeHtmlPyOutputs:
     """
-    apqc_make_html
+    apqc_make_html.py
     
     Tool to generate HTML reports.
     
@@ -134,23 +134,23 @@ def apqc_make_html_execute(
         params: The parameters.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `ApqcMakeHtmlOutputs`).
+        NamedTuple of outputs (described in `ApqcMakeHtmlPyOutputs`).
     """
     runner = runner or get_global_runner()
-    execution = runner.start_execution(APQC_MAKE_HTML_METADATA)
+    execution = runner.start_execution(APQC_MAKE_HTML_PY_METADATA)
     params = execution.params(params)
-    cargs = apqc_make_html_cargs(params, execution)
-    ret = apqc_make_html_outputs(params, execution)
+    cargs = apqc_make_html_py_cargs(params, execution)
+    ret = apqc_make_html_py_outputs(params, execution)
     execution.run(cargs)
     return ret
 
 
-def apqc_make_html(
+def apqc_make_html_py(
     qc_dir: str,
     runner: Runner | None = None,
-) -> ApqcMakeHtmlOutputs:
+) -> ApqcMakeHtmlPyOutputs:
     """
-    apqc_make_html
+    apqc_make_html.py
     
     Tool to generate HTML reports.
     
@@ -162,19 +162,19 @@ def apqc_make_html(
         qc_dir: Directory where QC files will be saved.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `ApqcMakeHtmlOutputs`).
+        NamedTuple of outputs (described in `ApqcMakeHtmlPyOutputs`).
     """
-    params = apqc_make_html_params(
+    params = apqc_make_html_py_params(
         qc_dir=qc_dir,
     )
-    return apqc_make_html_execute(params, runner)
+    return apqc_make_html_py_execute(params, runner)
 
 
 __all__ = [
-    "APQC_MAKE_HTML_METADATA",
-    "ApqcMakeHtmlOutputs",
-    "ApqcMakeHtmlParameters",
-    "apqc_make_html",
-    "apqc_make_html_execute",
-    "apqc_make_html_params",
+    "APQC_MAKE_HTML_PY_METADATA",
+    "ApqcMakeHtmlPyOutputs",
+    "ApqcMakeHtmlPyParameters",
+    "apqc_make_html_py",
+    "apqc_make_html_py_execute",
+    "apqc_make_html_py_params",
 ]

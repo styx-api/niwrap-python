@@ -5,16 +5,16 @@ import typing
 import pathlib
 from styxdefs import *
 
-ABIDS_TOOL_METADATA = Metadata(
-    id="623988e726ff6bf6b4972b1940f6f0b4f38877f2.boutiques",
-    name="abids_tool",
+ABIDS_TOOL_PY_METADATA = Metadata(
+    id="12686b7fa3fe6e6788b82863d0eb15e6743d467d.boutiques",
+    name="abids_tool.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
 )
 
 
-AbidsToolParameters = typing.TypedDict('AbidsToolParameters', {
-    "@type": typing.Literal["afni.abids_tool"],
+AbidsToolPyParameters = typing.TypedDict('AbidsToolPyParameters', {
+    "@type": typing.Literal["afni.abids_tool.py"],
     "input_files": list[InputPathType],
     "tr_match": bool,
     "add_tr": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "afni.abids_tool": abids_tool_cargs,
+        "afni.abids_tool.py": abids_tool_py_cargs,
     }.get(t)
 
 
@@ -55,22 +55,22 @@ def dyn_outputs(
     }.get(t)
 
 
-class AbidsToolOutputs(typing.NamedTuple):
+class AbidsToolPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `abids_tool(...)`.
+    Output object returned when calling `abids_tool_py(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
 
 
-def abids_tool_params(
+def abids_tool_py_params(
     input_files: list[InputPathType],
     tr_match: bool = False,
     add_tr: bool = False,
     add_slice_times: bool = False,
     copy_prefix: list[str] | None = None,
     help_flag: bool = False,
-) -> AbidsToolParameters:
+) -> AbidsToolPyParameters:
     """
     Build parameters.
     
@@ -89,7 +89,7 @@ def abids_tool_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.abids_tool",
+        "@type": "afni.abids_tool.py",
         "input_files": input_files,
         "tr_match": tr_match,
         "add_tr": add_tr,
@@ -101,8 +101,8 @@ def abids_tool_params(
     return params
 
 
-def abids_tool_cargs(
-    params: AbidsToolParameters,
+def abids_tool_py_cargs(
+    params: AbidsToolPyParameters,
     execution: Execution,
 ) -> list[str]:
     """
@@ -133,10 +133,10 @@ def abids_tool_cargs(
     return cargs
 
 
-def abids_tool_outputs(
-    params: AbidsToolParameters,
+def abids_tool_py_outputs(
+    params: AbidsToolPyParameters,
     execution: Execution,
-) -> AbidsToolOutputs:
+) -> AbidsToolPyOutputs:
     """
     Build outputs object containing output file paths and possibly stdout/stderr.
     
@@ -146,18 +146,18 @@ def abids_tool_outputs(
     Returns:
         Outputs object.
     """
-    ret = AbidsToolOutputs(
+    ret = AbidsToolPyOutputs(
         root=execution.output_file("."),
     )
     return ret
 
 
-def abids_tool_execute(
-    params: AbidsToolParameters,
+def abids_tool_py_execute(
+    params: AbidsToolPyParameters,
     runner: Runner | None = None,
-) -> AbidsToolOutputs:
+) -> AbidsToolPyOutputs:
     """
-    abids_tool
+    abids_tool.py
     
     A tool to work with BIDS formatted datasets created with dcm2niix_afni or
     dcm2niix, mainly to pull information from the matching JSON file and refit
@@ -171,18 +171,18 @@ def abids_tool_execute(
         params: The parameters.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `AbidsToolOutputs`).
+        NamedTuple of outputs (described in `AbidsToolPyOutputs`).
     """
     runner = runner or get_global_runner()
-    execution = runner.start_execution(ABIDS_TOOL_METADATA)
+    execution = runner.start_execution(ABIDS_TOOL_PY_METADATA)
     params = execution.params(params)
-    cargs = abids_tool_cargs(params, execution)
-    ret = abids_tool_outputs(params, execution)
+    cargs = abids_tool_py_cargs(params, execution)
+    ret = abids_tool_py_outputs(params, execution)
     execution.run(cargs)
     return ret
 
 
-def abids_tool(
+def abids_tool_py(
     input_files: list[InputPathType],
     tr_match: bool = False,
     add_tr: bool = False,
@@ -190,9 +190,9 @@ def abids_tool(
     copy_prefix: list[str] | None = None,
     help_flag: bool = False,
     runner: Runner | None = None,
-) -> AbidsToolOutputs:
+) -> AbidsToolPyOutputs:
     """
-    abids_tool
+    abids_tool.py
     
     A tool to work with BIDS formatted datasets created with dcm2niix_afni or
     dcm2niix, mainly to pull information from the matching JSON file and refit
@@ -215,9 +215,9 @@ def abids_tool(
         help_flag: Show help information and exit.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `AbidsToolOutputs`).
+        NamedTuple of outputs (described in `AbidsToolPyOutputs`).
     """
-    params = abids_tool_params(
+    params = abids_tool_py_params(
         input_files=input_files,
         tr_match=tr_match,
         add_tr=add_tr,
@@ -225,14 +225,14 @@ def abids_tool(
         copy_prefix=copy_prefix,
         help_flag=help_flag,
     )
-    return abids_tool_execute(params, runner)
+    return abids_tool_py_execute(params, runner)
 
 
 __all__ = [
-    "ABIDS_TOOL_METADATA",
-    "AbidsToolOutputs",
-    "AbidsToolParameters",
-    "abids_tool",
-    "abids_tool_execute",
-    "abids_tool_params",
+    "ABIDS_TOOL_PY_METADATA",
+    "AbidsToolPyOutputs",
+    "AbidsToolPyParameters",
+    "abids_tool_py",
+    "abids_tool_py_execute",
+    "abids_tool_py_params",
 ]

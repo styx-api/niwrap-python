@@ -5,16 +5,16 @@ import typing
 import pathlib
 from styxdefs import *
 
-EPI_B0_CORRECT_METADATA = Metadata(
-    id="a6677e9e92afc1f84d2e14c41fd7dc5daf44fd9c.boutiques",
-    name="epi_b0_correct",
+EPI_B0_CORRECT_PY_METADATA = Metadata(
+    id="a3a00a001245e6beb2daa81beda534e4b2ca0e0e.boutiques",
+    name="epi_b0_correct.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
 )
 
 
-EpiB0CorrectParameters = typing.TypedDict('EpiB0CorrectParameters', {
-    "@type": typing.Literal["afni.epi_b0_correct"],
+EpiB0CorrectPyParameters = typing.TypedDict('EpiB0CorrectPyParameters', {
+    "@type": typing.Literal["afni.epi_b0_correct.py"],
     "prefix": str,
     "input_freq": InputPathType,
     "input_epi": InputPathType,
@@ -54,7 +54,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "afni.epi_b0_correct": epi_b0_correct_cargs,
+        "afni.epi_b0_correct.py": epi_b0_correct_py_cargs,
     }.get(t)
 
 
@@ -70,13 +70,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "afni.epi_b0_correct": epi_b0_correct_outputs,
+        "afni.epi_b0_correct.py": epi_b0_correct_py_outputs,
     }.get(t)
 
 
-class EpiB0CorrectOutputs(typing.NamedTuple):
+class EpiB0CorrectPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `epi_b0_correct(...)`.
+    Output object returned when calling `epi_b0_correct_py(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -92,7 +92,7 @@ class EpiB0CorrectOutputs(typing.NamedTuple):
     """Directory containing QC images."""
 
 
-def epi_b0_correct_params(
+def epi_b0_correct_py_params(
     prefix: str,
     input_freq: InputPathType,
     input_epi: InputPathType,
@@ -117,7 +117,7 @@ def epi_b0_correct_params(
     help_: bool = False,
     ver: bool = False,
     date: bool = False,
-) -> EpiB0CorrectParameters:
+) -> EpiB0CorrectPyParameters:
     """
     Build parameters.
     
@@ -164,7 +164,7 @@ def epi_b0_correct_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.epi_b0_correct",
+        "@type": "afni.epi_b0_correct.py",
         "prefix": prefix,
         "input_freq": input_freq,
         "input_epi": input_epi,
@@ -207,8 +207,8 @@ def epi_b0_correct_params(
     return params
 
 
-def epi_b0_correct_cargs(
-    params: EpiB0CorrectParameters,
+def epi_b0_correct_py_cargs(
+    params: EpiB0CorrectPyParameters,
     execution: Execution,
 ) -> list[str]:
     """
@@ -320,10 +320,10 @@ def epi_b0_correct_cargs(
     return cargs
 
 
-def epi_b0_correct_outputs(
-    params: EpiB0CorrectParameters,
+def epi_b0_correct_py_outputs(
+    params: EpiB0CorrectPyParameters,
     execution: Execution,
-) -> EpiB0CorrectOutputs:
+) -> EpiB0CorrectPyOutputs:
     """
     Build outputs object containing output file paths and possibly stdout/stderr.
     
@@ -333,7 +333,7 @@ def epi_b0_correct_outputs(
     Returns:
         Outputs object.
     """
-    ret = EpiB0CorrectOutputs(
+    ret = EpiB0CorrectPyOutputs(
         root=execution.output_file("."),
         warp_dset=execution.output_file(params.get("prefix") + "_WARP.nii.gz"),
         cmds_script=execution.output_file(params.get("prefix") + "_cmds.tcsh"),
@@ -344,12 +344,12 @@ def epi_b0_correct_outputs(
     return ret
 
 
-def epi_b0_correct_execute(
-    params: EpiB0CorrectParameters,
+def epi_b0_correct_py_execute(
+    params: EpiB0CorrectPyParameters,
     runner: Runner | None = None,
-) -> EpiB0CorrectOutputs:
+) -> EpiB0CorrectPyOutputs:
     """
-    epi_b0_correct
+    epi_b0_correct.py
     
     B0 distortion correction tool using an acquired frequency (phase) image.
     
@@ -361,18 +361,18 @@ def epi_b0_correct_execute(
         params: The parameters.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `EpiB0CorrectOutputs`).
+        NamedTuple of outputs (described in `EpiB0CorrectPyOutputs`).
     """
     runner = runner or get_global_runner()
-    execution = runner.start_execution(EPI_B0_CORRECT_METADATA)
+    execution = runner.start_execution(EPI_B0_CORRECT_PY_METADATA)
     params = execution.params(params)
-    cargs = epi_b0_correct_cargs(params, execution)
-    ret = epi_b0_correct_outputs(params, execution)
+    cargs = epi_b0_correct_py_cargs(params, execution)
+    ret = epi_b0_correct_py_outputs(params, execution)
     execution.run(cargs)
     return ret
 
 
-def epi_b0_correct(
+def epi_b0_correct_py(
     prefix: str,
     input_freq: InputPathType,
     input_epi: InputPathType,
@@ -398,9 +398,9 @@ def epi_b0_correct(
     ver: bool = False,
     date: bool = False,
     runner: Runner | None = None,
-) -> EpiB0CorrectOutputs:
+) -> EpiB0CorrectPyOutputs:
     """
-    epi_b0_correct
+    epi_b0_correct.py
     
     B0 distortion correction tool using an acquired frequency (phase) image.
     
@@ -449,9 +449,9 @@ def epi_b0_correct(
         date: Display date of program's last update in terminal.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `EpiB0CorrectOutputs`).
+        NamedTuple of outputs (described in `EpiB0CorrectPyOutputs`).
     """
-    params = epi_b0_correct_params(
+    params = epi_b0_correct_py_params(
         prefix=prefix,
         input_freq=input_freq,
         input_epi=input_epi,
@@ -477,14 +477,14 @@ def epi_b0_correct(
         ver=ver,
         date=date,
     )
-    return epi_b0_correct_execute(params, runner)
+    return epi_b0_correct_py_execute(params, runner)
 
 
 __all__ = [
-    "EPI_B0_CORRECT_METADATA",
-    "EpiB0CorrectOutputs",
-    "EpiB0CorrectParameters",
-    "epi_b0_correct",
-    "epi_b0_correct_execute",
-    "epi_b0_correct_params",
+    "EPI_B0_CORRECT_PY_METADATA",
+    "EpiB0CorrectPyOutputs",
+    "EpiB0CorrectPyParameters",
+    "epi_b0_correct_py",
+    "epi_b0_correct_py_execute",
+    "epi_b0_correct_py_params",
 ]

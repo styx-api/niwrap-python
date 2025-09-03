@@ -5,16 +5,16 @@ import typing
 import pathlib
 from styxdefs import *
 
-MP_DIFFPOW_METADATA = Metadata(
-    id="c5b67359558c4494958df37eab4b65d805a2c063.boutiques",
-    name="mp_diffpow",
+MP_DIFFPOW_SH_METADATA = Metadata(
+    id="01bf70e2032d7f966a3cd42ea33f66cf2252d515.boutiques",
+    name="mp_diffpow.sh",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
 )
 
 
-MpDiffpowParameters = typing.TypedDict('MpDiffpowParameters', {
-    "@type": typing.Literal["fsl.mp_diffpow"],
+MpDiffpowShParameters = typing.TypedDict('MpDiffpowShParameters', {
+    "@type": typing.Literal["fsl.mp_diffpow.sh"],
     "reg_file": InputPathType,
     "diff_reg_file": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsl.mp_diffpow": mp_diffpow_cargs,
+        "fsl.mp_diffpow.sh": mp_diffpow_sh_cargs,
     }.get(t)
 
 
@@ -48,13 +48,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fsl.mp_diffpow": mp_diffpow_outputs,
+        "fsl.mp_diffpow.sh": mp_diffpow_sh_outputs,
     }.get(t)
 
 
-class MpDiffpowOutputs(typing.NamedTuple):
+class MpDiffpowShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mp_diffpow(...)`.
+    Output object returned when calling `mp_diffpow_sh(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,10 +63,10 @@ class MpDiffpowOutputs(typing.NamedTuple):
     parameters, and squared differenced values."""
 
 
-def mp_diffpow_params(
+def mp_diffpow_sh_params(
     reg_file: InputPathType,
     diff_reg_file: str,
-) -> MpDiffpowParameters:
+) -> MpDiffpowShParameters:
     """
     Build parameters.
     
@@ -79,15 +79,15 @@ def mp_diffpow_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.mp_diffpow",
+        "@type": "fsl.mp_diffpow.sh",
         "reg_file": reg_file,
         "diff_reg_file": diff_reg_file,
     }
     return params
 
 
-def mp_diffpow_cargs(
-    params: MpDiffpowParameters,
+def mp_diffpow_sh_cargs(
+    params: MpDiffpowShParameters,
     execution: Execution,
 ) -> list[str]:
     """
@@ -106,10 +106,10 @@ def mp_diffpow_cargs(
     return cargs
 
 
-def mp_diffpow_outputs(
-    params: MpDiffpowParameters,
+def mp_diffpow_sh_outputs(
+    params: MpDiffpowShParameters,
     execution: Execution,
-) -> MpDiffpowOutputs:
+) -> MpDiffpowShOutputs:
     """
     Build outputs object containing output file paths and possibly stdout/stderr.
     
@@ -119,19 +119,19 @@ def mp_diffpow_outputs(
     Returns:
         Outputs object.
     """
-    ret = MpDiffpowOutputs(
+    ret = MpDiffpowShOutputs(
         root=execution.output_file("."),
         outfile=execution.output_file(params.get("diff_reg_file")),
     )
     return ret
 
 
-def mp_diffpow_execute(
-    params: MpDiffpowParameters,
+def mp_diffpow_sh_execute(
+    params: MpDiffpowShParameters,
     runner: Runner | None = None,
-) -> MpDiffpowOutputs:
+) -> MpDiffpowShOutputs:
     """
-    mp_diffpow
+    mp_diffpow.sh
     
     Generates a file with specific motion parameter calculations useful for
     accounting for 'spin history' effects and other variations not accounted for
@@ -145,24 +145,24 @@ def mp_diffpow_execute(
         params: The parameters.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `MpDiffpowOutputs`).
+        NamedTuple of outputs (described in `MpDiffpowShOutputs`).
     """
     runner = runner or get_global_runner()
-    execution = runner.start_execution(MP_DIFFPOW_METADATA)
+    execution = runner.start_execution(MP_DIFFPOW_SH_METADATA)
     params = execution.params(params)
-    cargs = mp_diffpow_cargs(params, execution)
-    ret = mp_diffpow_outputs(params, execution)
+    cargs = mp_diffpow_sh_cargs(params, execution)
+    ret = mp_diffpow_sh_outputs(params, execution)
     execution.run(cargs)
     return ret
 
 
-def mp_diffpow(
+def mp_diffpow_sh(
     reg_file: InputPathType,
     diff_reg_file: str,
     runner: Runner | None = None,
-) -> MpDiffpowOutputs:
+) -> MpDiffpowShOutputs:
     """
-    mp_diffpow
+    mp_diffpow.sh
     
     Generates a file with specific motion parameter calculations useful for
     accounting for 'spin history' effects and other variations not accounted for
@@ -179,20 +179,20 @@ def mp_diffpow(
             (e.g., diffregparam.dat).
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `MpDiffpowOutputs`).
+        NamedTuple of outputs (described in `MpDiffpowShOutputs`).
     """
-    params = mp_diffpow_params(
+    params = mp_diffpow_sh_params(
         reg_file=reg_file,
         diff_reg_file=diff_reg_file,
     )
-    return mp_diffpow_execute(params, runner)
+    return mp_diffpow_sh_execute(params, runner)
 
 
 __all__ = [
-    "MP_DIFFPOW_METADATA",
-    "MpDiffpowOutputs",
-    "MpDiffpowParameters",
-    "mp_diffpow",
-    "mp_diffpow_execute",
-    "mp_diffpow_params",
+    "MP_DIFFPOW_SH_METADATA",
+    "MpDiffpowShOutputs",
+    "MpDiffpowShParameters",
+    "mp_diffpow_sh",
+    "mp_diffpow_sh_execute",
+    "mp_diffpow_sh_params",
 ]

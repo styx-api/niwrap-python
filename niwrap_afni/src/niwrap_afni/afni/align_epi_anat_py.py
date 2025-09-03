@@ -5,16 +5,16 @@ import typing
 import pathlib
 from styxdefs import *
 
-ALIGN_EPI_ANAT_METADATA = Metadata(
-    id="f8698b45584333a566a4ac7a702d9045fad24911.boutiques",
-    name="align_epi_anat",
+ALIGN_EPI_ANAT_PY_METADATA = Metadata(
+    id="a95d25c6d9f2c0adb3ad36d80c962341239e28e0.boutiques",
+    name="align_epi_anat.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
 )
 
 
-AlignEpiAnatParameters = typing.TypedDict('AlignEpiAnatParameters', {
-    "@type": typing.Literal["afni.align_epi_anat"],
+AlignEpiAnatPyParameters = typing.TypedDict('AlignEpiAnatPyParameters', {
+    "@type": typing.Literal["afni.align_epi_anat.py"],
     "epi": InputPathType,
     "anat": InputPathType,
     "epi_base": str,
@@ -47,7 +47,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "afni.align_epi_anat": align_epi_anat_cargs,
+        "afni.align_epi_anat.py": align_epi_anat_py_cargs,
     }.get(t)
 
 
@@ -63,13 +63,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "afni.align_epi_anat": align_epi_anat_outputs,
+        "afni.align_epi_anat.py": align_epi_anat_py_outputs,
     }.get(t)
 
 
-class AlignEpiAnatOutputs(typing.NamedTuple):
+class AlignEpiAnatPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `align_epi_anat(...)`.
+    Output object returned when calling `align_epi_anat_py(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +79,7 @@ class AlignEpiAnatOutputs(typing.NamedTuple):
     """A version of the EPI dataset aligned to the Anatomy"""
 
 
-def align_epi_anat_params(
+def align_epi_anat_py_params(
     epi: InputPathType,
     anat: InputPathType,
     epi_base: str,
@@ -97,7 +97,7 @@ def align_epi_anat_params(
     volreg_method: typing.Literal["3dvolreg", "3dWarpDrive", "3dAllineate"] | None = None,
     ex_mode: typing.Literal["quiet", "echo", "dry_run", "script"] | None = None,
     overwrite: bool = False,
-) -> AlignEpiAnatParameters:
+) -> AlignEpiAnatPyParameters:
     """
     Build parameters.
     
@@ -126,7 +126,7 @@ def align_epi_anat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.align_epi_anat",
+        "@type": "afni.align_epi_anat.py",
         "epi": epi,
         "anat": anat,
         "epi_base": epi_base,
@@ -153,8 +153,8 @@ def align_epi_anat_params(
     return params
 
 
-def align_epi_anat_cargs(
-    params: AlignEpiAnatParameters,
+def align_epi_anat_py_cargs(
+    params: AlignEpiAnatPyParameters,
     execution: Execution,
 ) -> list[str]:
     """
@@ -226,10 +226,10 @@ def align_epi_anat_cargs(
     return cargs
 
 
-def align_epi_anat_outputs(
-    params: AlignEpiAnatParameters,
+def align_epi_anat_py_outputs(
+    params: AlignEpiAnatPyParameters,
     execution: Execution,
-) -> AlignEpiAnatOutputs:
+) -> AlignEpiAnatPyOutputs:
     """
     Build outputs object containing output file paths and possibly stdout/stderr.
     
@@ -239,7 +239,7 @@ def align_epi_anat_outputs(
     Returns:
         Outputs object.
     """
-    ret = AlignEpiAnatOutputs(
+    ret = AlignEpiAnatPyOutputs(
         root=execution.output_file("."),
         anat_aligned=execution.output_file(pathlib.Path(params.get("anat")).name + "+orig"),
         epi_aligned=execution.output_file(pathlib.Path(params.get("epi")).name + "+orig"),
@@ -247,12 +247,12 @@ def align_epi_anat_outputs(
     return ret
 
 
-def align_epi_anat_execute(
-    params: AlignEpiAnatParameters,
+def align_epi_anat_py_execute(
+    params: AlignEpiAnatPyParameters,
     runner: Runner | None = None,
-) -> AlignEpiAnatOutputs:
+) -> AlignEpiAnatPyOutputs:
     """
-    align_epi_anat
+    align_epi_anat.py
     
     Align EPI to anatomical datasets or vice versa.
     
@@ -264,18 +264,18 @@ def align_epi_anat_execute(
         params: The parameters.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `AlignEpiAnatOutputs`).
+        NamedTuple of outputs (described in `AlignEpiAnatPyOutputs`).
     """
     runner = runner or get_global_runner()
-    execution = runner.start_execution(ALIGN_EPI_ANAT_METADATA)
+    execution = runner.start_execution(ALIGN_EPI_ANAT_PY_METADATA)
     params = execution.params(params)
-    cargs = align_epi_anat_cargs(params, execution)
-    ret = align_epi_anat_outputs(params, execution)
+    cargs = align_epi_anat_py_cargs(params, execution)
+    ret = align_epi_anat_py_outputs(params, execution)
     execution.run(cargs)
     return ret
 
 
-def align_epi_anat(
+def align_epi_anat_py(
     epi: InputPathType,
     anat: InputPathType,
     epi_base: str,
@@ -294,9 +294,9 @@ def align_epi_anat(
     ex_mode: typing.Literal["quiet", "echo", "dry_run", "script"] | None = None,
     overwrite: bool = False,
     runner: Runner | None = None,
-) -> AlignEpiAnatOutputs:
+) -> AlignEpiAnatPyOutputs:
     """
-    align_epi_anat
+    align_epi_anat.py
     
     Align EPI to anatomical datasets or vice versa.
     
@@ -327,9 +327,9 @@ def align_epi_anat(
         overwrite: Overwrite existing files.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `AlignEpiAnatOutputs`).
+        NamedTuple of outputs (described in `AlignEpiAnatPyOutputs`).
     """
-    params = align_epi_anat_params(
+    params = align_epi_anat_py_params(
         epi=epi,
         anat=anat,
         epi_base=epi_base,
@@ -348,14 +348,14 @@ def align_epi_anat(
         ex_mode=ex_mode,
         overwrite=overwrite,
     )
-    return align_epi_anat_execute(params, runner)
+    return align_epi_anat_py_execute(params, runner)
 
 
 __all__ = [
-    "ALIGN_EPI_ANAT_METADATA",
-    "AlignEpiAnatOutputs",
-    "AlignEpiAnatParameters",
-    "align_epi_anat",
-    "align_epi_anat_execute",
-    "align_epi_anat_params",
+    "ALIGN_EPI_ANAT_PY_METADATA",
+    "AlignEpiAnatPyOutputs",
+    "AlignEpiAnatPyParameters",
+    "align_epi_anat_py",
+    "align_epi_anat_py_execute",
+    "align_epi_anat_py_params",
 ]

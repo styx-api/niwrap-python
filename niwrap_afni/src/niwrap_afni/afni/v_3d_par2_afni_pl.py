@@ -5,16 +5,16 @@ import typing
 import pathlib
 from styxdefs import *
 
-V_3D_PAR2_AFNI_METADATA = Metadata(
-    id="8a1625af0dec0ca42ff6be27e5b3b994d19a0b23.boutiques",
-    name="3dPAR2AFNI",
+V_3D_PAR2_AFNI_PL_METADATA = Metadata(
+    id="f2d0b5e6d8cb6c9ece3fa96d8f963b37f3584021.boutiques",
+    name="3dPAR2AFNI.pl",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
 )
 
 
-V3dPar2AfniParameters = typing.TypedDict('V3dPar2AfniParameters', {
-    "@type": typing.Literal["afni.3dPAR2AFNI"],
+V3dPar2AfniPlParameters = typing.TypedDict('V3dPar2AfniPlParameters', {
+    "@type": typing.Literal["afni.3dPAR2AFNI.pl"],
     "input_file": InputPathType,
     "skip_outliers_test": bool,
     "output_nifti": bool,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "afni.3dPAR2AFNI": v_3d_par2_afni_cargs,
+        "afni.3dPAR2AFNI.pl": v_3d_par2_afni_pl_cargs,
     }.get(t)
 
 
@@ -56,13 +56,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "afni.3dPAR2AFNI": v_3d_par2_afni_outputs,
+        "afni.3dPAR2AFNI.pl": v_3d_par2_afni_pl_outputs,
     }.get(t)
 
 
-class V3dPar2AfniOutputs(typing.NamedTuple):
+class V3dPar2AfniPlOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_par2_afni(...)`.
+    Output object returned when calling `v_3d_par2_afni_pl(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +70,7 @@ class V3dPar2AfniOutputs(typing.NamedTuple):
     """Converted output files"""
 
 
-def v_3d_par2_afni_params(
+def v_3d_par2_afni_pl_params(
     input_file: InputPathType,
     skip_outliers_test: bool = False,
     output_nifti: bool = False,
@@ -81,7 +81,7 @@ def v_3d_par2_afni_params(
     byte_swap_2: bool = False,
     byte_swap_4: bool = False,
     help_flag: bool = False,
-) -> V3dPar2AfniParameters:
+) -> V3dPar2AfniPlParameters:
     """
     Build parameters.
     
@@ -107,7 +107,7 @@ def v_3d_par2_afni_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dPAR2AFNI",
+        "@type": "afni.3dPAR2AFNI.pl",
         "input_file": input_file,
         "skip_outliers_test": skip_outliers_test,
         "output_nifti": output_nifti,
@@ -123,8 +123,8 @@ def v_3d_par2_afni_params(
     return params
 
 
-def v_3d_par2_afni_cargs(
-    params: V3dPar2AfniParameters,
+def v_3d_par2_afni_pl_cargs(
+    params: V3dPar2AfniPlParameters,
     execution: Execution,
 ) -> list[str]:
     """
@@ -163,10 +163,10 @@ def v_3d_par2_afni_cargs(
     return cargs
 
 
-def v_3d_par2_afni_outputs(
-    params: V3dPar2AfniParameters,
+def v_3d_par2_afni_pl_outputs(
+    params: V3dPar2AfniPlParameters,
     execution: Execution,
-) -> V3dPar2AfniOutputs:
+) -> V3dPar2AfniPlOutputs:
     """
     Build outputs object containing output file paths and possibly stdout/stderr.
     
@@ -176,19 +176,19 @@ def v_3d_par2_afni_outputs(
     Returns:
         Outputs object.
     """
-    ret = V3dPar2AfniOutputs(
+    ret = V3dPar2AfniPlOutputs(
         root=execution.output_file("."),
         output_files=execution.output_file(pathlib.Path(params.get("input_file")).name + "_converted"),
     )
     return ret
 
 
-def v_3d_par2_afni_execute(
-    params: V3dPar2AfniParameters,
+def v_3d_par2_afni_pl_execute(
+    params: V3dPar2AfniPlParameters,
     runner: Runner | None = None,
-) -> V3dPar2AfniOutputs:
+) -> V3dPar2AfniPlOutputs:
     """
-    3dPAR2AFNI
+    3dPAR2AFNI.pl
     
     Convert Philips PAR/REC files to AFNI's BRIK/HEAD, NIfTI, or ANALYZE format.
     
@@ -200,18 +200,18 @@ def v_3d_par2_afni_execute(
         params: The parameters.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `V3dPar2AfniOutputs`).
+        NamedTuple of outputs (described in `V3dPar2AfniPlOutputs`).
     """
     runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_PAR2_AFNI_METADATA)
+    execution = runner.start_execution(V_3D_PAR2_AFNI_PL_METADATA)
     params = execution.params(params)
-    cargs = v_3d_par2_afni_cargs(params, execution)
-    ret = v_3d_par2_afni_outputs(params, execution)
+    cargs = v_3d_par2_afni_pl_cargs(params, execution)
+    ret = v_3d_par2_afni_pl_outputs(params, execution)
     execution.run(cargs)
     return ret
 
 
-def v_3d_par2_afni(
+def v_3d_par2_afni_pl(
     input_file: InputPathType,
     skip_outliers_test: bool = False,
     output_nifti: bool = False,
@@ -223,9 +223,9 @@ def v_3d_par2_afni(
     byte_swap_4: bool = False,
     help_flag: bool = False,
     runner: Runner | None = None,
-) -> V3dPar2AfniOutputs:
+) -> V3dPar2AfniPlOutputs:
     """
-    3dPAR2AFNI
+    3dPAR2AFNI.pl
     
     Convert Philips PAR/REC files to AFNI's BRIK/HEAD, NIfTI, or ANALYZE format.
     
@@ -253,9 +253,9 @@ def v_3d_par2_afni(
         help_flag: Display help message.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `V3dPar2AfniOutputs`).
+        NamedTuple of outputs (described in `V3dPar2AfniPlOutputs`).
     """
-    params = v_3d_par2_afni_params(
+    params = v_3d_par2_afni_pl_params(
         input_file=input_file,
         skip_outliers_test=skip_outliers_test,
         output_nifti=output_nifti,
@@ -267,14 +267,14 @@ def v_3d_par2_afni(
         byte_swap_4=byte_swap_4,
         help_flag=help_flag,
     )
-    return v_3d_par2_afni_execute(params, runner)
+    return v_3d_par2_afni_pl_execute(params, runner)
 
 
 __all__ = [
-    "V3dPar2AfniOutputs",
-    "V3dPar2AfniParameters",
-    "V_3D_PAR2_AFNI_METADATA",
-    "v_3d_par2_afni",
-    "v_3d_par2_afni_execute",
-    "v_3d_par2_afni_params",
+    "V3dPar2AfniPlOutputs",
+    "V3dPar2AfniPlParameters",
+    "V_3D_PAR2_AFNI_PL_METADATA",
+    "v_3d_par2_afni_pl",
+    "v_3d_par2_afni_pl_execute",
+    "v_3d_par2_afni_pl_params",
 ]

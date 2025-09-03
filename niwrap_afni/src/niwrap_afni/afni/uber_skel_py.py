@@ -5,16 +5,16 @@ import typing
 import pathlib
 from styxdefs import *
 
-UBER_SKEL_METADATA = Metadata(
-    id="9c8b94aec9b6f8e9660a86aa775db219d44ebe60.boutiques",
-    name="uber_skel",
+UBER_SKEL_PY_METADATA = Metadata(
+    id="95009f6df9fe408c5a8a3786bc0c7164b9b8f38b.boutiques",
+    name="uber_skel.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
 )
 
 
-UberSkelParameters = typing.TypedDict('UberSkelParameters', {
-    "@type": typing.Literal["afni.uber_skel"],
+UberSkelPyParameters = typing.TypedDict('UberSkelPyParameters', {
+    "@type": typing.Literal["afni.uber_skel.py"],
     "qt_options": typing.NotRequired[str | None],
     "no_gui_flag": bool,
     "print_script": bool,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "afni.uber_skel": uber_skel_cargs,
+        "afni.uber_skel.py": uber_skel_py_cargs,
     }.get(t)
 
 
@@ -60,15 +60,15 @@ def dyn_outputs(
     }.get(t)
 
 
-class UberSkelOutputs(typing.NamedTuple):
+class UberSkelPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `uber_skel(...)`.
+    Output object returned when calling `uber_skel_py(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
 
 
-def uber_skel_params(
+def uber_skel_py_params(
     qt_options: str | None = None,
     no_gui_flag: bool = False,
     print_script: bool = False,
@@ -80,7 +80,7 @@ def uber_skel_params(
     history: bool = False,
     show_valid_opts: bool = False,
     version: bool = False,
-) -> UberSkelParameters:
+) -> UberSkelPyParameters:
     """
     Build parameters.
     
@@ -100,7 +100,7 @@ def uber_skel_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.uber_skel",
+        "@type": "afni.uber_skel.py",
         "no_gui_flag": no_gui_flag,
         "print_script": print_script,
         "help_howto_program": help_howto_program,
@@ -119,8 +119,8 @@ def uber_skel_params(
     return params
 
 
-def uber_skel_cargs(
-    params: UberSkelParameters,
+def uber_skel_py_cargs(
+    params: UberSkelPyParameters,
     execution: Execution,
 ) -> list[str]:
     """
@@ -168,10 +168,10 @@ def uber_skel_cargs(
     return cargs
 
 
-def uber_skel_outputs(
-    params: UberSkelParameters,
+def uber_skel_py_outputs(
+    params: UberSkelPyParameters,
     execution: Execution,
-) -> UberSkelOutputs:
+) -> UberSkelPyOutputs:
     """
     Build outputs object containing output file paths and possibly stdout/stderr.
     
@@ -181,18 +181,18 @@ def uber_skel_outputs(
     Returns:
         Outputs object.
     """
-    ret = UberSkelOutputs(
+    ret = UberSkelPyOutputs(
         root=execution.output_file("."),
     )
     return ret
 
 
-def uber_skel_execute(
-    params: UberSkelParameters,
+def uber_skel_py_execute(
+    params: UberSkelPyParameters,
     runner: Runner | None = None,
-) -> UberSkelOutputs:
+) -> UberSkelPyOutputs:
     """
-    uber_skel
+    uber_skel.py
     
     Sample uber processing program for initializing user and control variables,
     with options for both GUI and non-GUI modes.
@@ -205,18 +205,18 @@ def uber_skel_execute(
         params: The parameters.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `UberSkelOutputs`).
+        NamedTuple of outputs (described in `UberSkelPyOutputs`).
     """
     runner = runner or get_global_runner()
-    execution = runner.start_execution(UBER_SKEL_METADATA)
+    execution = runner.start_execution(UBER_SKEL_PY_METADATA)
     params = execution.params(params)
-    cargs = uber_skel_cargs(params, execution)
-    ret = uber_skel_outputs(params, execution)
+    cargs = uber_skel_py_cargs(params, execution)
+    ret = uber_skel_py_outputs(params, execution)
     execution.run(cargs)
     return ret
 
 
-def uber_skel(
+def uber_skel_py(
     qt_options: str | None = None,
     no_gui_flag: bool = False,
     print_script: bool = False,
@@ -229,9 +229,9 @@ def uber_skel(
     show_valid_opts: bool = False,
     version: bool = False,
     runner: Runner | None = None,
-) -> UberSkelOutputs:
+) -> UberSkelPyOutputs:
     """
-    uber_skel
+    uber_skel.py
     
     Sample uber processing program for initializing user and control variables,
     with options for both GUI and non-GUI modes.
@@ -254,9 +254,9 @@ def uber_skel(
         version: Show version.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `UberSkelOutputs`).
+        NamedTuple of outputs (described in `UberSkelPyOutputs`).
     """
-    params = uber_skel_params(
+    params = uber_skel_py_params(
         qt_options=qt_options,
         no_gui_flag=no_gui_flag,
         print_script=print_script,
@@ -269,14 +269,14 @@ def uber_skel(
         show_valid_opts=show_valid_opts,
         version=version,
     )
-    return uber_skel_execute(params, runner)
+    return uber_skel_py_execute(params, runner)
 
 
 __all__ = [
-    "UBER_SKEL_METADATA",
-    "UberSkelOutputs",
-    "UberSkelParameters",
-    "uber_skel",
-    "uber_skel_execute",
-    "uber_skel_params",
+    "UBER_SKEL_PY_METADATA",
+    "UberSkelPyOutputs",
+    "UberSkelPyParameters",
+    "uber_skel_py",
+    "uber_skel_py_execute",
+    "uber_skel_py_params",
 ]

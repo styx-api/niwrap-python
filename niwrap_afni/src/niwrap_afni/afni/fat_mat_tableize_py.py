@@ -5,16 +5,16 @@ import typing
 import pathlib
 from styxdefs import *
 
-FAT_MAT_TABLEIZE_METADATA = Metadata(
-    id="54bddb6e07bcdce4629069126b94b563d0162fab.boutiques",
-    name="fat_mat_tableize",
+FAT_MAT_TABLEIZE_PY_METADATA = Metadata(
+    id="816e034cced8070fa25bb9884d58654e29d3fb8d.boutiques",
+    name="fat_mat_tableize.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
 )
 
 
-FatMatTableizeParameters = typing.TypedDict('FatMatTableizeParameters', {
-    "@type": typing.Literal["afni.fat_mat_tableize"],
+FatMatTableizePyParameters = typing.TypedDict('FatMatTableizePyParameters', {
+    "@type": typing.Literal["afni.fat_mat_tableize.py"],
     "input_matrices": list[str],
     "input_csv": typing.NotRequired[InputPathType | None],
     "input_list": typing.NotRequired[InputPathType | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "afni.fat_mat_tableize": fat_mat_tableize_cargs,
+        "afni.fat_mat_tableize.py": fat_mat_tableize_py_cargs,
     }.get(t)
 
 
@@ -56,13 +56,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "afni.fat_mat_tableize": fat_mat_tableize_outputs,
+        "afni.fat_mat_tableize.py": fat_mat_tableize_py_outputs,
     }.get(t)
 
 
-class FatMatTableizeOutputs(typing.NamedTuple):
+class FatMatTableizePyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fat_mat_tableize(...)`.
+    Output object returned when calling `fat_mat_tableize_py(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +73,7 @@ class FatMatTableizeOutputs(typing.NamedTuple):
     file."""
 
 
-def fat_mat_tableize_params(
+def fat_mat_tableize_py_params(
     input_matrices: list[str],
     output_prefix: str,
     input_csv: InputPathType | None = None,
@@ -84,7 +84,7 @@ def fat_mat_tableize_params(
     help_: bool = False,
     help_short: bool = False,
     help_view: bool = False,
-) -> FatMatTableizeParameters:
+) -> FatMatTableizePyParameters:
     """
     Build parameters.
     
@@ -108,7 +108,7 @@ def fat_mat_tableize_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.fat_mat_tableize",
+        "@type": "afni.fat_mat_tableize.py",
         "input_matrices": input_matrices,
         "output_prefix": output_prefix,
         "version": version,
@@ -126,8 +126,8 @@ def fat_mat_tableize_params(
     return params
 
 
-def fat_mat_tableize_cargs(
-    params: FatMatTableizeParameters,
+def fat_mat_tableize_py_cargs(
+    params: FatMatTableizePyParameters,
     execution: Execution,
 ) -> list[str]:
     """
@@ -177,10 +177,10 @@ def fat_mat_tableize_cargs(
     return cargs
 
 
-def fat_mat_tableize_outputs(
-    params: FatMatTableizeParameters,
+def fat_mat_tableize_py_outputs(
+    params: FatMatTableizePyParameters,
     execution: Execution,
-) -> FatMatTableizeOutputs:
+) -> FatMatTableizePyOutputs:
     """
     Build outputs object containing output file paths and possibly stdout/stderr.
     
@@ -190,7 +190,7 @@ def fat_mat_tableize_outputs(
     Returns:
         Outputs object.
     """
-    ret = FatMatTableizeOutputs(
+    ret = FatMatTableizePyOutputs(
         root=execution.output_file("."),
         output_table=execution.output_file(params.get("output_prefix") + "_tbl.txt"),
         output_log=execution.output_file(params.get("output_prefix") + "_prep.log"),
@@ -198,12 +198,12 @@ def fat_mat_tableize_outputs(
     return ret
 
 
-def fat_mat_tableize_execute(
-    params: FatMatTableizeParameters,
+def fat_mat_tableize_py_execute(
+    params: FatMatTableizePyParameters,
     runner: Runner | None = None,
-) -> FatMatTableizeOutputs:
+) -> FatMatTableizePyOutputs:
     """
-    fat_mat_tableize
+    fat_mat_tableize.py
     
     Make tables for AFNI group analysis programs from 3dNetCorr (*.netcc) and
     3dTrackID (*.grid) outputs, with optional additional subject information
@@ -217,18 +217,18 @@ def fat_mat_tableize_execute(
         params: The parameters.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `FatMatTableizeOutputs`).
+        NamedTuple of outputs (described in `FatMatTableizePyOutputs`).
     """
     runner = runner or get_global_runner()
-    execution = runner.start_execution(FAT_MAT_TABLEIZE_METADATA)
+    execution = runner.start_execution(FAT_MAT_TABLEIZE_PY_METADATA)
     params = execution.params(params)
-    cargs = fat_mat_tableize_cargs(params, execution)
-    ret = fat_mat_tableize_outputs(params, execution)
+    cargs = fat_mat_tableize_py_cargs(params, execution)
+    ret = fat_mat_tableize_py_outputs(params, execution)
     execution.run(cargs)
     return ret
 
 
-def fat_mat_tableize(
+def fat_mat_tableize_py(
     input_matrices: list[str],
     output_prefix: str,
     input_csv: InputPathType | None = None,
@@ -240,9 +240,9 @@ def fat_mat_tableize(
     help_short: bool = False,
     help_view: bool = False,
     runner: Runner | None = None,
-) -> FatMatTableizeOutputs:
+) -> FatMatTableizePyOutputs:
     """
-    fat_mat_tableize
+    fat_mat_tableize.py
     
     Make tables for AFNI group analysis programs from 3dNetCorr (*.netcc) and
     3dTrackID (*.grid) outputs, with optional additional subject information
@@ -270,9 +270,9 @@ def fat_mat_tableize(
         help_view: Display help in a separate text editor.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `FatMatTableizeOutputs`).
+        NamedTuple of outputs (described in `FatMatTableizePyOutputs`).
     """
-    params = fat_mat_tableize_params(
+    params = fat_mat_tableize_py_params(
         input_matrices=input_matrices,
         input_csv=input_csv,
         input_list=input_list,
@@ -284,14 +284,14 @@ def fat_mat_tableize(
         help_short=help_short,
         help_view=help_view,
     )
-    return fat_mat_tableize_execute(params, runner)
+    return fat_mat_tableize_py_execute(params, runner)
 
 
 __all__ = [
-    "FAT_MAT_TABLEIZE_METADATA",
-    "FatMatTableizeOutputs",
-    "FatMatTableizeParameters",
-    "fat_mat_tableize",
-    "fat_mat_tableize_execute",
-    "fat_mat_tableize_params",
+    "FAT_MAT_TABLEIZE_PY_METADATA",
+    "FatMatTableizePyOutputs",
+    "FatMatTableizePyParameters",
+    "fat_mat_tableize_py",
+    "fat_mat_tableize_py_execute",
+    "fat_mat_tableize_py_params",
 ]

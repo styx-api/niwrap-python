@@ -5,16 +5,16 @@ import typing
 import pathlib
 from styxdefs import *
 
-GEN_GROUP_COMMAND_METADATA = Metadata(
-    id="651bed24d25f24b638ede9e2e579da34a9498f9a.boutiques",
-    name="gen_group_command",
+GEN_GROUP_COMMAND_PY_METADATA = Metadata(
+    id="9e998b67f89b44f6b5b1d301245053ea4eff8a7b.boutiques",
+    name="gen_group_command.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
 )
 
 
-GenGroupCommandParameters = typing.TypedDict('GenGroupCommandParameters', {
-    "@type": typing.Literal["afni.gen_group_command"],
+GenGroupCommandPyParameters = typing.TypedDict('GenGroupCommandPyParameters', {
+    "@type": typing.Literal["afni.gen_group_command.py"],
     "command_name": str,
     "datasets": list[str],
     "prefix": typing.NotRequired[str | None],
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "afni.gen_group_command": gen_group_command_cargs,
+        "afni.gen_group_command.py": gen_group_command_py_cargs,
     }.get(t)
 
 
@@ -58,13 +58,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "afni.gen_group_command": gen_group_command_outputs,
+        "afni.gen_group_command.py": gen_group_command_py_outputs,
     }.get(t)
 
 
-class GenGroupCommandOutputs(typing.NamedTuple):
+class GenGroupCommandPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `gen_group_command(...)`.
+    Output object returned when calling `gen_group_command_py(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +72,7 @@ class GenGroupCommandOutputs(typing.NamedTuple):
     """The generated command script file"""
 
 
-def gen_group_command_params(
+def gen_group_command_py_params(
     command_name: str,
     datasets: list[str],
     prefix: str | None = None,
@@ -85,7 +85,7 @@ def gen_group_command_params(
     verb: str | None = None,
     write_script: str | None = None,
     other_options: list[str] | None = None,
-) -> GenGroupCommandParameters:
+) -> GenGroupCommandPyParameters:
     """
     Build parameters.
     
@@ -107,7 +107,7 @@ def gen_group_command_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.gen_group_command",
+        "@type": "afni.gen_group_command.py",
         "command_name": command_name,
         "datasets": datasets,
     }
@@ -134,8 +134,8 @@ def gen_group_command_params(
     return params
 
 
-def gen_group_command_cargs(
-    params: GenGroupCommandParameters,
+def gen_group_command_py_cargs(
+    params: GenGroupCommandPyParameters,
     execution: Execution,
 ) -> list[str]:
     """
@@ -210,10 +210,10 @@ def gen_group_command_cargs(
     return cargs
 
 
-def gen_group_command_outputs(
-    params: GenGroupCommandParameters,
+def gen_group_command_py_outputs(
+    params: GenGroupCommandPyParameters,
     execution: Execution,
-) -> GenGroupCommandOutputs:
+) -> GenGroupCommandPyOutputs:
     """
     Build outputs object containing output file paths and possibly stdout/stderr.
     
@@ -223,19 +223,19 @@ def gen_group_command_outputs(
     Returns:
         Outputs object.
     """
-    ret = GenGroupCommandOutputs(
+    ret = GenGroupCommandPyOutputs(
         root=execution.output_file("."),
         output_script=execution.output_file(params.get("write_script")) if (params.get("write_script") is not None) else None,
     )
     return ret
 
 
-def gen_group_command_execute(
-    params: GenGroupCommandParameters,
+def gen_group_command_py_execute(
+    params: GenGroupCommandPyParameters,
     runner: Runner | None = None,
-) -> GenGroupCommandOutputs:
+) -> GenGroupCommandPyOutputs:
     """
-    gen_group_command
+    gen_group_command.py
     
     Generate group analysis command scripts by parsing wildcard-based lists of
     input datasets.
@@ -248,18 +248,18 @@ def gen_group_command_execute(
         params: The parameters.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `GenGroupCommandOutputs`).
+        NamedTuple of outputs (described in `GenGroupCommandPyOutputs`).
     """
     runner = runner or get_global_runner()
-    execution = runner.start_execution(GEN_GROUP_COMMAND_METADATA)
+    execution = runner.start_execution(GEN_GROUP_COMMAND_PY_METADATA)
     params = execution.params(params)
-    cargs = gen_group_command_cargs(params, execution)
-    ret = gen_group_command_outputs(params, execution)
+    cargs = gen_group_command_py_cargs(params, execution)
+    ret = gen_group_command_py_outputs(params, execution)
     execution.run(cargs)
     return ret
 
 
-def gen_group_command(
+def gen_group_command_py(
     command_name: str,
     datasets: list[str],
     prefix: str | None = None,
@@ -273,9 +273,9 @@ def gen_group_command(
     write_script: str | None = None,
     other_options: list[str] | None = None,
     runner: Runner | None = None,
-) -> GenGroupCommandOutputs:
+) -> GenGroupCommandPyOutputs:
     """
-    gen_group_command
+    gen_group_command.py
     
     Generate group analysis command scripts by parsing wildcard-based lists of
     input datasets.
@@ -300,9 +300,9 @@ def gen_group_command(
         other_options: List of options to pass along to result.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `GenGroupCommandOutputs`).
+        NamedTuple of outputs (described in `GenGroupCommandPyOutputs`).
     """
-    params = gen_group_command_params(
+    params = gen_group_command_py_params(
         command_name=command_name,
         datasets=datasets,
         prefix=prefix,
@@ -316,14 +316,14 @@ def gen_group_command(
         write_script=write_script,
         other_options=other_options,
     )
-    return gen_group_command_execute(params, runner)
+    return gen_group_command_py_execute(params, runner)
 
 
 __all__ = [
-    "GEN_GROUP_COMMAND_METADATA",
-    "GenGroupCommandOutputs",
-    "GenGroupCommandParameters",
-    "gen_group_command",
-    "gen_group_command_execute",
-    "gen_group_command_params",
+    "GEN_GROUP_COMMAND_PY_METADATA",
+    "GenGroupCommandPyOutputs",
+    "GenGroupCommandPyParameters",
+    "gen_group_command_py",
+    "gen_group_command_py_execute",
+    "gen_group_command_py_params",
 ]

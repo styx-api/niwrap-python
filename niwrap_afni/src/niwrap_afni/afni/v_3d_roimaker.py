@@ -5,16 +5,16 @@ import typing
 import pathlib
 from styxdefs import *
 
-V_3_DROIMAKER_METADATA = Metadata(
-    id="5b3355492db520e49a5f6a884aa39664389df7ac.boutiques",
-    name="3DROIMaker",
+V_3D_ROIMAKER_METADATA = Metadata(
+    id="5920f7c4edf531d99fbcd79f62063134f553617f.boutiques",
+    name="3dROIMaker",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
 )
 
 
-V3DroimakerParameters = typing.TypedDict('V3DroimakerParameters', {
-    "@type": typing.Literal["afni.3DROIMaker"],
+V3dRoimakerParameters = typing.TypedDict('V3dRoimakerParameters', {
+    "@type": typing.Literal["afni.3dROIMaker"],
     "inset": InputPathType,
     "thresh": float,
     "prefix": str,
@@ -50,7 +50,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "afni.3DROIMaker": v_3_droimaker_cargs,
+        "afni.3dROIMaker": v_3d_roimaker_cargs,
     }.get(t)
 
 
@@ -66,13 +66,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "afni.3DROIMaker": v_3_droimaker_outputs,
+        "afni.3dROIMaker": v_3d_roimaker_outputs,
     }.get(t)
 
 
-class V3DroimakerOutputs(typing.NamedTuple):
+class V3dRoimakerOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3_droimaker(...)`.
+    Output object returned when calling `v_3d_roimaker(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +84,7 @@ class V3DroimakerOutputs(typing.NamedTuple):
     user-design or WM skeleton."""
 
 
-def v_3_droimaker_params(
+def v_3d_roimaker_params(
     inset: InputPathType,
     thresh: float,
     prefix: str,
@@ -105,7 +105,7 @@ def v_3_droimaker_params(
     preinfl_inset: InputPathType | None = None,
     preinfl_inflate: float | None = None,
     dump_no_labtab: bool = False,
-) -> V3DroimakerParameters:
+) -> V3dRoimakerParameters:
     """
     Build parameters.
     
@@ -150,7 +150,7 @@ def v_3_droimaker_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3DROIMaker",
+        "@type": "afni.3dROIMaker",
         "inset": inset,
         "thresh": thresh,
         "prefix": prefix,
@@ -186,8 +186,8 @@ def v_3_droimaker_params(
     return params
 
 
-def v_3_droimaker_cargs(
-    params: V3DroimakerParameters,
+def v_3d_roimaker_cargs(
+    params: V3dRoimakerParameters,
     execution: Execution,
 ) -> list[str]:
     """
@@ -280,10 +280,10 @@ def v_3_droimaker_cargs(
     return cargs
 
 
-def v_3_droimaker_outputs(
-    params: V3DroimakerParameters,
+def v_3d_roimaker_outputs(
+    params: V3dRoimakerParameters,
     execution: Execution,
-) -> V3DroimakerOutputs:
+) -> V3dRoimakerOutputs:
     """
     Build outputs object containing output file paths and possibly stdout/stderr.
     
@@ -293,7 +293,7 @@ def v_3_droimaker_outputs(
     Returns:
         Outputs object.
     """
-    ret = V3DroimakerOutputs(
+    ret = V3dRoimakerOutputs(
         root=execution.output_file("."),
         gm_map=execution.output_file(params.get("prefix") + "_GM+orig.*.HEAD"),
         gmi_map=execution.output_file(params.get("prefix") + "_GMI+orig.*.HEAD"),
@@ -301,12 +301,12 @@ def v_3_droimaker_outputs(
     return ret
 
 
-def v_3_droimaker_execute(
-    params: V3DroimakerParameters,
+def v_3d_roimaker_execute(
+    params: V3dRoimakerParameters,
     runner: Runner | None = None,
-) -> V3DroimakerOutputs:
+) -> V3dRoimakerOutputs:
     """
-    3DROIMaker
+    3dROIMaker
     
     Create a labelled set of ROIs from input data, useful in combining
     functional and tractographic/structural data.
@@ -319,18 +319,18 @@ def v_3_droimaker_execute(
         params: The parameters.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `V3DroimakerOutputs`).
+        NamedTuple of outputs (described in `V3dRoimakerOutputs`).
     """
     runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3_DROIMAKER_METADATA)
+    execution = runner.start_execution(V_3D_ROIMAKER_METADATA)
     params = execution.params(params)
-    cargs = v_3_droimaker_cargs(params, execution)
-    ret = v_3_droimaker_outputs(params, execution)
+    cargs = v_3d_roimaker_cargs(params, execution)
+    ret = v_3d_roimaker_outputs(params, execution)
     execution.run(cargs)
     return ret
 
 
-def v_3_droimaker(
+def v_3d_roimaker(
     inset: InputPathType,
     thresh: float,
     prefix: str,
@@ -352,9 +352,9 @@ def v_3_droimaker(
     preinfl_inflate: float | None = None,
     dump_no_labtab: bool = False,
     runner: Runner | None = None,
-) -> V3DroimakerOutputs:
+) -> V3dRoimakerOutputs:
     """
-    3DROIMaker
+    3dROIMaker
     
     Create a labelled set of ROIs from input data, useful in combining
     functional and tractographic/structural data.
@@ -402,9 +402,9 @@ def v_3_droimaker(
             output GM and GMI files.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `V3DroimakerOutputs`).
+        NamedTuple of outputs (described in `V3dRoimakerOutputs`).
     """
-    params = v_3_droimaker_params(
+    params = v_3d_roimaker_params(
         inset=inset,
         thresh=thresh,
         prefix=prefix,
@@ -426,14 +426,14 @@ def v_3_droimaker(
         preinfl_inflate=preinfl_inflate,
         dump_no_labtab=dump_no_labtab,
     )
-    return v_3_droimaker_execute(params, runner)
+    return v_3d_roimaker_execute(params, runner)
 
 
 __all__ = [
-    "V3DroimakerOutputs",
-    "V3DroimakerParameters",
-    "V_3_DROIMAKER_METADATA",
-    "v_3_droimaker",
-    "v_3_droimaker_execute",
-    "v_3_droimaker_params",
+    "V3dRoimakerOutputs",
+    "V3dRoimakerParameters",
+    "V_3D_ROIMAKER_METADATA",
+    "v_3d_roimaker",
+    "v_3d_roimaker_execute",
+    "v_3d_roimaker_params",
 ]

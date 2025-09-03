@@ -5,16 +5,16 @@ import typing
 import pathlib
 from styxdefs import *
 
-POSSUM_PLOT_METADATA = Metadata(
-    id="dc6b75f878a7827865c273243da941f0afd83134.boutiques",
-    name="possum_plot",
+POSSUM_PLOT_PY_METADATA = Metadata(
+    id="bd2b6b8b85bcd1d3167b1b04cdbf739929894a10.boutiques",
+    name="possum_plot.py",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
 )
 
 
-PossumPlotParameters = typing.TypedDict('PossumPlotParameters', {
-    "@type": typing.Literal["fsl.possum_plot"],
+PossumPlotPyParameters = typing.TypedDict('PossumPlotPyParameters', {
+    "@type": typing.Literal["fsl.possum_plot.py"],
     "input_file": InputPathType,
     "output_basename": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsl.possum_plot": possum_plot_cargs,
+        "fsl.possum_plot.py": possum_plot_py_cargs,
     }.get(t)
 
 
@@ -48,13 +48,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fsl.possum_plot": possum_plot_outputs,
+        "fsl.possum_plot.py": possum_plot_py_outputs,
     }.get(t)
 
 
-class PossumPlotOutputs(typing.NamedTuple):
+class PossumPlotPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `possum_plot(...)`.
+    Output object returned when calling `possum_plot_py(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,10 +62,10 @@ class PossumPlotOutputs(typing.NamedTuple):
     """Output plot images from POSSUM"""
 
 
-def possum_plot_params(
+def possum_plot_py_params(
     input_file: InputPathType,
     output_basename: str,
-) -> PossumPlotParameters:
+) -> PossumPlotPyParameters:
     """
     Build parameters.
     
@@ -77,15 +77,15 @@ def possum_plot_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.possum_plot",
+        "@type": "fsl.possum_plot.py",
         "input_file": input_file,
         "output_basename": output_basename,
     }
     return params
 
 
-def possum_plot_cargs(
-    params: PossumPlotParameters,
+def possum_plot_py_cargs(
+    params: PossumPlotPyParameters,
     execution: Execution,
 ) -> list[str]:
     """
@@ -104,10 +104,10 @@ def possum_plot_cargs(
     return cargs
 
 
-def possum_plot_outputs(
-    params: PossumPlotParameters,
+def possum_plot_py_outputs(
+    params: PossumPlotPyParameters,
     execution: Execution,
-) -> PossumPlotOutputs:
+) -> PossumPlotPyOutputs:
     """
     Build outputs object containing output file paths and possibly stdout/stderr.
     
@@ -117,19 +117,19 @@ def possum_plot_outputs(
     Returns:
         Outputs object.
     """
-    ret = PossumPlotOutputs(
+    ret = PossumPlotPyOutputs(
         root=execution.output_file("."),
         output_plots=execution.output_file(params.get("output_basename") + "_*.png"),
     )
     return ret
 
 
-def possum_plot_execute(
-    params: PossumPlotParameters,
+def possum_plot_py_execute(
+    params: PossumPlotPyParameters,
     runner: Runner | None = None,
-) -> PossumPlotOutputs:
+) -> PossumPlotPyOutputs:
     """
-    possum_plot
+    possum_plot.py
     
     Tool for plotting results from POSSUM simulations in FSL.
     
@@ -141,24 +141,24 @@ def possum_plot_execute(
         params: The parameters.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `PossumPlotOutputs`).
+        NamedTuple of outputs (described in `PossumPlotPyOutputs`).
     """
     runner = runner or get_global_runner()
-    execution = runner.start_execution(POSSUM_PLOT_METADATA)
+    execution = runner.start_execution(POSSUM_PLOT_PY_METADATA)
     params = execution.params(params)
-    cargs = possum_plot_cargs(params, execution)
-    ret = possum_plot_outputs(params, execution)
+    cargs = possum_plot_py_cargs(params, execution)
+    ret = possum_plot_py_outputs(params, execution)
     execution.run(cargs)
     return ret
 
 
-def possum_plot(
+def possum_plot_py(
     input_file: InputPathType,
     output_basename: str,
     runner: Runner | None = None,
-) -> PossumPlotOutputs:
+) -> PossumPlotPyOutputs:
     """
-    possum_plot
+    possum_plot.py
     
     Tool for plotting results from POSSUM simulations in FSL.
     
@@ -172,20 +172,20 @@ def possum_plot(
         output_basename: Basename for output files (e.g. plot_output).
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `PossumPlotOutputs`).
+        NamedTuple of outputs (described in `PossumPlotPyOutputs`).
     """
-    params = possum_plot_params(
+    params = possum_plot_py_params(
         input_file=input_file,
         output_basename=output_basename,
     )
-    return possum_plot_execute(params, runner)
+    return possum_plot_py_execute(params, runner)
 
 
 __all__ = [
-    "POSSUM_PLOT_METADATA",
-    "PossumPlotOutputs",
-    "PossumPlotParameters",
-    "possum_plot",
-    "possum_plot_execute",
-    "possum_plot_params",
+    "POSSUM_PLOT_PY_METADATA",
+    "PossumPlotPyOutputs",
+    "PossumPlotPyParameters",
+    "possum_plot_py",
+    "possum_plot_py_execute",
+    "possum_plot_py_params",
 ]

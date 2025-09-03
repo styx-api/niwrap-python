@@ -5,16 +5,16 @@ import typing
 import pathlib
 from styxdefs import *
 
-AP_RUN_SIMPLE_REST_METADATA = Metadata(
-    id="5092ef596210a75b6b040d6dc8cfafbc8fb2a70b.boutiques",
-    name="ap_run_simple_rest",
+AP_RUN_SIMPLE_REST_TCSH_METADATA = Metadata(
+    id="40f222b46edf6b24d448637aef9886505378580a.boutiques",
+    name="ap_run_simple_rest.tcsh",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
 )
 
 
-ApRunSimpleRestParameters = typing.TypedDict('ApRunSimpleRestParameters', {
-    "@type": typing.Literal["afni.ap_run_simple_rest"],
+ApRunSimpleRestTcshParameters = typing.TypedDict('ApRunSimpleRestTcshParameters', {
+    "@type": typing.Literal["afni.ap_run_simple_rest.tcsh"],
     "anat": typing.NotRequired[InputPathType | None],
     "epi": list[InputPathType],
     "nt_rm": typing.NotRequired[float | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "afni.ap_run_simple_rest": ap_run_simple_rest_cargs,
+        "afni.ap_run_simple_rest.tcsh": ap_run_simple_rest_tcsh_cargs,
     }.get(t)
 
 
@@ -56,13 +56,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "afni.ap_run_simple_rest": ap_run_simple_rest_outputs,
+        "afni.ap_run_simple_rest.tcsh": ap_run_simple_rest_tcsh_outputs,
     }.get(t)
 
 
-class ApRunSimpleRestOutputs(typing.NamedTuple):
+class ApRunSimpleRestTcshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ap_run_simple_rest(...)`.
+    Output object returned when calling `ap_run_simple_rest_tcsh(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -76,7 +76,7 @@ class ApRunSimpleRestOutputs(typing.NamedTuple):
     """Text output files from AP and proc scripts"""
 
 
-def ap_run_simple_rest_params(
+def ap_run_simple_rest_tcsh_params(
     epi: list[InputPathType],
     anat: InputPathType | None = None,
     nt_rm: float | None = None,
@@ -87,7 +87,7 @@ def ap_run_simple_rest_params(
     compressor: str | None = None,
     verb: float | None = None,
     echo: bool = False,
-) -> ApRunSimpleRestParameters:
+) -> ApRunSimpleRestTcshParameters:
     """
     Build parameters.
     
@@ -106,7 +106,7 @@ def ap_run_simple_rest_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.ap_run_simple_rest",
+        "@type": "afni.ap_run_simple_rest.tcsh",
         "epi": epi,
         "run_ap": run_ap,
         "run_proc": run_proc,
@@ -127,8 +127,8 @@ def ap_run_simple_rest_params(
     return params
 
 
-def ap_run_simple_rest_cargs(
-    params: ApRunSimpleRestParameters,
+def ap_run_simple_rest_tcsh_cargs(
+    params: ApRunSimpleRestTcshParameters,
     execution: Execution,
 ) -> list[str]:
     """
@@ -185,10 +185,10 @@ def ap_run_simple_rest_cargs(
     return cargs
 
 
-def ap_run_simple_rest_outputs(
-    params: ApRunSimpleRestParameters,
+def ap_run_simple_rest_tcsh_outputs(
+    params: ApRunSimpleRestTcshParameters,
     execution: Execution,
-) -> ApRunSimpleRestOutputs:
+) -> ApRunSimpleRestTcshOutputs:
     """
     Build outputs object containing output file paths and possibly stdout/stderr.
     
@@ -198,7 +198,7 @@ def ap_run_simple_rest_outputs(
     Returns:
         Outputs object.
     """
-    ret = ApRunSimpleRestOutputs(
+    ret = ApRunSimpleRestTcshOutputs(
         root=execution.output_file("."),
         run_ap_script=execution.output_file("run_ap_" + params.get("subjid")) if (params.get("subjid") is not None) else None,
         proc_script=execution.output_file("proc." + params.get("subjid")) if (params.get("subjid") is not None) else None,
@@ -208,12 +208,12 @@ def ap_run_simple_rest_outputs(
     return ret
 
 
-def ap_run_simple_rest_execute(
-    params: ApRunSimpleRestParameters,
+def ap_run_simple_rest_tcsh_execute(
+    params: ApRunSimpleRestTcshParameters,
     runner: Runner | None = None,
-) -> ApRunSimpleRestOutputs:
+) -> ApRunSimpleRestTcshOutputs:
     """
-    ap_run_simple_rest
+    ap_run_simple_rest.tcsh
     
     Run a quick afni_proc.py analysis for QC.
     
@@ -225,18 +225,18 @@ def ap_run_simple_rest_execute(
         params: The parameters.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `ApRunSimpleRestOutputs`).
+        NamedTuple of outputs (described in `ApRunSimpleRestTcshOutputs`).
     """
     runner = runner or get_global_runner()
-    execution = runner.start_execution(AP_RUN_SIMPLE_REST_METADATA)
+    execution = runner.start_execution(AP_RUN_SIMPLE_REST_TCSH_METADATA)
     params = execution.params(params)
-    cargs = ap_run_simple_rest_cargs(params, execution)
-    ret = ap_run_simple_rest_outputs(params, execution)
+    cargs = ap_run_simple_rest_tcsh_cargs(params, execution)
+    ret = ap_run_simple_rest_tcsh_outputs(params, execution)
     execution.run(cargs)
     return ret
 
 
-def ap_run_simple_rest(
+def ap_run_simple_rest_tcsh(
     epi: list[InputPathType],
     anat: InputPathType | None = None,
     nt_rm: float | None = None,
@@ -248,9 +248,9 @@ def ap_run_simple_rest(
     verb: float | None = None,
     echo: bool = False,
     runner: Runner | None = None,
-) -> ApRunSimpleRestOutputs:
+) -> ApRunSimpleRestTcshOutputs:
     """
-    ap_run_simple_rest
+    ap_run_simple_rest.tcsh
     
     Run a quick afni_proc.py analysis for QC.
     
@@ -271,9 +271,9 @@ def ap_run_simple_rest(
         echo: Same as verbosity level 3.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `ApRunSimpleRestOutputs`).
+        NamedTuple of outputs (described in `ApRunSimpleRestTcshOutputs`).
     """
-    params = ap_run_simple_rest_params(
+    params = ap_run_simple_rest_tcsh_params(
         anat=anat,
         epi=epi,
         nt_rm=nt_rm,
@@ -285,14 +285,14 @@ def ap_run_simple_rest(
         verb=verb,
         echo=echo,
     )
-    return ap_run_simple_rest_execute(params, runner)
+    return ap_run_simple_rest_tcsh_execute(params, runner)
 
 
 __all__ = [
-    "AP_RUN_SIMPLE_REST_METADATA",
-    "ApRunSimpleRestOutputs",
-    "ApRunSimpleRestParameters",
-    "ap_run_simple_rest",
-    "ap_run_simple_rest_execute",
-    "ap_run_simple_rest_params",
+    "AP_RUN_SIMPLE_REST_TCSH_METADATA",
+    "ApRunSimpleRestTcshOutputs",
+    "ApRunSimpleRestTcshParameters",
+    "ap_run_simple_rest_tcsh",
+    "ap_run_simple_rest_tcsh_execute",
+    "ap_run_simple_rest_tcsh_params",
 ]

@@ -5,16 +5,16 @@ import typing
 import pathlib
 from styxdefs import *
 
-POSSUM_INTERPMOT_METADATA = Metadata(
-    id="19a05108d70a52f83dc7560156ab3b5bd08df5d8.boutiques",
-    name="possum_interpmot",
+POSSUM_INTERPMOT_PY_METADATA = Metadata(
+    id="5b0453b36626d1d748f6c169ba2d9e57289dd2bd.boutiques",
+    name="possum_interpmot.py",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
 )
 
 
-PossumInterpmotParameters = typing.TypedDict('PossumInterpmotParameters', {
-    "@type": typing.Literal["fsl.possum_interpmot"],
+PossumInterpmotPyParameters = typing.TypedDict('PossumInterpmotPyParameters', {
+    "@type": typing.Literal["fsl.possum_interpmot.py"],
     "motion_type": int,
     "tr": float,
     "tr_slice": float,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsl.possum_interpmot": possum_interpmot_cargs,
+        "fsl.possum_interpmot.py": possum_interpmot_py_cargs,
     }.get(t)
 
 
@@ -53,13 +53,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fsl.possum_interpmot": possum_interpmot_outputs,
+        "fsl.possum_interpmot.py": possum_interpmot_py_outputs,
     }.get(t)
 
 
-class PossumInterpmotOutputs(typing.NamedTuple):
+class PossumInterpmotPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `possum_interpmot(...)`.
+    Output object returned when calling `possum_interpmot_py(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +67,7 @@ class PossumInterpmotOutputs(typing.NamedTuple):
     """Interpolated motion output file"""
 
 
-def possum_interpmot_params(
+def possum_interpmot_py_params(
     motion_type: int,
     tr: float,
     tr_slice: float,
@@ -75,7 +75,7 @@ def possum_interpmot_params(
     nvols: int,
     custom_motion_file: InputPathType,
     output_file: str,
-) -> PossumInterpmotParameters:
+) -> PossumInterpmotPyParameters:
     """
     Build parameters.
     
@@ -92,7 +92,7 @@ def possum_interpmot_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.possum_interpmot",
+        "@type": "fsl.possum_interpmot.py",
         "motion_type": motion_type,
         "tr": tr,
         "tr_slice": tr_slice,
@@ -104,8 +104,8 @@ def possum_interpmot_params(
     return params
 
 
-def possum_interpmot_cargs(
-    params: PossumInterpmotParameters,
+def possum_interpmot_py_cargs(
+    params: PossumInterpmotPyParameters,
     execution: Execution,
 ) -> list[str]:
     """
@@ -129,10 +129,10 @@ def possum_interpmot_cargs(
     return cargs
 
 
-def possum_interpmot_outputs(
-    params: PossumInterpmotParameters,
+def possum_interpmot_py_outputs(
+    params: PossumInterpmotPyParameters,
     execution: Execution,
-) -> PossumInterpmotOutputs:
+) -> PossumInterpmotPyOutputs:
     """
     Build outputs object containing output file paths and possibly stdout/stderr.
     
@@ -142,19 +142,19 @@ def possum_interpmot_outputs(
     Returns:
         Outputs object.
     """
-    ret = PossumInterpmotOutputs(
+    ret = PossumInterpmotPyOutputs(
         root=execution.output_file("."),
         outfile=execution.output_file(params.get("output_file")),
     )
     return ret
 
 
-def possum_interpmot_execute(
-    params: PossumInterpmotParameters,
+def possum_interpmot_py_execute(
+    params: PossumInterpmotPyParameters,
     runner: Runner | None = None,
-) -> PossumInterpmotOutputs:
+) -> PossumInterpmotPyOutputs:
     """
-    possum_interpmot
+    possum_interpmot.py
     
     Position Interpolation for Movers and Shakers.
     
@@ -166,18 +166,18 @@ def possum_interpmot_execute(
         params: The parameters.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `PossumInterpmotOutputs`).
+        NamedTuple of outputs (described in `PossumInterpmotPyOutputs`).
     """
     runner = runner or get_global_runner()
-    execution = runner.start_execution(POSSUM_INTERPMOT_METADATA)
+    execution = runner.start_execution(POSSUM_INTERPMOT_PY_METADATA)
     params = execution.params(params)
-    cargs = possum_interpmot_cargs(params, execution)
-    ret = possum_interpmot_outputs(params, execution)
+    cargs = possum_interpmot_py_cargs(params, execution)
+    ret = possum_interpmot_py_outputs(params, execution)
     execution.run(cargs)
     return ret
 
 
-def possum_interpmot(
+def possum_interpmot_py(
     motion_type: int,
     tr: float,
     tr_slice: float,
@@ -186,9 +186,9 @@ def possum_interpmot(
     custom_motion_file: InputPathType,
     output_file: str,
     runner: Runner | None = None,
-) -> PossumInterpmotOutputs:
+) -> PossumInterpmotPyOutputs:
     """
-    possum_interpmot
+    possum_interpmot.py
     
     Position Interpolation for Movers and Shakers.
     
@@ -207,9 +207,9 @@ def possum_interpmot(
         output_file: Output file.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `PossumInterpmotOutputs`).
+        NamedTuple of outputs (described in `PossumInterpmotPyOutputs`).
     """
-    params = possum_interpmot_params(
+    params = possum_interpmot_py_params(
         motion_type=motion_type,
         tr=tr,
         tr_slice=tr_slice,
@@ -218,14 +218,14 @@ def possum_interpmot(
         custom_motion_file=custom_motion_file,
         output_file=output_file,
     )
-    return possum_interpmot_execute(params, runner)
+    return possum_interpmot_py_execute(params, runner)
 
 
 __all__ = [
-    "POSSUM_INTERPMOT_METADATA",
-    "PossumInterpmotOutputs",
-    "PossumInterpmotParameters",
-    "possum_interpmot",
-    "possum_interpmot_execute",
-    "possum_interpmot_params",
+    "POSSUM_INTERPMOT_PY_METADATA",
+    "PossumInterpmotPyOutputs",
+    "PossumInterpmotPyParameters",
+    "possum_interpmot_py",
+    "possum_interpmot_py_execute",
+    "possum_interpmot_py_params",
 ]
