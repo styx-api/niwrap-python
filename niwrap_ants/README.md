@@ -4,6 +4,6 @@ Advanced Normalization Tools (ANTs) is a C++ library available through the comma
 
 The ANTs library is considered a state-of-the-art medical image registration and segmentation toolkit which depends on the Insight ToolKit, a widely used medical image processing library to which ANTs developers contribute. ANTs-related tools have also won several international, unbiased competitions such as MICCAI, BRATS, and STACOM.
 
-ANTs is made by ANTs Developers.
+ANTs is made by https://github.com/ANTsX/ANTs.
 
 This package contains wrappers only and has no affiliation with the original authors.

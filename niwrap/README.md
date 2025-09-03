@@ -55,7 +55,6 @@ pip install -r https://raw.githubusercontent.com/styx-api/niwrap-python/main/req
 | [NiftyReg](http://cmictig.cs.ucl.ac.uk/wiki/index.php/NiftyReg) | Experimental | [`1.4.0`](https://hub.docker.com/r/vnmd/niftyreg_1.4.0) | 7/7 (100% 🎉) |
 | [dcm2niix](https://github.com/rordenlab/dcm2niix) | Experimental | [`1.0.20240202`](https://hub.docker.com/r/vnmd/dcm2niix_v1.0.20240202) | 1/1 (100% 🎉) |
 
-
 ## 🛠 Usage Examples
 
 Usage examples and tutorials can be found in the [Styx book](https://styx-api.github.io/styxbook/).

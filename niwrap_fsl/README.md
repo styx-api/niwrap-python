@@ -8,6 +8,6 @@ S.M. Smith, M. Jenkinson, M.W. Woolrich, C.F. Beckmann, T.E.J. Behrens, H. Johan
 
 M. Jenkinson, C.F. Beckmann, T.E. Behrens, M.W. Woolrich, S.M. Smith. FSL. NeuroImage, 62:782-90, 2012
 
-FSL is made by FMRIB Analysis Group, University of Oxford.
+FSL is made by https://fsl.fmrib.ox.ac.uk/fsl/fslwiki.
 
 This package contains wrappers only and has no affiliation with the original authors.

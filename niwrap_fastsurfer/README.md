@@ -9,6 +9,6 @@ FastSurfer includes three main components:
 
 The pipeline produces FreeSurfer-compatible outputs and can be used as a drop-in replacement for FreeSurfer's recon-all pipeline, while being orders of magnitude faster.
 
-FastSurfer is made by Deep-MI Lab, Massachusetts General Hospital.
+FastSurfer is made by https://github.com/Deep-MI/FastSurfer.
 
 This package contains wrappers only and has no affiliation with the original authors.

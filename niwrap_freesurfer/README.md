@@ -4,6 +4,6 @@ FreeSurfer is a software package for the analysis and visualization of neuroimag
 
 FreeSurfer provides full processing streams for structural and functional MRI and includes tools for linear and nonlinear registration, cortical and subcortical segmentation, cortical surface reconstruction, statistical analysis of group morphometry, diffusion MRI, PET analysis, and much more. It is also the structural MRI analysis software of choice for the Human Connectome Project.
 
-FreeSurfer is made by FreeSurfer Developers.
+FreeSurfer is made by https://github.com/freesurfer/freesurfer.
 
 This package contains wrappers only and has no affiliation with the original authors.

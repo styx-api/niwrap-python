@@ -1,31 +1,28 @@
 [project]
 name = "niwrap"
 version = "0.6.3"
-description = "Neuroimaging Python wrappers"
+description = "Neuroimaging wrappers."
 readme = "README.md"
-license = "LGPL-2.1"
-authors = [{ name = "CMI DAIR", email = "dair@childmind.org" }]
+license = "MIT"
+authors = [{ name = "CMI DAIR" }]
 requires-python = ">=3.10"
 dependencies = [
   "styxdocker",
   "styxsingularity",
   "styxgraph",
-  "niwrap_mrtrix==0.6.3",
-  "niwrap_mrtrix3tissue==0.6.3",
-  "niwrap_greedy==0.6.3",
-  "niwrap_c3d==0.6.3",
-  "niwrap_niftyreg==0.6.3",
-  "niwrap_afni==0.6.3",
-  "niwrap_fastsurfer==0.6.3",
-  "niwrap_dcm2niix==0.6.3",
-  "niwrap_freesurfer==0.6.3",
-  "niwrap_fsl==0.6.3",
-  "niwrap_workbench==0.6.3",
-  "niwrap_ants==0.6.3"
+  "mrtrix",
+  "mrtrix3tissue",
+  "greedy",
+  "c3d",
+  "niftyreg",
+  "afni",
+  "fastsurfer",
+  "dcm2niix",
+  "freesurfer",
+  "fsl",
+  "workbench",
+  "ants",
 ]
-
-[tool.hatch.build.targets.wheel]
-packages = ["src/niwrap"]
 
 [build-system]
 requires = ["uv_build>=0.8.13,<0.9.0"]

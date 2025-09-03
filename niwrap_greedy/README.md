@@ -4,6 +4,6 @@ Greedy is a tool for fast medical image registration. It was developed by Paul Y
 
 Greedy borrows many concepts (and some implementation strategies) from the Symmetric Normalization (SyN) in ANTS. But greedy is non-symmetric, which makes it faster (in applications like multi-atlas segmentation, symmetric property is not required). Greedy also uses highly optimized code for image metric computation that adds extra speed.
 
-Greedy is made by Greedy Developers.
+Greedy is made by https://sites.google.com/view/greedyreg/about.
 
 This package contains wrappers only and has no affiliation with the original authors.
