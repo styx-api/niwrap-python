@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 GREEDY_METADATA = Metadata(
-    id="d2b2cd75881251964bd1af5bd8f198093a5b74b9.boutiques",
+    id="cb84db88438f1674b1e435e7a18e6b4755de1b18.boutiques",
     name="greedy",
     package="greedy",
     container_image_tag="pyushkevich/itksnap:v3.8.2",
@@ -78,6 +78,22 @@ GreedyResliceSurfaceParameters = typing.TypedDict('GreedyResliceSurfaceParameter
 })
 
 
+GreedyNnParameters = typing.TypedDict('GreedyNnParameters', {
+    "@type": typing.Literal["greedy.greedy.nn"],
+})
+
+
+GreedyLinearParameters = typing.TypedDict('GreedyLinearParameters', {
+    "@type": typing.Literal["greedy.greedy.linear"],
+})
+
+
+GreedyLabelParameters = typing.TypedDict('GreedyLabelParameters', {
+    "@type": typing.Literal["greedy.greedy.label"],
+    "sigma_spec": str,
+})
+
+
 GreedyResliceSimplexJacobianParameters = typing.TypedDict('GreedyResliceSimplexJacobianParameters', {
     "@type": typing.Literal["greedy.greedy.reslice_simplex_jacobian"],
     "inmesh": InputPathType,
@@ -140,7 +156,7 @@ GreedyParameters = typing.TypedDict('GreedyParameters', {
     "fixed_reslicing_image": typing.NotRequired[InputPathType | None],
     "reslice_moving_image": typing.NotRequired[GreedyResliceMovingImageParameters | None],
     "reslice_surface": typing.NotRequired[GreedyResliceSurfaceParameters | None],
-    "interpolation": typing.NotRequired[typing.Literal["NN", "LINEAR", "LABEL"] | None],
+    "interpolation": typing.NotRequired[typing.Union[GreedyNnParameters, GreedyLinearParameters, GreedyLabelParameters] | None],
     "reslice_background": typing.NotRequired[float | None],
     "reslice_datatype": typing.NotRequired[typing.Literal["auto", "double", "float", "uint", "int", "ushort", "short", "uchar", "char"] | None],
     "reslice_composite": typing.NotRequired[InputPathType | None],
@@ -184,6 +200,9 @@ def dyn_cargs(
         "greedy.greedy.search": greedy_search_cargs,
         "greedy.greedy.reslice_moving_image": greedy_reslice_moving_image_cargs,
         "greedy.greedy.reslice_surface": greedy_reslice_surface_cargs,
+        "greedy.greedy.nn": greedy_nn_cargs,
+        "greedy.greedy.linear": greedy_linear_cargs,
+        "greedy.greedy.label": greedy_label_cargs,
         "greedy.greedy.reslice_simplex_jacobian": greedy_reslice_simplex_jacobian_cargs,
     }.get(t)
 
@@ -731,6 +750,113 @@ def greedy_reslice_surface_outputs(
     return ret
 
 
+def greedy_nn_params(
+) -> GreedyNnParameters:
+    """
+    Build parameters.
+    
+    Args:
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "greedy.greedy.nn",
+    }
+    return params
+
+
+def greedy_nn_cargs(
+    params: GreedyNnParameters,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("NN")
+    return cargs
+
+
+def greedy_linear_params(
+) -> GreedyLinearParameters:
+    """
+    Build parameters.
+    
+    Args:
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "greedy.greedy.linear",
+    }
+    return params
+
+
+def greedy_linear_cargs(
+    params: GreedyLinearParameters,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("LINEAR")
+    return cargs
+
+
+def greedy_label_params(
+    sigma_spec: str,
+) -> GreedyLabelParameters:
+    """
+    Build parameters.
+    
+    Args:
+        sigma_spec: The <sigma_spec> parameter to the -ri LABEL command\
+            specifies the standard deviation of the Gaussian kernel used to smooth\
+            the labels. It can be provided in voxel units (e.g., 0.2vox) or\
+            millimeter units (e.g., 0.2mm). Value of 0.2vox works well in most\
+            situations.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "greedy.greedy.label",
+        "sigma_spec": sigma_spec,
+    }
+    return params
+
+
+def greedy_label_cargs(
+    params: GreedyLabelParameters,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("LABEL")
+    cargs.append(params.get("sigma_spec"))
+    return cargs
+
+
 class GreedyResliceSimplexJacobianOutputs(typing.NamedTuple):
     """
     Output object returned when calling `GreedyResliceSimplexJacobianParameters | None(...)`.
@@ -877,7 +1003,7 @@ def greedy_params(
     fixed_reslicing_image: InputPathType | None = None,
     reslice_moving_image: GreedyResliceMovingImageParameters | None = None,
     reslice_surface: GreedyResliceSurfaceParameters | None = None,
-    interpolation: typing.Literal["NN", "LINEAR", "LABEL"] | None = None,
+    interpolation: typing.Union[GreedyNnParameters, GreedyLinearParameters, GreedyLabelParameters] | None = None,
     reslice_background: float | None = None,
     reslice_datatype: typing.Literal["auto", "double", "float", "uint", "int", "ushort", "short", "uchar", "char"] | None = None,
     reslice_composite: InputPathType | None = None,
@@ -1384,7 +1510,7 @@ def greedy_cargs(
     if params.get("interpolation") is not None:
         cargs.extend([
             "-ri",
-            params.get("interpolation")
+            *dyn_cargs(params.get("interpolation")["@type"])(params.get("interpolation"), execution)
         ])
     if params.get("reslice_background") is not None:
         cargs.extend([
@@ -1566,7 +1692,7 @@ def greedy_(
     fixed_reslicing_image: InputPathType | None = None,
     reslice_moving_image: GreedyResliceMovingImageParameters | None = None,
     reslice_surface: GreedyResliceSurfaceParameters | None = None,
-    interpolation: typing.Literal["NN", "LINEAR", "LABEL"] | None = None,
+    interpolation: typing.Union[GreedyNnParameters, GreedyLinearParameters, GreedyLabelParameters] | None = None,
     reslice_background: float | None = None,
     reslice_datatype: typing.Literal["auto", "double", "float", "uint", "int", "ushort", "short", "uchar", "char"] | None = None,
     reslice_composite: InputPathType | None = None,
@@ -1789,7 +1915,10 @@ __all__ = [
     "GreedyInvertParameters",
     "GreedyJacobianOutputs",
     "GreedyJacobianParameters",
+    "GreedyLabelParameters",
+    "GreedyLinearParameters",
     "GreedyMetricParameters",
+    "GreedyNnParameters",
     "GreedyOutputs",
     "GreedyParameters",
     "GreedyResliceMovingImageOutputs",
@@ -1807,7 +1936,10 @@ __all__ = [
     "greedy_input_images_params",
     "greedy_invert_params",
     "greedy_jacobian_params",
+    "greedy_label_params",
+    "greedy_linear_params",
     "greedy_metric_params",
+    "greedy_nn_params",
     "greedy_params",
     "greedy_reslice_moving_image_params",
     "greedy_reslice_simplex_jacobian_params",
