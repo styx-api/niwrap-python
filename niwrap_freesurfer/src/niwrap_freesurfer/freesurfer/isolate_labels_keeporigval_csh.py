@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ISOLATE_LABELS_KEEPORIGVAL_CSH_METADATA = Metadata(
-    id="69a06015ac3f44b818171366613d6206d53ee668.boutiques",
+    id="1326bd6d6c5da13df656f1de4b71d08c81e0847b.boutiques",
     name="isolate_labels_keeporigval.csh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

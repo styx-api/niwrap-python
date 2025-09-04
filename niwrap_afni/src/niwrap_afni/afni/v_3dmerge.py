@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3DMERGE_METADATA = Metadata(
-    id="b4bc137cd47dc951a1ce4996b1bce347a13b1474.boutiques",
+    id="adf15b50bd188615828c5d85748b7e28454ee6b6.boutiques",
     name="3dmerge",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

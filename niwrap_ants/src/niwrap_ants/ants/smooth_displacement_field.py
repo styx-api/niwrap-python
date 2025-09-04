@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SMOOTH_DISPLACEMENT_FIELD_METADATA = Metadata(
-    id="9720ba2fb6e8073a4e5a9081a747582f3894d2ce.boutiques",
+    id="430313dde82351b7e8ca1893a4a8efe15e5d3c98.boutiques",
     name="SmoothDisplacementField",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

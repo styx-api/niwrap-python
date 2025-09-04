@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ISNIFTI_METADATA = Metadata(
-    id="0ec07279947545d1155748f4d9a448ee304204a0.boutiques",
+    id="99a950590917d27a496537b3dec8ccbeb6bac9a0.boutiques",
     name="isnifti",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

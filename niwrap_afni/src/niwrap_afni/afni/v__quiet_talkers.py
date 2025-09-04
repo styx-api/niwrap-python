@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__QUIET_TALKERS_METADATA = Metadata(
-    id="82edcbc7b6fffaa345b1e5d59fe730b7ca9bd87f.boutiques",
+    id="00c6dc29db0aef0f99749f24573a4ed8e3adfda3.boutiques",
     name="@Quiet_Talkers",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

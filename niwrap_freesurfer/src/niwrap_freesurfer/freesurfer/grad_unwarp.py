@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 GRAD_UNWARP_METADATA = Metadata(
-    id="1de0e1e689455d67e8bfe978e1aface6ac7c1a6a.boutiques",
+    id="df3fd775da58b9f83cf4ac32afc89aee8cace983.boutiques",
     name="grad_unwarp",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

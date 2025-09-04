@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 GCAPREPONE_METADATA = Metadata(
-    id="fea37ea95fe10bc19c820f21259071fe7046f12d.boutiques",
+    id="940518fccb866cf95e928c8f745beb1878a0cb61.boutiques",
     name="gcaprepone",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

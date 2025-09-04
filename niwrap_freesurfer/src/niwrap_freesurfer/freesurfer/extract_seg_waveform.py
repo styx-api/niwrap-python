@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 EXTRACT_SEG_WAVEFORM_METADATA = Metadata(
-    id="1e8d726c7b2975eda55d107c6a157a6568cc1f02.boutiques",
+    id="0c14a7e22cc624b467246c753b26e8a0c353711a.boutiques",
     name="extract_seg_waveform",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

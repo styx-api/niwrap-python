@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DMRI_VOX2VOX_METADATA = Metadata(
-    id="a9c7d072c67909100e5d0cc0f852b4f198351ffb.boutiques",
+    id="e98d1aa0dd9e6a6212d4ed9294022ac34a2aae3a.boutiques",
     name="dmri_vox2vox",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

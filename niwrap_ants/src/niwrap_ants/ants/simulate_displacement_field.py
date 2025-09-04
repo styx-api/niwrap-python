@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SIMULATE_DISPLACEMENT_FIELD_METADATA = Metadata(
-    id="c1c49671ae59650087ced154b39f3497b3151423.boutiques",
+    id="62eab1210d3ee9c94268b73a3a247d08a7a705f3.boutiques",
     name="SimulateDisplacementField",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

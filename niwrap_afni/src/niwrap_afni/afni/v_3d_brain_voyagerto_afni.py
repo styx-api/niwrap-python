@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_BRAIN_VOYAGERTO_AFNI_METADATA = Metadata(
-    id="5fa4482f1d05556b8c1f6948d6ca7a34ed478089.boutiques",
+    id="286218a64fa6e1151307ace8ad14804dacd20778.boutiques",
     name="3dBRAIN_VOYAGERtoAFNI",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

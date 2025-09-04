@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3DVOLREG_METADATA = Metadata(
-    id="568c36c7af9d384ea17acfcd37efb9dd6f74758e.boutiques",
+    id="6a91f264e1e34e3d73c66cff9c688faa39d2b0de.boutiques",
     name="3dvolreg",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FLOAT_SCAN_METADATA = Metadata(
-    id="28d4eadc825c8d2737bbbea46fd718d9d9a73f5d.boutiques",
+    id="736559794aec1b67724d54af3dc33b4693f7d27e.boutiques",
     name="float_scan",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

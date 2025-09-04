@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_BRAIN_EXTRACTION_SH_METADATA = Metadata(
-    id="b485303e7e4d99346f604386fa84b160ec8992d4.boutiques",
+    id="213a7e9d04883d3a1da6772d0c400d3c8b109028.boutiques",
     name="antsBrainExtraction.sh",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -240,7 +240,7 @@ def ants_brain_extraction_sh_outputs(
         root=execution.output_file("."),
         brain_extracted_image=execution.output_file(params.get("output_prefix") + "_BrainExtractionBrain.nii.gz") if (params.get("output_prefix") is not None) else None,
         brain_mask=execution.output_file(params.get("output_prefix") + "_BrainExtractionMask.nii.gz") if (params.get("output_prefix") is not None) else None,
-        brain_probability_mask=execution.output_file(params.get("output_prefix") + "_BrainExtractionPrior0GenericAffine.mat") if (params.get("output_prefix") is not None) else None,
+        brain_probability_mask=execution.output_file(params.get("output_prefix") + "BrainExtractionPrior0GenericAffine.mat") if (params.get("output_prefix") is not None) else None,
     )
     return ret
 

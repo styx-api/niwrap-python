@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 GEN_EPI_REVIEW_PY_METADATA = Metadata(
-    id="d8d2bfa4cbebb23bdbab47bb389c8686d9524ec8.boutiques",
+    id="6789f4ee958948df08713dc79f981e6501a16f41.boutiques",
     name="gen_epi_review.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

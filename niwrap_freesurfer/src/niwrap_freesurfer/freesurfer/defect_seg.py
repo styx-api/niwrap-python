@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DEFECT_SEG_METADATA = Metadata(
-    id="e62195c9efa7652fa4b60dc4510ea3f4d8ba50f5.boutiques",
+    id="1583927f622eec1fc55a57cf0a70382ea0e8f31c.boutiques",
     name="defect-seg",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

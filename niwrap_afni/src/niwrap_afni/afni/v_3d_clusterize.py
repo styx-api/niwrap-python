@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_CLUSTERIZE_METADATA = Metadata(
-    id="e4655542f19e9af1312825c39fb9645b11431092.boutiques",
+    id="725fbe8de4d68e491d4c6521feeffaddeff3ba5c.boutiques",
     name="3dClusterize",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

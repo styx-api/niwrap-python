@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_TFILTER_METADATA = Metadata(
-    id="806ba81a851aeaa8b72fdcc2ee762dd9eadeb854.boutiques",
+    id="3297bc9e743e70fe53ae189965f0b3c2844915ef.boutiques",
     name="3dTfilter",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

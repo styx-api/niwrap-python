@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_TSGEN_METADATA = Metadata(
-    id="cdf7418bc42352fc7dbfd986bc66d59a6325538b.boutiques",
+    id="b0c7bd6475eba69a0c6af0e385626961ae80a12c.boutiques",
     name="3dTSgen",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

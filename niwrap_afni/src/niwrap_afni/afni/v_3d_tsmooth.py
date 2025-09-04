@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_TSMOOTH_METADATA = Metadata(
-    id="aa6dd3c1515c93b42935ecf05bfb0b6f2739b26b.boutiques",
+    id="3db17981529d52a5b5608759bc63ca9447ff22b5.boutiques",
     name="3dTsmooth",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

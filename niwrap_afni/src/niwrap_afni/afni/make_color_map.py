@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MAKE_COLOR_MAP_METADATA = Metadata(
-    id="74bc2813713e1afd72d384800e82892e19f26459.boutiques",
+    id="b166ea43fbf7c4fe260b5ab62d4e4a681005db1c.boutiques",
     name="MakeColorMap",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

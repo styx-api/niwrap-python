@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LESION_FILLING_METADATA = Metadata(
-    id="e67424ecd9a0c5e13dd9b069bccb2e63e4348726.boutiques",
+    id="f62267e4c44ed75137abe7a7fed3c36c1ab95683.boutiques",
     name="LesionFilling",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

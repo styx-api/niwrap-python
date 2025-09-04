@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_REMLFIT_METADATA = Metadata(
-    id="c3d94a2363ffc8ce0deb6c202c023dd3b848f3ec.boutiques",
+    id="036315e0f46a70dcc3f52e76a3cbd09391a7e811.boutiques",
     name="3dREMLfit",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

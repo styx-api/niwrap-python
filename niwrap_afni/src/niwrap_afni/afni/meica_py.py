@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MEICA_PY_METADATA = Metadata(
-    id="0ef40c9e3811e940f045cb9c834086f22bf505b2.boutiques",
+    id="b446f47c0652504fc62596ad7811f616934e7136.boutiques",
     name="meica.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DRIVE_SUMA_METADATA = Metadata(
-    id="a84ac5b5fa5efa62f31e31f6fea077bf00c5e358.boutiques",
+    id="06b283cd16423388345b6a9480478f50be8e1295.boutiques",
     name="DriveSuma",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DENOISE_IMAGE_METADATA = Metadata(
-    id="c724dafafc43426f15d57c46a1fd25866000d279.boutiques",
+    id="dd9cbbb4389367b37aac087edf973dfbcbdeb4d3.boutiques",
     name="DenoiseImage",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

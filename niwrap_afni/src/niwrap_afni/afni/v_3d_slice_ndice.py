@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_SLICE_NDICE_METADATA = Metadata(
-    id="998a2cd5417c4b5430994f6eaffe16312f3012f7.boutiques",
+    id="47faa2b7fa568539489509b1d3737397345c1187.boutiques",
     name="3dSliceNDice",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

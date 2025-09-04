@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 APQC_MAKE_HTML_PY_METADATA = Metadata(
-    id="5a0a0655640ca3011ee8b320cb3dec8f45de5e54.boutiques",
+    id="75d15c133646b9af46b8b07280f7d7208042b9a7.boutiques",
     name="apqc_make_html.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

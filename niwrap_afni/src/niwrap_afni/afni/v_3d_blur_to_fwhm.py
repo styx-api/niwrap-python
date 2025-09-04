@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_BLUR_TO_FWHM_METADATA = Metadata(
-    id="e3c0c223285ad52e0076e3b433c4e9372a9374b3.boutiques",
+    id="12e7d81671107d9ada75a687d37b1447e3899716.boutiques",
     name="3dBlurToFWHM",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

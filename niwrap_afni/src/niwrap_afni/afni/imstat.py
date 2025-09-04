@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 IMSTAT_METADATA = Metadata(
-    id="89246952930bbc473cd12fb8e5446fc4fdc11065.boutiques",
+    id="4da535ce4141bcf89f5877ae61702c19f674a35c.boutiques",
     name="imstat",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

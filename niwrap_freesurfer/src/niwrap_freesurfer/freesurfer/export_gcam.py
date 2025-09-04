@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 EXPORT_GCAM_METADATA = Metadata(
-    id="bd91d1b894313409678dcf687e735865846f54f2.boutiques",
+    id="3b19d60cb17d730d36308a8cf56655ae554738ff.boutiques",
     name="exportGcam",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

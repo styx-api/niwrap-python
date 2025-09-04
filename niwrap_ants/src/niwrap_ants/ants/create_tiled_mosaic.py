@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CREATE_TILED_MOSAIC_METADATA = Metadata(
-    id="3d9613f574ee8ff2d48c4509a9a508bfd56f8d3d.boutiques",
+    id="ce3fc57fea426a71907429b635a0ccf43f34f6db.boutiques",
     name="CreateTiledMosaic",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

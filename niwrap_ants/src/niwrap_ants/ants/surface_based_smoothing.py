@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFACE_BASED_SMOOTHING_METADATA = Metadata(
-    id="0f212837e6cfdb7d79585c7f58fe041aca5a9ef1.boutiques",
+    id="b2f8fe5e700adfbe15932f192ed3a9cf1462c8c5.boutiques",
     name="SurfaceBasedSmoothing",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

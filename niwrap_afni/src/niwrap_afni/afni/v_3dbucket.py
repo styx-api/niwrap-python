@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3DBUCKET_METADATA = Metadata(
-    id="209f280cf80f67eec54b9e248d877666d290d19c.boutiques",
+    id="e8cc2881149d3136709a0708be9b84949d81918c.boutiques",
     name="3dbucket",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

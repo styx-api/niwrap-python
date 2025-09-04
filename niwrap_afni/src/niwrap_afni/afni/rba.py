@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RBA_METADATA = Metadata(
-    id="180fca902f5ffecfd9602bea793e87295168a52b.boutiques",
+    id="dddda802dffa9b3fda84a9975dc47edf6e31b397.boutiques",
     name="RBA",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

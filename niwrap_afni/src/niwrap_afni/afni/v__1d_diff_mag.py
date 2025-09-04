@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__1D_DIFF_MAG_METADATA = Metadata(
-    id="341c08e9d208f0097d8fc91a023300220946a0bb.boutiques",
+    id="79a9dcf4877ee3724d0c39add1bc50f6b62d7601.boutiques",
     name="@1dDiffMag",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BIASFIELD_METADATA = Metadata(
-    id="5981ee8ca338526bd3e95eb71c3b7956f4c7d239.boutiques",
+    id="791c68624f21165063a1669d3c6117e3219b6789.boutiques",
     name="biasfield",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

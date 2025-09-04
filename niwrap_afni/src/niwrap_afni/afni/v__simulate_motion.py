@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__SIMULATE_MOTION_METADATA = Metadata(
-    id="81ca0292d10cb27ca6eec2771f9556bf24d569dc.boutiques",
+    id="7806e5a3157aef86617e16840ac5ed147efa9cc4.boutiques",
     name="@simulate_motion",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

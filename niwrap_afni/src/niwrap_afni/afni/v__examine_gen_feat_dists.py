@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__EXAMINE_GEN_FEAT_DISTS_METADATA = Metadata(
-    id="4760e5b0736b09b09bbfea2061b56fd6ac5a0f99.boutiques",
+    id="79b05ad4b7f4474e74b6c73890296644948275bd.boutiques",
     name="@ExamineGenFeatDists",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

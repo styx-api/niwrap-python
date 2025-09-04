@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FREEVIEW_METADATA = Metadata(
-    id="c7a33420dcdb44d944cc751c512e7e743300b534.boutiques",
+    id="d816f0d3dba7c6ee822421423d6d161df3fed35f.boutiques",
     name="freeview",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

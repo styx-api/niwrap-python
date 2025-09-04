@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_MOTION_CORR_STATS_METADATA = Metadata(
-    id="0bffc9f3dc5b519482bb987ee079e3de5b2e5ec9.boutiques",
+    id="51fc61f7cc00b9eb9222ce3cabc8dc3386c917fa.boutiques",
     name="antsMotionCorrStats",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

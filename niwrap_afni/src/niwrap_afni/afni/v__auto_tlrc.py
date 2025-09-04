@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__AUTO_TLRC_METADATA = Metadata(
-    id="6358e72ba8c0b7fb15ce11a94e7f6e56fa8f3baa.boutiques",
+    id="9ec14a3c3a060032a8913afb5801da9608c8ae87.boutiques",
     name="@auto_tlrc",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

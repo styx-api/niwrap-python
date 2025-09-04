@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DMRI_MERGEPATHS_METADATA = Metadata(
-    id="a806a559aa7a4e196c0f4f692e84bf6c75a34049.boutiques",
+    id="d09f39b5969ca1e494eb59099da10470db2c3ada.boutiques",
     name="dmri_mergepaths",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

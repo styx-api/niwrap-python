@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_CONVOLVE_METADATA = Metadata(
-    id="a0c61b357c0b8968a59079d164442d2ca0b8cb8d.boutiques",
+    id="8f3103e3d9bb6441f1e9c0b890b87c89f981bcc0.boutiques",
     name="3dConvolve",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 THRESHOLD_IMAGE_METADATA = Metadata(
-    id="8cf8b0c4869168dc7cd4d8ddd7703d636b4075fc.boutiques",
+    id="5cd4076dfa4063e8b08ed0f6ec899b6e29670420.boutiques",
     name="ThresholdImage",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

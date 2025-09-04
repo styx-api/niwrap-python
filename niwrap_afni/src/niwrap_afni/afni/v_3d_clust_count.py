@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_CLUST_COUNT_METADATA = Metadata(
-    id="69d4eb9bd4a197a90cb255e74008d918a4d6fbec.boutiques",
+    id="bba3556a01bcefede9729b43d63f695d828f84e3.boutiques",
     name="3dClustCount",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

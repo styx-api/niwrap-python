@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 EXTRACT_REGION_FROM_IMAGE_METADATA = Metadata(
-    id="ae946f4d1bb246c4c0e1a26e1d18d3d6f5ce930d.boutiques",
+    id="10d27f71688084d6c7f941dd2b6d185bedce38a8.boutiques",
     name="ExtractRegionFromImage",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

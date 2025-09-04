@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_RE_HO_METADATA = Metadata(
-    id="3a27e09e4e1a042595724b1260fd5708eb32b082.boutiques",
+    id="c46ec7166950d75a3ca69b019838d644b481ce05.boutiques",
     name="3dReHo",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

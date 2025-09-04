@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 QUOTIZE_METADATA = Metadata(
-    id="4c584c1c53b452f98fe6627b0010b0bc7d24c8a7.boutiques",
+    id="d158ee4416dbfc742de4bc2b2d90d239f3be5934.boutiques",
     name="quotize",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

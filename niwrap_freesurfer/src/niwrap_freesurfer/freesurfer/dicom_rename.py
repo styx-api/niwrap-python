@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DICOM_RENAME_METADATA = Metadata(
-    id="3fa82f4f7cfa0f517393cf4bbd8d9673564b758d.boutiques",
+    id="ca4d93c3e9518d2c158aeb7b4b47f5257f9ce799.boutiques",
     name="dicom-rename",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

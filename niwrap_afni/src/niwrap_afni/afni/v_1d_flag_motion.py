@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_1D_FLAG_MOTION_METADATA = Metadata(
-    id="3cccb4c8c9ef53bdcbc8db52f5600d6320db213e.boutiques",
+    id="50cd14d6c955325b397090100d74d78dcd0f657a.boutiques",
     name="1dFlagMotion",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

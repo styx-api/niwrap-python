@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 AUTO_WARP_PY_METADATA = Metadata(
-    id="0544bfd6f7c98eb7f7b9e3942033737cca834e31.boutiques",
+    id="9d62ac70156fc0e15439602dbb70dde9a4663939.boutiques",
     name="auto_warp.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FAT_MVM_GRIDCONV_PY_METADATA = Metadata(
-    id="8f0e721df0a1ca6fa03a42bfa5d524680cdb92c9.boutiques",
+    id="b082285800362f5644c0f2275c7fb8980bd9cc47.boutiques",
     name="fat_mvm_gridconv.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FLIP_4DFP_METADATA = Metadata(
-    id="8ea4c9ced73015848191893b7f55466d9dc889a2.boutiques",
+    id="72aeaef961cef1989aa2360038200c45341617ae.boutiques",
     name="flip_4dfp",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

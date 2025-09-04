@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 AVI2TALXFM_METADATA = Metadata(
-    id="dd49fcac45ac0aee8f33fc3c39f2335f058798ac.boutiques",
+    id="b2655b0f30995a088bcf42b9c6db2e6477fd8f33.boutiques",
     name="avi2talxfm",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

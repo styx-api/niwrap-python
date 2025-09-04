@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_BALL_MATCH_METADATA = Metadata(
-    id="e91bd8bca8af6f73af7781b32ec76cb4701697b9.boutiques",
+    id="12076e5b1959ea628a5005f966925a521c023965.boutiques",
     name="3dBallMatch",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

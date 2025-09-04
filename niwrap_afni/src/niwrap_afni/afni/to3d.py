@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TO3D_METADATA = Metadata(
-    id="aa25be4c65cd1700bec18ae9e25e237d195d1256.boutiques",
+    id="b5fc32e956ee67dd746be525a6e36281b7403e3a.boutiques",
     name="to3d",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

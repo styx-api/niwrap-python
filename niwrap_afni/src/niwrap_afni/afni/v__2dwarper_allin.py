@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__2DWARPER_ALLIN_METADATA = Metadata(
-    id="8350bf12695f1212dc58ebccdf2720b13d67a583.boutiques",
+    id="225a74d08261c6d90001aa24a11526d518df01f8.boutiques",
     name="@2dwarper.Allin",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

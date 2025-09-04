@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 APARCSTATS2TABLE_METADATA = Metadata(
-    id="a5b02b8f995f62d90daa8ab7ad92ab2234b517fa.boutiques",
+    id="2dfe86d8f3cbaf4479df19a82085ad457536316c.boutiques",
     name="aparcstats2table",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

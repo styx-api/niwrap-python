@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 IMCALC_METADATA = Metadata(
-    id="0f1c33e4f0b22c6e5934a76021bc78779977e799.boutiques",
+    id="fad3aec9b2fc467edeb3c2adf90642af21b5542d.boutiques",
     name="imcalc",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

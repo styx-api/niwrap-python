@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ROIGROW_METADATA = Metadata(
-    id="f4aa7a593eb763743bac7b66d6cbfc7d7a8e1e49.boutiques",
+    id="893b3e6beea2d4e9cedff33cfd4e0a638591b4f8.boutiques",
     name="ROIgrow",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

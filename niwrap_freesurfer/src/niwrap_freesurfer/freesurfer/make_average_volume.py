@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MAKE_AVERAGE_VOLUME_METADATA = Metadata(
-    id="d5918126931a1262771808902f81e13cdc611a10.boutiques",
+    id="6f40ff65943cb8e7db2c3bba2a4245dae06bf55e.boutiques",
     name="make_average_volume",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

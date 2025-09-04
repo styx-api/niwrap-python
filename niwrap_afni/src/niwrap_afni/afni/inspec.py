@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 INSPEC_METADATA = Metadata(
-    id="89203ff038bd27aa4191bdef00850e222bfaf10c.boutiques",
+    id="f3c02766faf70bafac4841d4ad24b734660a6873.boutiques",
     name="inspec",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BROWSE_MINC_HEADER_TCL_METADATA = Metadata(
-    id="22e391d58621f276bcf2d734a8c66b008bb55ba4.boutiques",
+    id="bdcd4ebf4d35174bac49f3caff6d3c3854ff552f.boutiques",
     name="browse-minc-header.tcl",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

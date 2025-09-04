@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DCMUNPACK_METADATA = Metadata(
-    id="64a19ab70f6129ad53152ddeab602e5432759bab.boutiques",
+    id="a172d3fb8225abb3caf4f7ee8805cdf0967017f5.boutiques",
     name="dcmunpack",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

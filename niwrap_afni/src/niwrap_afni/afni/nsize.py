@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 NSIZE_METADATA = Metadata(
-    id="a9d2ae05ed0705b6b163c901233146b3b789bc31.boutiques",
+    id="3ce24bfc99036870491608926e2af290bef3ada3.boutiques",
     name="nsize",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

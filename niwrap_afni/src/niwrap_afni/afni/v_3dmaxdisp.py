@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3DMAXDISP_METADATA = Metadata(
-    id="a6aa9cced188a32fdfff9cb9b8e0dd6ed83c244c.boutiques",
+    id="df5cebff8f2b1777c51dee0444455c1379652c77.boutiques",
     name="3dmaxdisp",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

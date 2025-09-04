@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BAYESIAN_GROUP_ANA_PY_METADATA = Metadata(
-    id="16a41e07083d349e8b592010dd1d0f643a97bab3.boutiques",
+    id="bfff44a85f87d9a3928e423c75c60997d4309948.boutiques",
     name="BayesianGroupAna.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

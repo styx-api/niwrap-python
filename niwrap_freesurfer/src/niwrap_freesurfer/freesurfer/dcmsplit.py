@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DCMSPLIT_METADATA = Metadata(
-    id="32509a30d18a74c8ffaec50695d2c1f51a6cff31.boutiques",
+    id="40fc4ee33e05e3c85a74db0d71099f3a4c924cbb.boutiques",
     name="dcmsplit",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

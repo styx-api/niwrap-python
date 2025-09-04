@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__SUMA_RENUMBER_FS_METADATA = Metadata(
-    id="36cc26b0ba811b8c0e9853ad670754a15c232786.boutiques",
+    id="0697ae6a2709e6ef926f690c7fcc6f1562f456cd.boutiques",
     name="@SUMA_renumber_FS",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

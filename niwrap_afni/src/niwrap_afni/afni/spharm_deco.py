@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SPHARM_DECO_METADATA = Metadata(
-    id="3cbbf2779039075f5f650ce59cd2419e01af55c0.boutiques",
+    id="136eb925672dddd41ae7dc46f8b5ae5e6222005b.boutiques",
     name="SpharmDeco",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

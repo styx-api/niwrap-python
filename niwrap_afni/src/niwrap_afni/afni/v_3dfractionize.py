@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3DFRACTIONIZE_METADATA = Metadata(
-    id="663b4096f3c27dafe7f1f91756343636456bd9a8.boutiques",
+    id="131e3f310d788f67bb187824b228758d394458e7.boutiques",
     name="3dfractionize",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

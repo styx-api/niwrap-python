@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FIXUP_MNI_PATHS_METADATA = Metadata(
-    id="c3f882d4801a38a0ebe1d369afcdd5e436615473.boutiques",
+    id="2c7dba42b378fddcebc95bd3b583793305a381ee.boutiques",
     name="fixup_mni_paths",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

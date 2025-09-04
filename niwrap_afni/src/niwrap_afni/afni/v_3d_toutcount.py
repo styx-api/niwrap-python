@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_TOUTCOUNT_METADATA = Metadata(
-    id="76920b41e924975789eef980078cb1ea35d8f364.boutiques",
+    id="9193883305e8473f3547bb336f7df4ae106042f8.boutiques",
     name="3dToutcount",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

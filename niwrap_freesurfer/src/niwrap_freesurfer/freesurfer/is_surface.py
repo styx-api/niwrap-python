@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 IS_SURFACE_METADATA = Metadata(
-    id="86c411bc39041a8b3eae45962259ad09e76de3b1.boutiques",
+    id="035e166500ca11119ee6ff6e44628cacf5feb50e.boutiques",
     name="is-surface",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

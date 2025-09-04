@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FIND_VARIANCE_LINES_TCSH_METADATA = Metadata(
-    id="0e418376195ab0af604b478b75e8482423331a58.boutiques",
+    id="3447eee105e11d76e6ca8bbc5dda2062c2674033.boutiques",
     name="find_variance_lines.tcsh",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

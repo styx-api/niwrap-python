@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 N4_BIAS_FIELD_CORRECTION_METADATA = Metadata(
-    id="e1dc7f6a95071b641e72a957ad7c86a8591d637a.boutiques",
+    id="3f10828e86e53eef2772983bf2e0a920246c4729.boutiques",
     name="N4BiasFieldCorrection",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

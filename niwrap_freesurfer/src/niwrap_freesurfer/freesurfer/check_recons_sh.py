@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CHECK_RECONS_SH_METADATA = Metadata(
-    id="52142d2a907acd3a0d9631fc56bcb011b2c8e9af.boutiques",
+    id="b6a9d7c947101234227e0b232da4c1e46cbf1198.boutiques",
     name="check_recons.sh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

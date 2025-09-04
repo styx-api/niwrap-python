@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DMRI_VIOLIN_PLOTS_METADATA = Metadata(
-    id="a193f3c5d1fcce153b59c31f2df32aafdf44cb45.boutiques",
+    id="bfd3395e98f397268b14fd38e421efd6a400a506.boutiques",
     name="dmri_violinPlots",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

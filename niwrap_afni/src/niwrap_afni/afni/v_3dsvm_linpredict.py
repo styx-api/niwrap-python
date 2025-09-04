@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3DSVM_LINPREDICT_METADATA = Metadata(
-    id="75accbcc401ca78691df247e44440c27677dbbec.boutiques",
+    id="0dff3a78cf5e724eaa03100a73cf96116889b8fb.boutiques",
     name="3dsvm_linpredict",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

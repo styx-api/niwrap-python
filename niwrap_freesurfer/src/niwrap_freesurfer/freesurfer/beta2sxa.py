@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BETA2SXA_METADATA = Metadata(
-    id="00432ae4af64a406f4f622cf8d671b764747774c.boutiques",
+    id="0cf345ab66dc4b1164643c5f220562d8ef37bfa7.boutiques",
     name="beta2sxa",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

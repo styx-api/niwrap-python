@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_NOTES_METADATA = Metadata(
-    id="05aa91a825b65166c425b7ec0eb4409fe3f5ad64.boutiques",
+    id="1756987bc517c02b04ed29f17cd59746f7a1e6a8.boutiques",
     name="3dNotes",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

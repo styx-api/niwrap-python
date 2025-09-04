@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSL_RIGID_REGISTER_METADATA = Metadata(
-    id="0e36527961ef5f32edd4250263430f3e00b08730.boutiques",
+    id="abd62e6795a7fb22e18676b3f84f7431ec93f8c9.boutiques",
     name="fsl_rigid_register",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

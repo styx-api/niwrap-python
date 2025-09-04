@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__FLOAT_FIX_METADATA = Metadata(
-    id="69c8566d3c52dcfb93a135adaaa38398077c4bc6.boutiques",
+    id="767e876d3f0cfcc45088815cd58010847e88edb7.boutiques",
     name="@float_fix",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

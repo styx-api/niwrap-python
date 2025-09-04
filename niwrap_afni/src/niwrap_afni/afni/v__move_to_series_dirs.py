@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__MOVE_TO_SERIES_DIRS_METADATA = Metadata(
-    id="3258c3e5be037bd2af4e822c7e7ad229a6157990.boutiques",
+    id="27688027b086a8f3681feffe1acd7e006bb142e5.boutiques",
     name="@move.to.series.dirs",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

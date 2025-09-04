@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DT_RECON_METADATA = Metadata(
-    id="e2e2bdcf7e463218626ecd3b7295c2fc21a1670a.boutiques",
+    id="0e86e8ca45a5e3376c51be3517688e8262426cd3.boutiques",
     name="dt_recon",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSREAD_ANNOT_METADATA = Metadata(
-    id="119c7f16e85967567c34d369d4ee5cf158ea2364.boutiques",
+    id="f43f4505849178213f22484e025190c164fdc8b0.boutiques",
     name="FSread_annot",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

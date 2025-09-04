@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_SIGNATURES_METADATA = Metadata(
-    id="e20b04fdf19b18d2e6f8de7dfa09276b1b35f130.boutiques",
+    id="62c42f9307b68462703f2e02d462d769ea17d659.boutiques",
     name="3dSignatures",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 GLTSYMTEST_METADATA = Metadata(
-    id="cb3ce3fd8a02c860741465a6388d7e399c05c7bb.boutiques",
+    id="a1f6825f5f2c006c71df619ba8e2a9e407a6dc79.boutiques",
     name="GLTsymtest",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

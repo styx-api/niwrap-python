@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ADD_NOISE_TO_IMAGE_METADATA = Metadata(
-    id="5da8ee75f74c156a91ae2c476ce7533d884a9bda.boutiques",
+    id="5673a36dafb026b933cb72c1d9581ff34f85a2ae.boutiques",
     name="AddNoiseToImage",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

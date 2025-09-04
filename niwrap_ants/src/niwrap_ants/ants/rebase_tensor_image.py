@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 REBASE_TENSOR_IMAGE_METADATA = Metadata(
-    id="cb7dc4431e44610b96f7d5021a64651fd63ad535.boutiques",
+    id="9ca2dd8e8d88e7fa58609c2b0453e98bb4f8ab16.boutiques",
     name="RebaseTensorImage",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

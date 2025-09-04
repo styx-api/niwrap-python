@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTSUSE_DEFORMATION_FIELD_TO_GET_AFFINE_TRANSFORM_METADATA = Metadata(
-    id="a114d5c9bfbab1242b558e6ff3e44480841f6e38.boutiques",
+    id="33730edc7d31f068b95a970d8aa4ca5ece2c7a6f.boutiques",
     name="ANTSUseDeformationFieldToGetAffineTransform",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

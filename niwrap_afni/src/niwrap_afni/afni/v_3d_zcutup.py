@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_ZCUTUP_METADATA = Metadata(
-    id="da952f2c6d1682e69ef1ef9b1f9dce9d5eeaa1da.boutiques",
+    id="7f841bd4dfbc27b4d2e1ea682e9cf137e9548bea.boutiques",
     name="3dZcutup",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

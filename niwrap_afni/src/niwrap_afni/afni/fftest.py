@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FFTEST_METADATA = Metadata(
-    id="242a4a37e8f3488a79d04ee8e61c7d3309af7f5b.boutiques",
+    id="1928ae0343683e1c41b9b191dc62899dbf26932f.boutiques",
     name="fftest",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

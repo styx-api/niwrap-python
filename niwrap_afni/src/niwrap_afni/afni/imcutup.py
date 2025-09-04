@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 IMCUTUP_METADATA = Metadata(
-    id="43fa5585a6eaffb033a1081d2fd7ef7e71ec60a8.boutiques",
+    id="530ef006832ca6e8fa5ddd054e9840a9b18311a2.boutiques",
     name="imcutup",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

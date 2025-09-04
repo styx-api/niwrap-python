@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 JKGCATRAIN_METADATA = Metadata(
-    id="1b073a4bde95bf0446c7a3c6603565814010d9f8.boutiques",
+    id="2fc935b295a01c3e8c5075c012db63cd4ba471d7.boutiques",
     name="jkgcatrain",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

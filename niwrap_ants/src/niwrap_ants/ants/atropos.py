@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ATROPOS_METADATA = Metadata(
-    id="4cb469cdce62fc57298fef68a491750d55ea4517.boutiques",
+    id="6436edca90da7aa4163ae647bc1238ae647dd4fd.boutiques",
     name="Atropos",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

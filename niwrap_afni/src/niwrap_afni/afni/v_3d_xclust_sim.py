@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_XCLUST_SIM_METADATA = Metadata(
-    id="186c6702b32cf3095da6ff9e5531a64250c00391.boutiques",
+    id="efbc399cad29d2ac5b2bb8a45940bf52699805cd.boutiques",
     name="3dXClustSim",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

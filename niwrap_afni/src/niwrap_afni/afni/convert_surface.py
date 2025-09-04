@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CONVERT_SURFACE_METADATA = Metadata(
-    id="d48b4e88fa9598a23318fbc071216469e4145c7f.boutiques",
+    id="57576de1b82aad67fcaed9b36da45f9b5b81e8fe.boutiques",
     name="ConvertSurface",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_SURF_MASK_METADATA = Metadata(
-    id="8c0ff8c2071e2a01164c6a3e3d4790c519002089.boutiques",
+    id="0c8c0c85cb938597bc328e04d5ab913c255457c7.boutiques",
     name="3dSurfMask",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

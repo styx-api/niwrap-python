@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_1D_ASTRIP_METADATA = Metadata(
-    id="2aea6d9a25067a9ea93b108537a720deaa6d64fe.boutiques",
+    id="cd3707044d51e37b30b478fdfc860e9d133d8ffa.boutiques",
     name="1dAstrip",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

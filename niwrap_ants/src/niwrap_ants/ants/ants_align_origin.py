@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_ALIGN_ORIGIN_METADATA = Metadata(
-    id="74cc71ee1dbe0d0c58e8719cd30215507f2ae81e.boutiques",
+    id="a2901ef9bcab2f861ffe659998f028f791c5e4fd.boutiques",
     name="antsAlignOrigin",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

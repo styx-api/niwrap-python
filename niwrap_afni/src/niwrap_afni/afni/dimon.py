@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DIMON_METADATA = Metadata(
-    id="e3ed5d018fb00fd99a4fcfd1786e665135af510b.boutiques",
+    id="5ab73709e46bdb383910ed3cb7eef84a4ba8075a.boutiques",
     name="Dimon",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

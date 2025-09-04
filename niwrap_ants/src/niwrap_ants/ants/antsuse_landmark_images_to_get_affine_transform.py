@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTSUSE_LANDMARK_IMAGES_TO_GET_AFFINE_TRANSFORM_METADATA = Metadata(
-    id="c11dd7c0d9840d40017d52a654120cd6141ec439.boutiques",
+    id="bf03b521899d77cb41c538f595ad6ed7f0d4440c.boutiques",
     name="ANTSUseLandmarkImagesToGetAffineTransform",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

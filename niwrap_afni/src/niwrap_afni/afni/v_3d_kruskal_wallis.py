@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_KRUSKAL_WALLIS_METADATA = Metadata(
-    id="317079b0dac4061070175eb508c808dec48b1852.boutiques",
+    id="c4d588d98c846668cc79de9a1c61e26919317883.boutiques",
     name="3dKruskalWallis",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

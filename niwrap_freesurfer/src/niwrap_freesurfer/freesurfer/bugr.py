@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BUGR_METADATA = Metadata(
-    id="c59ecc18f09513a64d6c410b4046dd59f641fd90.boutiques",
+    id="807792016b12ce5d8a6fee4fc70af6b9a40e4f20.boutiques",
     name="bugr",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

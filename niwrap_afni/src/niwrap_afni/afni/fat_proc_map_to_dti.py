@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FAT_PROC_MAP_TO_DTI_METADATA = Metadata(
-    id="2071c7c40db2fbca86d8b9d2a81d43349c721ca3.boutiques",
+    id="395822a397ddad40ad7686204af5516f6ff6b62a.boutiques",
     name="fat_proc_map_to_dti",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 HIAM_REGISTER_METADATA = Metadata(
-    id="f991b3b9d61600e2eb491ce23d796663df3a627a.boutiques",
+    id="c0d9976db59a72d53136e5152d99ba64d191cfdf.boutiques",
     name="hiam_register",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

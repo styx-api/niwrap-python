@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__TO_MNI_AWARP_METADATA = Metadata(
-    id="b4a2edc3a1e3b7747916913c0087ec23a80fbfef.boutiques",
+    id="b6d7b0fa8121b6538d215cd65437e4218af3eeba.boutiques",
     name="@toMNI_Awarp",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__DEBLANK_FILE_NAMES_METADATA = Metadata(
-    id="5ee51800cef7163b87f314574ef99b6eec9f40f6.boutiques",
+    id="a4ade0381653186c414b4d6513135f328146083b.boutiques",
     name="@DeblankFileNames",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

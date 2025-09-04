@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__TO_RAI_METADATA = Metadata(
-    id="8c60899686c3401d179992be9780ca970e04a901.boutiques",
+    id="024583cd57fcfddfb771a0c795047e59fba1411f.boutiques",
     name="@ToRAI",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

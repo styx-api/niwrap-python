@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_REGISTRATION_SY_N_SH_METADATA = Metadata(
-    id="029fb8014cb72b8e3e10e60f5b05a9adf14dc918.boutiques",
+    id="b8b4732301023521da1f1ecab58942846288f659.boutiques",
     name="antsRegistrationSyN.sh",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

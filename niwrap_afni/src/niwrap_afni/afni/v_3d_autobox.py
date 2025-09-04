@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_AUTOBOX_METADATA = Metadata(
-    id="c48b09409ec96591cf8ab9ce93ca409e6795208a.boutiques",
+    id="6e3e31b343afcbd477fc5796286883657b4ffffb.boutiques",
     name="3dAutobox",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

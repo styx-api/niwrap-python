@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CLUST_EXP_STAT_PARSE_PY_METADATA = Metadata(
-    id="49f4672da2d43b66b47563c0d330449527488d04.boutiques",
+    id="c7ab6b5b185b8575bcc32b1e9ea87332591bb445.boutiques",
     name="ClustExp_StatParse.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

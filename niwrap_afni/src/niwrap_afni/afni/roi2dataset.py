@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ROI2DATASET_METADATA = Metadata(
-    id="5d5ce9ca7d281ca079da489d9aa946cea52cf676.boutiques",
+    id="95919d130a43b738fd4be5b9f406f11c46290e50.boutiques",
     name="ROI2dataset",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

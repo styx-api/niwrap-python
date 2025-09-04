@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FNAME2STEM_METADATA = Metadata(
-    id="94f87797696ba85f60d558b2cd4d3fefe8915133.boutiques",
+    id="618f3f567ece6c5824fca1deb74adb629723f532.boutiques",
     name="fname2stem",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__CENTER_DISTANCE_METADATA = Metadata(
-    id="c1fb8e11634781a3137d3f8303111b847d52ddb6.boutiques",
+    id="f179e8348e56e5e6c674b858f8ada01c7b1547c8.boutiques",
     name="@Center_Distance",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSL_5_0_2_XYZTRANS_SCH_METADATA = Metadata(
-    id="2e8e3863e13fefc751213519c3123968f897e3e2.boutiques",
+    id="a3ebfe38f72e8d10f1cafe04c5df2e3fc2159be7.boutiques",
     name="fsl.5.0.2.xyztrans.sch",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__ELECTRO_GRID_METADATA = Metadata(
-    id="8c1955ff5d63981d8778a40d725680192b793844.boutiques",
+    id="8ac7f5045194e5e0a61feb132b6f3dfdbb4abcc2.boutiques",
     name="@ElectroGrid",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

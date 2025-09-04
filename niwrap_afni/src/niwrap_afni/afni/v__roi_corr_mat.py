@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__ROI_CORR_MAT_METADATA = Metadata(
-    id="5904d2e01ec13ad3edfd3292a0db082f6bbac4d2.boutiques",
+    id="90c954ebd0a6700b3e766d38ae5a6aae20dbbd89.boutiques",
     name="@ROI_Corr_Mat",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

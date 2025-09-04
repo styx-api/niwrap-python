@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CP_DICOM_METADATA = Metadata(
-    id="a3b5658a53886c2046aff8ddfa60c01956982a5b.boutiques",
+    id="a61a44a95b9acc4f8c31cd28c22febf9e54641e5.boutiques",
     name="cp-dicom",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

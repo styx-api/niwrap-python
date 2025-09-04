@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PRINT_HEADER_METADATA = Metadata(
-    id="514e4dbae6f3b5a425925fca62d2ade89ff0b0c2.boutiques",
+    id="3d1f9490b54e21b3758d6c6dda5a08e02998973a.boutiques",
     name="PrintHeader",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

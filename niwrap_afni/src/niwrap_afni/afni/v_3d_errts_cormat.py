@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_ERRTS_CORMAT_METADATA = Metadata(
-    id="27ff9611a565195edc13b6e85a9a5b1aa081dede.boutiques",
+    id="d14e91ea697278239ebae181e3192bf27d7d44bf.boutiques",
     name="3dErrtsCormat",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSCALC_METADATA = Metadata(
-    id="ea4a3f00afbc065f06ad7bec64190787fc5e16a4.boutiques",
+    id="ae4a7625eb43dd733c4d61d54bfadf65d95eb4e4.boutiques",
     name="fscalc",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

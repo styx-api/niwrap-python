@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 IMSTACK_METADATA = Metadata(
-    id="d9dca2a7110a68c32c73fef2f7ffc0520892ff07.boutiques",
+    id="903eb8f0f9425899a698dfbbbf982f858818717b.boutiques",
     name="imstack",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

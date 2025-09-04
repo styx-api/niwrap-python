@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 GEN_GROUP_COMMAND_PY_METADATA = Metadata(
-    id="9e998b67f89b44f6b5b1d301245053ea4eff8a7b.boutiques",
+    id="a50fced0bad2328ced816377a295b47a238138e1.boutiques",
     name="gen_group_command.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

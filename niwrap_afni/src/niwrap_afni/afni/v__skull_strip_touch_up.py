@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__SKULL_STRIP_TOUCH_UP_METADATA = Metadata(
-    id="9f2f6c87f11ad6568c143e9302cc39f55ec33279.boutiques",
+    id="6c2944dd523c28bc9850a8eb4db4c81926ee4298.boutiques",
     name="@SkullStrip_TouchUp",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

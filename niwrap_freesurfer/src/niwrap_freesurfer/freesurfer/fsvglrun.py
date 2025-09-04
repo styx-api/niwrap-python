@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSVGLRUN_METADATA = Metadata(
-    id="ad655adf03c2f7e801ecfdc1e82750b8a5a683b5.boutiques",
+    id="b9aa8b75c4e91fb4790a0905f2c4ba9fcb2f9645.boutiques",
     name="fsvglrun",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

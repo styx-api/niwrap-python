@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_TAGALIGN_METADATA = Metadata(
-    id="475b53c4b6432ecad79b017ae32826c765d7c00c.boutiques",
+    id="9b9bddb3a6de929defedf353ef13f73e77d162d8.boutiques",
     name="3dTagalign",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LONG_STATS_COMBINE_METADATA = Metadata(
-    id="bc07fa2d21f0070237805d7567bf0841a65a42f5.boutiques",
+    id="55027fbac1d768ae04a1fd31571b55d66733a83b.boutiques",
     name="long_stats_combine",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

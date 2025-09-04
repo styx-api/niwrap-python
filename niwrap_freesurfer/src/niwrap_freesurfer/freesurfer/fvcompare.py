@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FVCOMPARE_METADATA = Metadata(
-    id="a1051daa28d455cf970ddfd61d853128a3adffe9.boutiques",
+    id="2e45e84a88f675a13ba473420447ab26c018ea25.boutiques",
     name="fvcompare",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 R_PKGS_INSTALL_METADATA = Metadata(
-    id="02fcafb674321d658d1a59f536c7612b3e27207f.boutiques",
+    id="21bbac9c8d45c10c34e4107732268562b9494893.boutiques",
     name="rPkgsInstall",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

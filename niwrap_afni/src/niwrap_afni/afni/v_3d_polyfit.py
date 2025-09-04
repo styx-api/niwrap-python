@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_POLYFIT_METADATA = Metadata(
-    id="634ca94604006da564db557fefa10ca9d8de9d9c.boutiques",
+    id="0e4fe88ec0cfc1d3aebc6e9308bba232fbca5fc6.boutiques",
     name="3dPolyfit",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

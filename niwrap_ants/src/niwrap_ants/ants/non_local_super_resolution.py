@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 NON_LOCAL_SUPER_RESOLUTION_METADATA = Metadata(
-    id="03123827e70ea9c3395947e4a4ca9f4d8e7f6c42.boutiques",
+    id="9477168f7f637dd3c00955206ae4aee6a14438be.boutiques",
     name="NonLocalSuperResolution",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

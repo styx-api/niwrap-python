@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_UNIFIZE_METADATA = Metadata(
-    id="6277d1cde4dea26d7a71d4b0fc2e2e04b1054790.boutiques",
+    id="9fab3ba8f4e528c3b3fe2bdcd3fc9fd6c7cd2841.boutiques",
     name="3dUnifize",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_MASK_TO_ASCII_METADATA = Metadata(
-    id="778a8402c86f1b42b01b3553f5a5396f990949e6.boutiques",
+    id="5690b62c0dc16bb101f03c22d22615f3b255e3a0.boutiques",
     name="3dMaskToASCII",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

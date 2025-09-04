@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ADJUNCT_IS_LABEL_PY_METADATA = Metadata(
-    id="fd161fa6ffe35fb86b826e60d07e867baeceef7c.boutiques",
+    id="d2235f4fdb54ec6b5f9ee49cb86db0943973aad4.boutiques",
     name="adjunct_is_label.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

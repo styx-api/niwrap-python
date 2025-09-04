@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_ROIMAKER_METADATA = Metadata(
-    id="2535dd2581f0ff2810580b75c5be9f74e2e30560.boutiques",
+    id="69620c1a87f0694cec0d446d98ee3d79ce4d24a9.boutiques",
     name="3dROIMaker",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

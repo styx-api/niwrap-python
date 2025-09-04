@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURF_FWHM_METADATA = Metadata(
-    id="5f3d67852b7237a8609f944b36387016b6ab2c24.boutiques",
+    id="507940e5e4dbb09e2303be71339d44cbb0abc244.boutiques",
     name="SurfFWHM",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

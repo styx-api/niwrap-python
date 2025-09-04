@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BREC_METADATA = Metadata(
-    id="b85a2d15360507de8faa909c425df2fb82e4ca9d.boutiques",
+    id="ce9f9f5bb497c6bb574e5731aafa611a10debdc6.boutiques",
     name="brec",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

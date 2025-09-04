@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 UBER_SUBJECT_PY_METADATA = Metadata(
-    id="530df676c8d2b6020a3d36b7074940b4993bef60.boutiques",
+    id="bfef0d988515d01a9441002cb166324b59a66ee2.boutiques",
     name="uber_subject.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

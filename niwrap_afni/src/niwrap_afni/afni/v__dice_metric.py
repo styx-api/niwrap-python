@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__DICE_METRIC_METADATA = Metadata(
-    id="fa48f6aeea318af3d334f9731c18e1c38c549246.boutiques",
+    id="3827ccde2853d6201108799ed58e5424de9271d1.boutiques",
     name="@DiceMetric",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

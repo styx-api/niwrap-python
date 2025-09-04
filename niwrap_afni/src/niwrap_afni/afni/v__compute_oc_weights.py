@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__COMPUTE_OC_WEIGHTS_METADATA = Metadata(
-    id="8cbef05597be3ac05a382bf27e8ef50be3a6cef0.boutiques",
+    id="22729c57ac0f8061c696e52f5cfb71514654aab2.boutiques",
     name="@compute_OC_weights",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

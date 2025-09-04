@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURF_RETINO_MAP_METADATA = Metadata(
-    id="fdc8b6d1c56b104c1c85ed05e61553f8ef0d8d73.boutiques",
+    id="759f3f4ec4008d75ee870dbe1ee1e5e8b576e660.boutiques",
     name="SurfRetinoMap",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

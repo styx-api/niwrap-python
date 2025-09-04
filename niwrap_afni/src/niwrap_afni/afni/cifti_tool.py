@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CIFTI_TOOL_METADATA = Metadata(
-    id="d35c1bdf886b6ca8faed8f62946bf8ec095c0a8c.boutiques",
+    id="5dccf8e632c65fb5c70327668e713fb4c23945df.boutiques",
     name="cifti_tool",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

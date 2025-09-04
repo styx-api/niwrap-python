@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 IMDUMP_METADATA = Metadata(
-    id="459004bda38f190bf54b7b93ee1f69c9a1440cdf.boutiques",
+    id="132ebf01ecdda91027e6ffa02b249f1cca08047f.boutiques",
     name="imdump",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

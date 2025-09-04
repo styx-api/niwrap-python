@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_LOMB_SCARGLE_METADATA = Metadata(
-    id="9e597a7312ee6b69d649017dd3754eea9c3d47b9.boutiques",
+    id="3eb111bc9d1c9d69174403521850d208bfb9c167.boutiques",
     name="3dLombScargle",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

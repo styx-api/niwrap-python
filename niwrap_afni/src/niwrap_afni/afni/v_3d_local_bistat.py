@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_LOCAL_BISTAT_METADATA = Metadata(
-    id="f2b736bc414186f493c90278602c279b6976ba7d.boutiques",
+    id="bd3b4e7f6f4fe6509303def6d9ffdfba8fcba781.boutiques",
     name="3dLocalBistat",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

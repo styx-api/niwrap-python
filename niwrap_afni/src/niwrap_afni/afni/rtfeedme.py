@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RTFEEDME_METADATA = Metadata(
-    id="10a9c1f1dd1351e0a684111b51d759ea5478ae34.boutiques",
+    id="031662f7ace1e435c0c343699a3380e8eef5d84a.boutiques",
     name="rtfeedme",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

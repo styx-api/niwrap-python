@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CAT_MATVEC_METADATA = Metadata(
-    id="61e7c2b9d7eb804f1420ce54e105f89806022415.boutiques",
+    id="4af4fdd04807f20b13d358c19c75c2b343fba421.boutiques",
     name="cat_matvec",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

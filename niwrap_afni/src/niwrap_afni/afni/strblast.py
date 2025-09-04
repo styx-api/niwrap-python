@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 STRBLAST_METADATA = Metadata(
-    id="f32f04cd48a95c18324b547f5e4333f3e6c5f926.boutiques",
+    id="979e93554e0c9bc2129eb838cda90544cca19b0e.boutiques",
     name="strblast",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

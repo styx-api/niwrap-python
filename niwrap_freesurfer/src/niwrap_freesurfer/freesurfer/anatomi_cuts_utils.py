@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANATOMI_CUTS_UTILS_METADATA = Metadata(
-    id="5b8fc2fbd044825ca8524543fcf4b4b3d56cb1f7.boutiques",
+    id="5b69d917d40aa2d42c8485fb374b3003d3556d0b.boutiques",
     name="anatomiCutsUtils",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

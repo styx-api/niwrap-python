@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BEDPOSTX_MGH_METADATA = Metadata(
-    id="3ed864ec81d1c034c4ff17b4f55cad7b918d2d91.boutiques",
+    id="30878138f06e8d8b5b7cb02eea3673a7add660b9.boutiques",
     name="bedpostx_mgh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

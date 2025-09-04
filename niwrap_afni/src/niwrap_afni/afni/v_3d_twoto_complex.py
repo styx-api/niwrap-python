@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_TWOTO_COMPLEX_METADATA = Metadata(
-    id="aa8fbbdea4d3caa146b57ec824c11fc1f44cb810.boutiques",
+    id="17b73527b00b0f307fb5ced607e1099690f5ba4e.boutiques",
     name="3dTwotoComplex",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

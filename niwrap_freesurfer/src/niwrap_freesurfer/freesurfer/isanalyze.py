@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ISANALYZE_METADATA = Metadata(
-    id="3d8f8ed4f2f6a0e189b0b47b6a3b1fc896553e24.boutiques",
+    id="aa58d8228bd180bd56d730927dfa201442c71e68.boutiques",
     name="isanalyze",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

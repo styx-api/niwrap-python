@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 NICCC_METADATA = Metadata(
-    id="0537b5f7fdbe5bd7d26d518f7b08fae562a93852.boutiques",
+    id="38ab5aeadd2358c30dcd70e6045a73c5e0e67cb5.boutiques",
     name="niccc",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

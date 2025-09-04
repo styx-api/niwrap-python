@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BALLOON_METADATA = Metadata(
-    id="efa704edebd4da856d63213685c5a8439a31d101.boutiques",
+    id="0a7d4282856d71f09868e8b468d6ca3effe21796.boutiques",
     name="balloon",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

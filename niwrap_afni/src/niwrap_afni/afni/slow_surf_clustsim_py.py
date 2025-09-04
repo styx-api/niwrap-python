@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SLOW_SURF_CLUSTSIM_PY_METADATA = Metadata(
-    id="ddeecc1fb59992d9c9426870d78e92238ec8b21a.boutiques",
+    id="4536849b259e21d078656a34c845d549eaef3333.boutiques",
     name="slow_surf_clustsim.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

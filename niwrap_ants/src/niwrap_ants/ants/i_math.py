@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 I_MATH_METADATA = Metadata(
-    id="d073063ec2007a9533d0bbda7ed07a494030fd90.boutiques",
+    id="a09cd0f5ecbce9fc1a786a7239575e5515e90de2.boutiques",
     name="iMath",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

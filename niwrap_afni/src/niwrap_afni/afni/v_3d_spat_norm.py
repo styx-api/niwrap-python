@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_SPAT_NORM_METADATA = Metadata(
-    id="5e25808dc97cedae2e2d6f6da2b00952c1719962.boutiques",
+    id="a7e3b0ea983f6153df299b1f17211df205465114.boutiques",
     name="3dSpatNorm",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

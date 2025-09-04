@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_CLIP_LEVEL_METADATA = Metadata(
-    id="88bdbec4ad5f8ad542e0aad8dde4036aca9e4e12.boutiques",
+    id="fd4a8baf337596ea9a1bc436e3a61d90b89ee692.boutiques",
     name="3dClipLevel",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

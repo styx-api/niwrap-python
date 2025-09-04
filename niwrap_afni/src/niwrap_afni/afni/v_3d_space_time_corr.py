@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_SPACE_TIME_CORR_METADATA = Metadata(
-    id="02283e56a615340b7f56f781bc42f0718ddae8af.boutiques",
+    id="6c145ad16f230ce2c8671d5d52e1f53f0abd0f68.boutiques",
     name="3dSpaceTimeCorr",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

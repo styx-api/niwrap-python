@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DCMDIR_INFO_MGH_METADATA = Metadata(
-    id="3daeb28e82ea718d162a4cbccc3cdf65bad4b314.boutiques",
+    id="ff157bb6f0f3351f04caa2610173225c28c8297c.boutiques",
     name="dcmdir-info-mgh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

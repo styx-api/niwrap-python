@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 GET_LABEL_THICKNESS_METADATA = Metadata(
-    id="f6297b36ddfbae019c6113cbf899ac43a825fe9b.boutiques",
+    id="2c97545231cb85d6b31699760e72e6a36cb65db1.boutiques",
     name="get_label_thickness",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

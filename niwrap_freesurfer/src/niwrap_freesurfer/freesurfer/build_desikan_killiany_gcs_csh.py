@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BUILD_DESIKAN_KILLIANY_GCS_CSH_METADATA = Metadata(
-    id="5e5a2f630a4fc0d2ffc6f6330bdbd3389407c897.boutiques",
+    id="c49d04436582b3a7e97b189ad8a57b6bfabd4d9d.boutiques",
     name="build_desikan_killiany_gcs.csh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

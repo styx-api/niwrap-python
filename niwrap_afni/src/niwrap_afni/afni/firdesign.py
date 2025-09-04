@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FIRDESIGN_METADATA = Metadata(
-    id="a74504adf0b49ec5a0615bc609bf67d8b73823f0.boutiques",
+    id="0c4ea34db1930ae230e4105a67970c789ca0a3f2.boutiques",
     name="FIRdesign",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

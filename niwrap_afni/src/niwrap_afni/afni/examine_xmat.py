@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 EXAMINE_XMAT_METADATA = Metadata(
-    id="41c6732fe776e16e30c04c5fc5c3167c839b8815.boutiques",
+    id="fc52de953fa604c168788487dd5836de626b94b0.boutiques",
     name="ExamineXmat",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

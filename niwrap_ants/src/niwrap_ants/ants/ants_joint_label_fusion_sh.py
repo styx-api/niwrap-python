@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_JOINT_LABEL_FUSION_SH_METADATA = Metadata(
-    id="247a29d0e6dd59cbbad0a89af0ca5b7e052f7e73.boutiques",
+    id="c1267bf8b624408f46319d6d24c21b8a6d4c38ca.boutiques",
     name="antsJointLabelFusion.sh",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

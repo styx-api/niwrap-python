@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__MEASURE_EROSION_THICK_METADATA = Metadata(
-    id="0a17dd4546f4d28205dbdff108358d9b46fa5306.boutiques",
+    id="38a8daf5a4a8dae931166c9e1c03b44c10b6b8df.boutiques",
     name="@measure_erosion_thick",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

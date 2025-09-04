@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__SUMA_FSVOL_TO_BRIK_METADATA = Metadata(
-    id="4852184b5da4f86b34b433664927c76929e3ca4c.boutiques",
+    id="67ffbfb1c41a26dac3811235a2de927d197e7174.boutiques",
     name="@SUMA_FSvolToBRIK",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

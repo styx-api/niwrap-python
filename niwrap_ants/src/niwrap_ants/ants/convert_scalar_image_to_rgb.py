@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CONVERT_SCALAR_IMAGE_TO_RGB_METADATA = Metadata(
-    id="3d2bbf73fe4824b5d14e6ad1dad04dc288964f49.boutiques",
+    id="0188f81662be3b550786a9a91112208db37eb27b.boutiques",
     name="ConvertScalarImageToRGB",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

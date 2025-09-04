@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CONVERT_CDIFLIST_TO_GRADS_PY_METADATA = Metadata(
-    id="952d22bf52099f1384279868ad4b5aae296890e4.boutiques",
+    id="64ab963d60d406f9d0685d461ee3fcdb60c15e0c.boutiques",
     name="convert_cdiflist_to_grads.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

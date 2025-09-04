@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CONVEX_HULL_METADATA = Metadata(
-    id="212679c3e56974a08070cda35b98c1c96c0bfe04.boutiques",
+    id="79e3bac48907406f7ee6520d509c9b76000ff72f.boutiques",
     name="ConvexHull",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

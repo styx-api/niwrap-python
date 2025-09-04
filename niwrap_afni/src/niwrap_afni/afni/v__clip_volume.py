@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__CLIP_VOLUME_METADATA = Metadata(
-    id="0999d3039fac00d441e01a61ca33ad8ceb36a238.boutiques",
+    id="7c7d598a3972fa11983862ca7a48415ad15d22ac.boutiques",
     name="@clip_volume",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

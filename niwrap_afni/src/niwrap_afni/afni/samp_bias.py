@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SAMP_BIAS_METADATA = Metadata(
-    id="73bcedebddacb73e50fa496ef2f4a5a44b29fdd5.boutiques",
+    id="4faddcdab52d97992d0c7bcd367e7c5071d25515.boutiques",
     name="SampBias",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

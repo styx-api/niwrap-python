@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DEFACE_SUBJECT_METADATA = Metadata(
-    id="89832befbb0be4ec4bfd9bda31d48569152b4136.boutiques",
+    id="7c334a149092c36895908dacd855b00538942a5d.boutiques",
     name="deface_subject",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

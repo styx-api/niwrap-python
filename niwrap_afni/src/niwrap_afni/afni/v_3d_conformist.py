@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_CONFORMIST_METADATA = Metadata(
-    id="63b3754b3ba2db8a7c79b06afeb0810bdb32d0bc.boutiques",
+    id="5364044bdb15b4b167c48ea32e2e56b54471409d.boutiques",
     name="3dConformist",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

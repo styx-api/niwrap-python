@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TEXTURE_RUN_LENGTH_FEATURES_METADATA = Metadata(
-    id="cdad220e1f92008ab3b0f50c2e99cfb09db10d4d.boutiques",
+    id="bea2e1f273411c3a732dce2d0c932046b8f8f464.boutiques",
     name="TextureRunLengthFeatures",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

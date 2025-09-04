@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSPALM_METADATA = Metadata(
-    id="6423174c0a141ab40ff807e3980bfa4f3ce57b18.boutiques",
+    id="cf8e3d88104ed079f77f6b32ec9e15dfe608166a.boutiques",
     name="fspalm",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__ADD_EDGE_METADATA = Metadata(
-    id="06a72814ee44ef3e2b9ca6f055c466f63cd08827.boutiques",
+    id="8cd52f727a7c5099091545565ae09d97e24fe8dd.boutiques",
     name="@AddEdge",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

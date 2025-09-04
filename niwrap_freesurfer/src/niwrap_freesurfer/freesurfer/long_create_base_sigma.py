@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LONG_CREATE_BASE_SIGMA_METADATA = Metadata(
-    id="359af0d6b57993950b3f756ef93dd6df37402a88.boutiques",
+    id="4c6141a217c61baf0c141da4a8f2865bd36f37dd.boutiques",
     name="long_create_base_sigma",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

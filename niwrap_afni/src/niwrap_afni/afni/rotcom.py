@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ROTCOM_METADATA = Metadata(
-    id="fd59ff87f6727df1beafdf436f19aba6a53a3cea.boutiques",
+    id="cedbefcf10a28280103e75a171cb3de8c47463b6.boutiques",
     name="rotcom",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

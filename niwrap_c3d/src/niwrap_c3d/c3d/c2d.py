@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 C2D_METADATA = Metadata(
-    id="6fbd44c3822e359b015bdf476d5481a92c77d17d.boutiques",
+    id="14020b0937295500f0b0909841a2550a57433a6c.boutiques",
     name="c2d",
     package="c3d",
     container_image_tag="pyushkevich/itksnap:v3.8.2",

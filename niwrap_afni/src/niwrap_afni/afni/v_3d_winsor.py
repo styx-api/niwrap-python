@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_WINSOR_METADATA = Metadata(
-    id="92e62c723247bd822fe1b796340d17082d011bd9.boutiques",
+    id="63d591ddd595415c5679482f5edf0c3b0117e9eb.boutiques",
     name="3dWinsor",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

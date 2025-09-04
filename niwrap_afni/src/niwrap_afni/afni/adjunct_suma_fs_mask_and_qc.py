@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ADJUNCT_SUMA_FS_MASK_AND_QC_METADATA = Metadata(
-    id="37b21ccd5c604daa479e5db4fabbf97bb4f18994.boutiques",
+    id="0b8258892cbf5ad4aa648c0f8ea129aed0f967cd.boutiques",
     name="adjunct_suma_fs_mask_and_qc",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

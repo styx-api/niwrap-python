@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PROMPT_POPUP_METADATA = Metadata(
-    id="c24519073e7efb98045929a1a4d42a4a25f3e8ef.boutiques",
+    id="1754fed0e11b63758a193b0de9198e3fac8f88c3.boutiques",
     name="prompt_popup",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

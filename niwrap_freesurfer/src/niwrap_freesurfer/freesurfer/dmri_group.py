@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DMRI_GROUP_METADATA = Metadata(
-    id="93e524a844ab2f832a6731597f76dcfcfbb61112.boutiques",
+    id="bbcba71ee223998296e5cb23fe97ac0a430c9718.boutiques",
     name="dmri_group",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

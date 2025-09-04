@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3DROTATE_METADATA = Metadata(
-    id="bedf388c506ade76e3d20b0cde9521d511961b2e.boutiques",
+    id="faff662007ce788fdeb0edbcc281fab85f7a83d9.boutiques",
     name="3drotate",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

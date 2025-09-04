@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__RENAME_PANGA_METADATA = Metadata(
-    id="667fb48aeb92a9756a0ac4f7c1ba77ceb5554bab.boutiques",
+    id="f6ac5e008e4d183c833a40c6cb0ed7f8a09bb03c.boutiques",
     name="@RenamePanga",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

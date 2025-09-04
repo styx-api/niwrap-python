@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__SHOW_DYNAMIC_RANGE_METADATA = Metadata(
-    id="79a18236c270604039c67089fe05e4d75deeff40.boutiques",
+    id="2b71199429f8c25442c744816458a31d2cae16d0.boutiques",
     name="@ShowDynamicRange",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

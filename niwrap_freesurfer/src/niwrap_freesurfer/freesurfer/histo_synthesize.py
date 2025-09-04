@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 HISTO_SYNTHESIZE_METADATA = Metadata(
-    id="946fc632c928dd4853d72358819684fced1a0ab5.boutiques",
+    id="22328b0a53f00b2d16b4d4c6b5dab0dfb12a1d70.boutiques",
     name="histo_synthesize",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

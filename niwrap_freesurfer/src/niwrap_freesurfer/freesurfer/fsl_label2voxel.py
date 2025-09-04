@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSL_LABEL2VOXEL_METADATA = Metadata(
-    id="488fd9f6f8cf1cc2dafb238be876366f78aac9b2.boutiques",
+    id="b7cfa174c1d53b421fb427ab1a24c20eebcc6c94.boutiques",
     name="fsl_label2voxel",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

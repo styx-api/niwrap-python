@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ADJUNCT_COMBINE_STR_PY_METADATA = Metadata(
-    id="000e1eed64bccb1d991895bd288ca5f9ee91719d.boutiques",
+    id="c40413f9850076201efeb4cb725687d44a1fda1d.boutiques",
     name="adjunct_combine_str.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

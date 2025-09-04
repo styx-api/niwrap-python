@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_1D_BANDPASS_METADATA = Metadata(
-    id="104ecd08be741b5ae61424022bc0666d569805e3.boutiques",
+    id="b2059d142bea69c6d41d2aeaeddd1bf0a7feffa9.boutiques",
     name="1dBandpass",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

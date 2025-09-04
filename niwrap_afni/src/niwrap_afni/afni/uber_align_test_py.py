@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 UBER_ALIGN_TEST_PY_METADATA = Metadata(
-    id="20699d437f455f9157d451d23c5cf085923ab9b5.boutiques",
+    id="8db49cffc0b0ffff63d0de6633fa5778cf55d4ab.boutiques",
     name="uber_align_test.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

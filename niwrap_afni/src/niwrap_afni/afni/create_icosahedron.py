@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CREATE_ICOSAHEDRON_METADATA = Metadata(
-    id="7e97ac60c3ab73084c4724cc7515e703d2c1bdde.boutiques",
+    id="96e2d49d3eefc8b7ccf8343e61f4a58a876cac50.boutiques",
     name="CreateIcosahedron",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

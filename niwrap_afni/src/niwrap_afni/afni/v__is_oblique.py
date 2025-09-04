@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__IS_OBLIQUE_METADATA = Metadata(
-    id="26f04b5daa7f9df4c6266d840714d074632c8670.boutiques",
+    id="1db61c294d0093711594ad61dae63fc37edee3bb.boutiques",
     name="@isOblique",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_1DMATCALC_METADATA = Metadata(
-    id="39dfacdca25eb6ed111a4b0aece4bcb728d9b08a.boutiques",
+    id="3d885ad283a58a557b3d058e1282611af7f67092.boutiques",
     name="1dmatcalc",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

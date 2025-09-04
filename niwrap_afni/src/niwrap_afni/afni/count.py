@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 COUNT_METADATA = Metadata(
-    id="988ff55fdaad56036baf2929faf8abe20f54fb03.boutiques",
+    id="12da58ce0df53dbf18689eebeddd8ea53ea970cf.boutiques",
     name="count",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

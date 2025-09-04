@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TILE_IMAGES_METADATA = Metadata(
-    id="d25b8eb520a9f772e1be8a0571d47dff47f48e49.boutiques",
+    id="d5c59deda3b33a375285832f265a0151acf9c1d9.boutiques",
     name="TileImages",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

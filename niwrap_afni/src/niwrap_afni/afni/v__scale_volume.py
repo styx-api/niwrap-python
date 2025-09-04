@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__SCALE_VOLUME_METADATA = Metadata(
-    id="7b94d7257fff5e03d0ac0fc678af0dd8643049e9.boutiques",
+    id="38e29f0a503eb7393584f6500f816808bb70e0b9.boutiques",
     name="@ScaleVolume",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

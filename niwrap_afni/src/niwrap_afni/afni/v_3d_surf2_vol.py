@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_SURF2_VOL_METADATA = Metadata(
-    id="14b2b0e145e4a003c0ef00b979511c3cd7e14d9b.boutiques",
+    id="1f2f454c8e97201c60f42b8b26c9ecfeb795f1a7.boutiques",
     name="3dSurf2Vol",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

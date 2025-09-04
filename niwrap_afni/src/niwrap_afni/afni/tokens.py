@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TOKENS_METADATA = Metadata(
-    id="fa203a3c21c39761a0f8e237a33304c1ff4334e3.boutiques",
+    id="8789e51456a92251b79dc05e20a851cdc91189eb.boutiques",
     name="tokens",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

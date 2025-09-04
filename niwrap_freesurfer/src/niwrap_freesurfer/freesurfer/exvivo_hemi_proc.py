@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 EXVIVO_HEMI_PROC_METADATA = Metadata(
-    id="cb414a078e8d94e5c45d97713e59b5d051d0f4fb.boutiques",
+    id="29085991345ac22aea975305bede128ac6b2e321.boutiques",
     name="exvivo-hemi-proc",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

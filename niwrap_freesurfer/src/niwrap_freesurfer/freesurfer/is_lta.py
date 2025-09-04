@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 IS_LTA_METADATA = Metadata(
-    id="a9d22638bdece2ba3d66169a55affcf047517108.boutiques",
+    id="5b9882c3525933a7e40833c3e89a1444ba13a395.boutiques",
     name="IsLTA",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

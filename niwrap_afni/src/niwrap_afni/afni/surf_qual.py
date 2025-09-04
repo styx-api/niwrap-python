@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURF_QUAL_METADATA = Metadata(
-    id="dfb574190dfe225eb71023ac6f70ac221b310d08.boutiques",
+    id="ca9fbbde93da6b6ba30bd230838b95dce4404bf8.boutiques",
     name="SurfQual",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_MULTIVARIATE_TEMPLATE_CONSTRUCTION2_SH_METADATA = Metadata(
-    id="db2efca66d9d39c14e98577f3a638cb0f63e4218.boutiques",
+    id="dcd5ca5151722ef03dfc3e47fb8b190e2c1c0932.boutiques",
     name="antsMultivariateTemplateConstruction2.sh",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

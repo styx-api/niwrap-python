@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 IMAGE_SET_STATISTICS_METADATA = Metadata(
-    id="9329b484e2f67dba69c548b9b9a373ea2a072aa8.boutiques",
+    id="d02e2ac8fe2bc9079ce6267ba5d5982285e6b1bf.boutiques",
     name="ImageSetStatistics",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

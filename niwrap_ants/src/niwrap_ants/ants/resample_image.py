@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RESAMPLE_IMAGE_METADATA = Metadata(
-    id="243da81f65ea0a482b7b69380239da5960d94d94.boutiques",
+    id="3ea6d6619e81683724c08de9ba5f46a2f3e89995.boutiques",
     name="ResampleImage",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DTISTUDIO_FIBERTO_SEGMENTS_METADATA = Metadata(
-    id="7b645090f91e42ee064699f7e346fa9a87d9da30.boutiques",
+    id="153d8358c9e73a90c71c3f69eea088cdcd8f1746.boutiques",
     name="DTIStudioFibertoSegments",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

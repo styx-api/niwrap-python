@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__AFNI_REFACER_MAKE_ONEBIG_A12_METADATA = Metadata(
-    id="f03df11cce5321951f2161a48a9756c76bd1cf4e.boutiques",
+    id="0bc73fd2469df279796b8de9f4bc8643932c82f1.boutiques",
     name="@afni_refacer_make_onebigA12",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

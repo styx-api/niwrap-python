@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 AP_RUN_SIMPLE_REST_TCSH_METADATA = Metadata(
-    id="2f520f36d8190095e664639c463b2a7247eb3ac8.boutiques",
+    id="7e737e7c00ddc467814f6d863dc72a85ba7f5b1b.boutiques",
     name="ap_run_simple_rest.tcsh",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

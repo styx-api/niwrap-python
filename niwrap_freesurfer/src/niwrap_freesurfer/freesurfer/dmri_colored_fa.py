@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DMRI_COLORED_FA_METADATA = Metadata(
-    id="46a4473ad7a91ae9adbdb875b3792b8a983b19dc.boutiques",
+    id="718feafd2d16e543f6009bc9e147cd221438c40e.boutiques",
     name="dmri_coloredFA",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

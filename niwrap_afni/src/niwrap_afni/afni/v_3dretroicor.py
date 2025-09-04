@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3DRETROICOR_METADATA = Metadata(
-    id="925ba5dcd931de5a0a798d7af5a4598a7437092e.boutiques",
+    id="ac5b72f1993f14309c37ea9caf0344ab63a04ab3.boutiques",
     name="3dretroicor",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__FIX_FSSPHERE_METADATA = Metadata(
-    id="f74e39104dce4bf48131b40121e83b0669d1fac9.boutiques",
+    id="57a2fc2c6540525c0a354779c65d7c1d7921414a.boutiques",
     name="@fix_FSsphere",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

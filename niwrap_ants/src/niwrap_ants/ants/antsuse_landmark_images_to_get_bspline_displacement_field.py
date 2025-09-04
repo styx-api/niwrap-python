@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTSUSE_LANDMARK_IMAGES_TO_GET_BSPLINE_DISPLACEMENT_FIELD_METADATA = Metadata(
-    id="ccd2c57d89d2afd04ff06a69edd6fd4609e3b45b.boutiques",
+    id="97a7208c0feb66caac1f85f91d7e5b2be53f6438.boutiques",
     name="ANTSUseLandmarkImagesToGetBSplineDisplacementField",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

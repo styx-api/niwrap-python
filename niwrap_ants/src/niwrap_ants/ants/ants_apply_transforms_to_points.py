@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_APPLY_TRANSFORMS_TO_POINTS_METADATA = Metadata(
-    id="1ba8745cbb78f985d998ca462d13cc2627bbcd68.boutiques",
+    id="e37a5b8e4d1b3bc448995c7e8c944e1559bba40f.boutiques",
     name="antsApplyTransformsToPoints",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

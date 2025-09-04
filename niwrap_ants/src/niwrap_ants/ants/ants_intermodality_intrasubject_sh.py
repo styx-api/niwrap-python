@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_INTERMODALITY_INTRASUBJECT_SH_METADATA = Metadata(
-    id="e4f43efff74611f07e60c00f682c377a411a79c7.boutiques",
+    id="4c7c5492fcbe6ca2173159c5be98ecb63525e76c.boutiques",
     name="antsIntermodalityIntrasubject.sh",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

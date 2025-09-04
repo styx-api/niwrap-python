@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__FAT_TRACT_COLORIZE_METADATA = Metadata(
-    id="52600b9abdebebf0fd475c3cbed6752a3fa87572.boutiques",
+    id="8d8b3aaa35758a6a6a78e0730ac40b3f96234ac2.boutiques",
     name="@fat_tract_colorize",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

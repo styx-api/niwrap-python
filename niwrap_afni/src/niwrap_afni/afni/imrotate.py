@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 IMROTATE_METADATA = Metadata(
-    id="b1deba5a72945c551d4389c3320d0152b83b453a.boutiques",
+    id="68a8a871a455385d9e6b357b30b75c0ea9b3cc6d.boutiques",
     name="imrotate",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

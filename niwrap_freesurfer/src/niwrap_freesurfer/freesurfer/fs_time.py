@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FS_TIME_METADATA = Metadata(
-    id="897824286c7098dc9c88cb3bcaf0654aece28325.boutiques",
+    id="ebe69ebd0ffd307fd6b99269db6880b8aacee0d9.boutiques",
     name="fs_time",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

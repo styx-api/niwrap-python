@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 NEURO_DECONVOLVE_PY_METADATA = Metadata(
-    id="154583959fdfd006d275bd6d8f9c6a8e067b7747.boutiques",
+    id="68370abf4e1ff88106fda189b221bf2ee052bc8b.boutiques",
     name="neuro_deconvolve.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

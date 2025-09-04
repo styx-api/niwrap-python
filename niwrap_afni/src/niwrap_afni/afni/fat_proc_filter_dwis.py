@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FAT_PROC_FILTER_DWIS_METADATA = Metadata(
-    id="3def8805da69fa90cfe590bc1ca23a15f6d16d00.boutiques",
+    id="9978a84be8a7011c9a5406c54e68397255149cfc.boutiques",
     name="fat_proc_filter_dwis",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_TSORT_METADATA = Metadata(
-    id="57a44e6cf176a45cac2081b1b5e5c2beead9d843.boutiques",
+    id="5d9ca58028660f8bc8ecbc139838677b6c58e892.boutiques",
     name="3dTsort",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

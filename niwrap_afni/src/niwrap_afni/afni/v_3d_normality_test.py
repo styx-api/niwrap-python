@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_NORMALITY_TEST_METADATA = Metadata(
-    id="14d5ae08c9e5a24d364a73473b07d9f557ff4cdc.boutiques",
+    id="f4e493074cf1abbf672c4d1c6107ad9f408737a2.boutiques",
     name="3dNormalityTest",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

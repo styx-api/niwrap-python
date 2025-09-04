@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__AFNI_ORIENT2_RAIMAP_METADATA = Metadata(
-    id="ade1258888a2ab4d7104b72e6f2921d74eaf281c.boutiques",
+    id="febf1cf266ecd5b8f67d7b9d8795b382c26c3672.boutiques",
     name="@AfniOrient2RAImap",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

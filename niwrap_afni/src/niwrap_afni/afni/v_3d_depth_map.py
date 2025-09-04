@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_DEPTH_MAP_METADATA = Metadata(
-    id="b4b586aabaa0388928e52c39e0a960a38ea18d5b.boutiques",
+    id="08e415c1078b5105d214367ddc3e04f3759931bf.boutiques",
     name="3dDepthMap",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__REORDER_METADATA = Metadata(
-    id="ef9c00baf613311acb5352e7a897dfe4418a1739.boutiques",
+    id="cd46479c358c4447d40503c639bbd80f9c31e06b.boutiques",
     name="@Reorder",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

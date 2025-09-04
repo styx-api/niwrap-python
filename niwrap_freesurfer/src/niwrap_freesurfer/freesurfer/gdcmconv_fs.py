@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 GDCMCONV_FS_METADATA = Metadata(
-    id="33b8dc164d4657e5b24c4c1c814e2af7b9be58de.boutiques",
+    id="4c87edca5ec76949a0836b632419b5e22128e9fd.boutiques",
     name="gdcmconv.fs",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

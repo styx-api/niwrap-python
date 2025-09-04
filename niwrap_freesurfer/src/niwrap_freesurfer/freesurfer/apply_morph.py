@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 APPLY_MORPH_METADATA = Metadata(
-    id="a7cb7e420a1c51fbb13f7cd6c2a1a9581804bf02.boutiques",
+    id="132df3f4036c201bd32bea9d1d867e1167f7130a.boutiques",
     name="applyMorph",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

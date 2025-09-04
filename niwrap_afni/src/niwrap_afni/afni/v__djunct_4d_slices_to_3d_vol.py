@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__DJUNCT_4D_SLICES_TO_3D_VOL_METADATA = Metadata(
-    id="38d40d23214be20723f89d4b5c429e8239857bce.boutiques",
+    id="d33d93b8039f4982d3532e2434ea65801211058f.boutiques",
     name="@djunct_4d_slices_to_3d_vol",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

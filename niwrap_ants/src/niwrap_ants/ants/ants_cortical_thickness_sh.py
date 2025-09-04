@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_CORTICAL_THICKNESS_SH_METADATA = Metadata(
-    id="44e126ab23855a6ccaa350a4283c4fd57c32b166.boutiques",
+    id="ae1660a4ec44065cf422065a1b939e3774e7d40d.boutiques",
     name="antsCorticalThickness.sh",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

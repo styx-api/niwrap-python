@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_ZEROPAD_METADATA = Metadata(
-    id="8becb29cf5d687af1a0c52c165ec0b440d32f49e.boutiques",
+    id="4fa7de0aae4ebc4468329b27d1522e9ee05fa450.boutiques",
     name="3dZeropad",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

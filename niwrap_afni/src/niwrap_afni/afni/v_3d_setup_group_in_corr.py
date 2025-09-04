@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_SETUP_GROUP_IN_CORR_METADATA = Metadata(
-    id="f4fdb6eb2bdc0a77fec3e1f1a2cc5b51172322c2.boutiques",
+    id="1683850374da35dcf958ddc69409cefbc1f13897.boutiques",
     name="3dSetupGroupInCorr",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 C3D_AFFINE_TOOL_METADATA = Metadata(
-    id="2295d98cda024ded2d2eadd5e1580f26abde5005.boutiques",
+    id="0b1b06c61e46fd55263a58174fa7b70673ba5e42.boutiques",
     name="c3d_affine_tool",
     package="c3d",
     container_image_tag="pyushkevich/itksnap:v3.8.2",

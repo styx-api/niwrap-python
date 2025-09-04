@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ADJUNCT_SUMA_FS_ROI_INFO_METADATA = Metadata(
-    id="174d682bbfbcc03f436d1ab2dd83376c7847145f.boutiques",
+    id="4c3bf5516cdbc83d322f7348efd10351c15c126e.boutiques",
     name="adjunct_suma_fs_roi_info",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

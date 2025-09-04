@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_REG_ANA_METADATA = Metadata(
-    id="d0f5f9773868694c40c8514ea58aae0c0f7243a6.boutiques",
+    id="6831e3fbaee6f2899266f38b3f5966413f97b912.boutiques",
     name="3dRegAna",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
