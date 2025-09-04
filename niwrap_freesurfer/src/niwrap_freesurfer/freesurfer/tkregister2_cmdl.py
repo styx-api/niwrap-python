@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TKREGISTER2_CMDL_METADATA = Metadata(
-    id="ed8b788e122e447337e0542452594478069e771c.boutiques",
+    id="3c265476564c72007cd82dd01a3552816a012f13.boutiques",
     name="tkregister2_cmdl",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

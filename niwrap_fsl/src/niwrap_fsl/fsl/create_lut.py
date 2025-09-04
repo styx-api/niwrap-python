@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CREATE_LUT_METADATA = Metadata(
-    id="688762d596401ed60ef6a0443f776bcf58dd7a95.boutiques",
+    id="9269e1c9b98bb94443dfb4e23fd3d58e3d79a3fd.boutiques",
     name="create_lut",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

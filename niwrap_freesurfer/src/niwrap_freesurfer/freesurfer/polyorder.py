@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 POLYORDER_METADATA = Metadata(
-    id="e6d4be8d2371cbb8cd8b9c4ced96e4b035574b00.boutiques",
+    id="2b601fbf0ae32a926483834344de385bcab3fb0f.boutiques",
     name="polyorder",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

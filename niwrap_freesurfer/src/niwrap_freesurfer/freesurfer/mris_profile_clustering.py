@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_PROFILE_CLUSTERING_METADATA = Metadata(
-    id="bfb3ad2ae45a1b0b3bdf59163ae8d98a75f29e41.boutiques",
+    id="d05a50a56ea6dcbf1723835e699f7dd1938ab8f5.boutiques",
     name="mris_profileClustering",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TAL_QC_AZS_METADATA = Metadata(
-    id="886563f0c6afbd7ecc04616fab1fcccc741bff0c.boutiques",
+    id="ba15945e9f7433adbd377a8a840d236dd9d40a78.boutiques",
     name="tal_QC_AZS",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

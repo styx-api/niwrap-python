@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VERTEXVOL_METADATA = Metadata(
-    id="898fd4926cfe3b5a863ffabd2c7c51dd3a39db87.boutiques",
+    id="8baaecedc11fde7b13401f036b6eb18a6aa86e88.boutiques",
     name="vertexvol",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PCTSURFCON_METADATA = Metadata(
-    id="41f4f72ed55be4072d0d15d9f6300820448d5489.boutiques",
+    id="bc20b6316dfee9817f866a81eff8ba3e5882f17b.boutiques",
     name="pctsurfcon",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

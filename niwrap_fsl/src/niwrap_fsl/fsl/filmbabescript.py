@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FILMBABESCRIPT_METADATA = Metadata(
-    id="c482f1ace2d9ca2fee7c3ed712be29e7f1ae595a.boutiques",
+    id="0461613e5128f9569a94a355e9ab701d23a03e2a.boutiques",
     name="filmbabescript",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MELODIC_METADATA = Metadata(
-    id="26dfaaafda323665e1ced6f940ff5cca346ee530.boutiques",
+    id="0e6ee0e215b2ec04ff4aa7674e916c1ec0900630.boutiques",
     name="melodic",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

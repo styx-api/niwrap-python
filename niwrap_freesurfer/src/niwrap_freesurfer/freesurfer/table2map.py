@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TABLE2MAP_METADATA = Metadata(
-    id="a1a6b6fb84c32df9b568c86f461d163ba6cbfca6.boutiques",
+    id="375fcb71ecdd3f7b02dfe12003321f048a22ccc7.boutiques",
     name="table2map",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

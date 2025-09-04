@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_MAKE_FACE_PARCELLATION_METADATA = Metadata(
-    id="fbb9898a52d45c0f46546002063d534704d78c03.boutiques",
+    id="a83c31ac33801cde424aa5e0a50696c422d569e6.boutiques",
     name="mris_make_face_parcellation",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

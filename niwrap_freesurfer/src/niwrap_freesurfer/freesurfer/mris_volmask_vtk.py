@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_VOLMASK_VTK_METADATA = Metadata(
-    id="f8c4ef4d9ac1def35648cc249ff61b45748f1ac2.boutiques",
+    id="18075f3e0f86b04df853ca3f2d12d30d3e8248fb.boutiques",
     name="mris_volmask_vtk",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

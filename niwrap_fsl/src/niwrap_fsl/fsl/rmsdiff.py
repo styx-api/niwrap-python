@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RMSDIFF_METADATA = Metadata(
-    id="721e867f6f94c898ce8453a6c1d46d329b31f94e.boutiques",
+    id="b571c69801b50f7f4ea39561f48adab04ceb60db.boutiques",
     name="rmsdiff",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

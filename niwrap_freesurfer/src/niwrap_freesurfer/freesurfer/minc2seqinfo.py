@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MINC2SEQINFO_METADATA = Metadata(
-    id="d57928aac7b425a7a859150e95ea57280a4d9604.boutiques",
+    id="40252e04328965715491d4e0d301dc7e8b671e34.boutiques",
     name="minc2seqinfo",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 EPI_REG_METADATA = Metadata(
-    id="397743cf48e9d8058e99b76a123e7617766baf7d.boutiques",
+    id="13e13252bc33a9e434c1924d267c3f59fa9def03.boutiques",
     name="epi_reg",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

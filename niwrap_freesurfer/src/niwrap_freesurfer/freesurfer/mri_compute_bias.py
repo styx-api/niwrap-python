@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_COMPUTE_BIAS_METADATA = Metadata(
-    id="fd8e507da48077556003e985db0ee8f6c8bbbc9b.boutiques",
+    id="6db834c786647e9384d2bb5c471bfe16ceddd6dd.boutiques",
     name="mri_compute_bias",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

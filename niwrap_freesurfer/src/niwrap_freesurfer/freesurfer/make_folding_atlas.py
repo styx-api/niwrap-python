@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MAKE_FOLDING_ATLAS_METADATA = Metadata(
-    id="7d950e528878826072902a114342355a24eb6c2b.boutiques",
+    id="153fb163dd26597740f452df478d4ac29c867616.boutiques",
     name="make_folding_atlas",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

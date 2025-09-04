@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SRATIO_METADATA = Metadata(
-    id="a0c61694880fb0d0ab8bc4437e881ebd40901b82.boutiques",
+    id="5677bab1e316327b9e1c66c023ddc455c4daf9a6.boutiques",
     name="sratio",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SLICEANIMATE_METADATA = Metadata(
-    id="3bb238a4c3747753c762aa5c93289948cbb7662a.boutiques",
+    id="eaa2838b719a179dfc1e98bc198593a99de3a09e.boutiques",
     name="sliceanimate",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

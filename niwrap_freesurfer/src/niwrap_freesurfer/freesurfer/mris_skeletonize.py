@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_SKELETONIZE_METADATA = Metadata(
-    id="0fd18a4509433802a711a64ec204f40b5554f22b.boutiques",
+    id="0fdd79ec24e0401776bf73585a340c5f957f2405.boutiques",
     name="mris_skeletonize",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

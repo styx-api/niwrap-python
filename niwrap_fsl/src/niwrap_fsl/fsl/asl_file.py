@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ASL_FILE_METADATA = Metadata(
-    id="b145a87b22ac321ce412e95b5179f65b7c044a2f.boutiques",
+    id="bba64fdd11067cc028c4c5d1df1c7359788d0c6a.boutiques",
     name="asl_file",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

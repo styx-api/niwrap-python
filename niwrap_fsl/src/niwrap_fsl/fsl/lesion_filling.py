@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LESION_FILLING_METADATA = Metadata(
-    id="18bfd82640cfbcfa322487f12eec8009e75f8b5d.boutiques",
+    id="1e65b5bcc2e50127be5143fa0cd4bc6affc80fd9.boutiques",
     name="lesion_filling",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

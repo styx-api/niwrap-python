@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 STD2IMGCOORD_METADATA = Metadata(
-    id="06097a1354792b31a5157d69abde462655d2d3a6.boutiques",
+    id="fe058392ca5a29c55a3d46a4459d1f6a0b06adab.boutiques",
     name="std2imgcoord",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

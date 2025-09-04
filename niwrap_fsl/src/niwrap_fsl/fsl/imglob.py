@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 IMGLOB_METADATA = Metadata(
-    id="69cd7a2cb4c69776a7db0456b3cb5af52ec8ff76.boutiques",
+    id="5679f0b3fa3e209aff9a49a163b3749df9118dcb.boutiques",
     name="imglob",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

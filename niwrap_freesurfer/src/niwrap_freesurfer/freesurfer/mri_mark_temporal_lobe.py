@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_MARK_TEMPORAL_LOBE_METADATA = Metadata(
-    id="75e6e60a85ce6a2bfb0234747d1412e2709192d8.boutiques",
+    id="cdc706940df41145e69814f5506bef3ea15ae487.boutiques",
     name="mri_mark_temporal_lobe",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_GLMFIT_SIM_METADATA = Metadata(
-    id="81cf6a49469f9fd67bac37d962ac078f78dffe90.boutiques",
+    id="db99628afb9c4582b7884fcf4c00fba3413034c3.boutiques",
     name="mri_glmfit-sim",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

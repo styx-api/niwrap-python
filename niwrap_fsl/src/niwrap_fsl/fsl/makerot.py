@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MAKEROT_METADATA = Metadata(
-    id="c8ad13a156bfd624943e9d35ecac0e5e11cdbf9c.boutiques",
+    id="f54ecdee1c289e241f72ffa0e88774c79a779b3e.boutiques",
     name="makerot",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

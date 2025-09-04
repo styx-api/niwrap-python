@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PRELUDE_METADATA = Metadata(
-    id="dccfbfdb8ed4e23f2a95b3d7d1951fe254df6693.boutiques",
+    id="c6a0e4f48cb0def61bd6bdb0dcb67dfa2b64dc5d.boutiques",
     name="prelude",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

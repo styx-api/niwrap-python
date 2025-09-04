@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_PROBEDICOM_METADATA = Metadata(
-    id="7f1797c009bba5f7f144df962f6ea7dfb90ac510.boutiques",
+    id="e1b3bdc72222d3578b3efc72f9534b11ca6f6261.boutiques",
     name="mri_probedicom",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MAKE_DYADIC_VECTORS_METADATA = Metadata(
-    id="dcd3b4614dc898f6e0238ec07111ca8117f65008.boutiques",
+    id="0d60dfdde04a5ce84cd5698cb7c5644c27685d57.boutiques",
     name="make_dyadic_vectors",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

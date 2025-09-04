@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_TOPO_FIXER_METADATA = Metadata(
-    id="8f80d79d55bacb40b2cbd2f6150f071f3dec1313.boutiques",
+    id="130981631be6b9b28baff8c72da137e074e52936.boutiques",
     name="mris_topo_fixer",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

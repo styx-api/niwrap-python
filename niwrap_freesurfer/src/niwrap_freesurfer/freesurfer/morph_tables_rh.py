@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MORPH_TABLES_RH_METADATA = Metadata(
-    id="0b7bdfd333d1ae3ca12dd01263420412372bb510.boutiques",
+    id="f6fbf33ff571242ee51f5f8e5a73a9abf1d87d0b.boutiques",
     name="morph_tables-rh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

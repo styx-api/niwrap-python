@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 IMRM_METADATA = Metadata(
-    id="2912eb712fa3a6125fef5aa4f51d0229fb833f90.boutiques",
+    id="f2bd28aaee17758776d9a766c86e6e9161dd250e.boutiques",
     name="imrm",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

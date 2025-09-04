@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MAP_ALL_LABELS_METADATA = Metadata(
-    id="462c951d78ae9c590ed2ea4c6261d60f96f1a539.boutiques",
+    id="7cdcb00ab943b88a9ec66dbd3667e475feba5e19.boutiques",
     name="map_all_labels",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

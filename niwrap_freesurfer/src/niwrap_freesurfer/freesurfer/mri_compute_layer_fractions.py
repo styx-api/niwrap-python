@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_COMPUTE_LAYER_FRACTIONS_METADATA = Metadata(
-    id="a8146683627b1832ed56bcd730a4888fd71017d9.boutiques",
+    id="8e237dcf475aabd98621f6fc5f16a5b4ffec92cc.boutiques",
     name="mri_compute_layer_fractions",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

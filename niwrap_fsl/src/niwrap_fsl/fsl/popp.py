@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 POPP_METADATA = Metadata(
-    id="c70c35d054916c3caf125fd1b72d01823ca917b8.boutiques",
+    id="109da1f246da1756bc3aa793df6646cb5b9f0246.boutiques",
     name="popp",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

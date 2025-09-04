@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PREWHITEN_METADATA = Metadata(
-    id="43d8c0085b1b1d413eb876ab522a94ce580ec7be.boutiques",
+    id="ceacbe09c29c6f92a468bcb14de97ad85f522501.boutiques",
     name="prewhiten",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

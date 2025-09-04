@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_FIND_FLAT_REGIONS_METADATA = Metadata(
-    id="c86aa7c8b5901b904aa92d271ff5970f326850a1.boutiques",
+    id="be573f569b90034ae9f6de163479dc51f840a2dd.boutiques",
     name="mris_find_flat_regions",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

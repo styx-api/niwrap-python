@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_REMOVE_NEGATIVE_VERTICES_METADATA = Metadata(
-    id="5a68aabeda2f4e6811f224288d7f4d9c8c795765.boutiques",
+    id="e5a89fc26e32cd844efa516970b571cf6064fcde.boutiques",
     name="mris_remove_negative_vertices",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

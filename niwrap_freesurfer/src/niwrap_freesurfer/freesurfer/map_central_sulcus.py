@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MAP_CENTRAL_SULCUS_METADATA = Metadata(
-    id="59e4d47cfdb10c0c50daadcb5d21dc2789079703.boutiques",
+    id="5c549551586600f53ac17c79e7ffe9f56d98b5c6.boutiques",
     name="map_central_sulcus",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

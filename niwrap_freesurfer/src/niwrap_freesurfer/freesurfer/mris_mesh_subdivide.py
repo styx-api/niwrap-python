@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_MESH_SUBDIVIDE_METADATA = Metadata(
-    id="43ce90cf6a44f8bcd3a24d12daa3e2183baa4a31.boutiques",
+    id="01bbf56fb52c81246c889b051a38d5054ff5195c.boutiques",
     name="mris_mesh_subdivide",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FEATREGAPPLY_METADATA = Metadata(
-    id="2ce5ebdfc71f9df7a3fb8dd81664fdf4fa345075.boutiques",
+    id="7aec4712113c7b2c58c6dd718630ad2ad49c1922.boutiques",
     name="featregapply",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

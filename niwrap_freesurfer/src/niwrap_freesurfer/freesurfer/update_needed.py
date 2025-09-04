@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 UPDATE_NEEDED_METADATA = Metadata(
-    id="bbeff96a804ee5f7f839128e9a8f2889e0e27e42.boutiques",
+    id="db8c9232b3360e24abd621ee1ace6d7a22a54132.boutiques",
     name="UpdateNeeded",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

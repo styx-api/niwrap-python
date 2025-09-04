@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TEST_ORIENTATION_PLANES_FROM_PARCELLATION_METADATA = Metadata(
-    id="d9e4252a13d21003be19f2759c3c32111b98c9e2.boutiques",
+    id="a0e7c2d4d564fe47df1edd4a3975b65bd96d8227.boutiques",
     name="testOrientationPlanesFromParcellation",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

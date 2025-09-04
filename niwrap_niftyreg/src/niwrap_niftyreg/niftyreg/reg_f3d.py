@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 REG_F3D_METADATA = Metadata(
-    id="b0005566615144d0f1aa5363cca293da625d3971.boutiques",
+    id="e1dbd964eb5e6624b2e18a2351f78c6f05a30390.boutiques",
     name="reg_f3d",
     package="niftyreg",
     container_image_tag="vnmd/niftyreg_1.4.0:20220819",

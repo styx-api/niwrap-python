@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 UNPACK_IMA1_TCL_METADATA = Metadata(
-    id="feba8f97ee33b863f2d23ca99c81c725a6e572db.boutiques",
+    id="879dfc4e2c1cd294a8c370964cc378f77296eb2a.boutiques",
     name="unpack_ima1.tcl",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

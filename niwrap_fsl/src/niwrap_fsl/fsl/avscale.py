@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 AVSCALE_METADATA = Metadata(
-    id="0e38b15f172b6816bad2fcced45ef761f1d72adf.boutiques",
+    id="a7e158e83af3e8758f4b3f92ad5363f705cf171d.boutiques",
     name="avscale",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

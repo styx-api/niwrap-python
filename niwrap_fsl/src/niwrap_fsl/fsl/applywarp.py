@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 APPLYWARP_METADATA = Metadata(
-    id="74909b5fce700425533a8c7bd7d384e2bd5c150b.boutiques",
+    id="347257c95a89909b2ce46f240091f5df03889f47.boutiques",
     name="applywarp",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

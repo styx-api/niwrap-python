@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 REGDAT2XFM_METADATA = Metadata(
-    id="b9432995881f050a69f7f6321a3344dd584bf012.boutiques",
+    id="6616f4ea03802055d15b1827ab4098f01d0e1d0d.boutiques",
     name="regdat2xfm",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

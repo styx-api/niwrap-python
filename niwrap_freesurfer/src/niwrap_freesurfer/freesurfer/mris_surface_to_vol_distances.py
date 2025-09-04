@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_SURFACE_TO_VOL_DISTANCES_METADATA = Metadata(
-    id="0803f1be3d6e6b156373a996f30cbdf91c784084.boutiques",
+    id="fafba889762effb030273d18df3d68b319b3f6a6.boutiques",
     name="mris_surface_to_vol_distances",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

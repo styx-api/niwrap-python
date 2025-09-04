@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 THICKDIFFMAP_METADATA = Metadata(
-    id="386d35dd120f181e0cd722b783b2ab7dab134ec4.boutiques",
+    id="3d6eab27a99149bcf829df0f8a5e86635a6ed4d0.boutiques",
     name="thickdiffmap",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

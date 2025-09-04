@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TRK_TOOLS_METADATA = Metadata(
-    id="e8662b8aa4556e166a6c80f8f4ea3e413af139aa.boutiques",
+    id="113c2ab5e4181b985d590456b9c41a26b1525c4f.boutiques",
     name="trk_tools",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

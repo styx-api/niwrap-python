@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RCA_BASE_INIT_METADATA = Metadata(
-    id="3c8d3ad6bcb4fc42684b1829ed14e08e22b13cd8.boutiques",
+    id="c55fc947d11178c3dfdddb94eba9f0a50fdf398f.boutiques",
     name="rca-base-init",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

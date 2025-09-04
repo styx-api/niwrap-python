@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSLSWAPDIM_EXE_METADATA = Metadata(
-    id="97d9c93f98c95055eaf40d197c460c130c5c0c4e.boutiques",
+    id="7c02ce7473b180b9601946e15594695e282d893a.boutiques",
     name="fslswapdim_exe",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

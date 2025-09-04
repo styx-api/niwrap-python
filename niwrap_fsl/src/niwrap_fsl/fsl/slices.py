@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SLICES_METADATA = Metadata(
-    id="a8594492356fc058a9bcf77bee3fdf328139290d.boutiques",
+    id="4289c0048444006a1853da0e0539d026b7d4b9fb.boutiques",
     name="slices",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

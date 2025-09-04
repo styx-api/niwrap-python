@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TRAC_PREPROC_METADATA = Metadata(
-    id="42b88183bcd352135a6f2621284dcf3f4430c692.boutiques",
+    id="21913fdc47128e05a924c3bd9320265aa78c9220.boutiques",
     name="trac-preproc",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

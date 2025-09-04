@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DTIGEN_METADATA = Metadata(
-    id="26e3d39b1213bf164649e73f628081a19756a5e0.boutiques",
+    id="abaee699f51242a35eba0eb7f3373dacc2e8c362.boutiques",
     name="dtigen",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

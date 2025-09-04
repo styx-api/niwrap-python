@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SLICEDELAY_METADATA = Metadata(
-    id="fefd12c00942108f1db83dac38baac8c6a806f9e.boutiques",
+    id="f6f4fe4c58eddbc76a9cd5aa81640e121ea9f052.boutiques",
     name="slicedelay",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

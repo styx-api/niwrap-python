@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ZEROPAD_METADATA = Metadata(
-    id="59ec07bb1e922d973d58ef847258171ce673bab0.boutiques",
+    id="88af77357126402075d3c052c3f0263af7fd3e22.boutiques",
     name="zeropad",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

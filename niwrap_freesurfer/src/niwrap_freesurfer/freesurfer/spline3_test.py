@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SPLINE3_TEST_METADATA = Metadata(
-    id="9ccbc9f138b1998a711b2f181ada2004afbb26fb.boutiques",
+    id="b6736dedb2a1a615decf03f5044e961689f145ae.boutiques",
     name="Spline3_test",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

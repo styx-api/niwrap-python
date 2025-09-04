@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 UNCONFOUND_METADATA = Metadata(
-    id="34ffd8c6c2867e92dcc1ce9a6c59da636e9e08a2.boutiques",
+    id="1907bcd0cc0aacbd331a700a5a469fec3c8a0c1a.boutiques",
     name="unconfound",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

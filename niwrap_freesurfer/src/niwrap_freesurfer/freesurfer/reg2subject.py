@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 REG2SUBJECT_METADATA = Metadata(
-    id="bd548e7db5696c14e468b04f1fafbb638585f19c.boutiques",
+    id="cefd2546e44a6b96bd7ddf7a1b9cf638824d614e.boutiques",
     name="reg2subject",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

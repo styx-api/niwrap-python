@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VIENA_QUANT_METADATA = Metadata(
-    id="7d5a7a07f45a14a2877c6e84007f4fd452ba4407.boutiques",
+    id="24ab165136ecc495bc4685a33991b32867715e60.boutiques",
     name="viena_quant",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

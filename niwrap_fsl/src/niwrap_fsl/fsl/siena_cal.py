@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SIENA_CAL_METADATA = Metadata(
-    id="b53c1eae8f14da0f80dcdb3e52fdf35ef7db733f.boutiques",
+    id="616069f380c3c85216a24ddc583f896c15fbcd02.boutiques",
     name="siena_cal",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

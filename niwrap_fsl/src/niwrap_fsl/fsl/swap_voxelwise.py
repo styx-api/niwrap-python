@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SWAP_VOXELWISE_METADATA = Metadata(
-    id="c84b215ba3d1a90ea860815c60f00b8df7204c6f.boutiques",
+    id="a67ba5db2731438636bdd3a139272c7544dfa806.boutiques",
     name="swap_voxelwise",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

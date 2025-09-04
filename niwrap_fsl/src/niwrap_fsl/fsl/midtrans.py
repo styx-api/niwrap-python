@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MIDTRANS_METADATA = Metadata(
-    id="86f11a5fd034e1ac886a982270ad8fdd8beaa7bf.boutiques",
+    id="10e0f9e9ad04da8a33160bb517a84ce8f21cc237.boutiques",
     name="midtrans",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

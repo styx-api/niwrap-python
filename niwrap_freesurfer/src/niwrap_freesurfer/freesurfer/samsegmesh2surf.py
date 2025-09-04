@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SAMSEGMESH2SURF_METADATA = Metadata(
-    id="87f0bba3783ef8326dcf1be161656bcc456d2f40.boutiques",
+    id="d3e9c8289d2b6f776a0193c487cb8308e01486dc.boutiques",
     name="samsegmesh2surf",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ROBUSTFOV_METADATA = Metadata(
-    id="7648b7c863e2e040e3c93931aa21307be8c46082.boutiques",
+    id="3a3ab4f8ff93286bd87b5ddcf30105a53ed295d4.boutiques",
     name="robustfov",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

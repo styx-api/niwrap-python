@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_THRESHOLD_METADATA = Metadata(
-    id="18118adc25493a185a902418d2d12f7e965b7d74.boutiques",
+    id="62baf41ab3970c5b8c42316e743a468c342edf72.boutiques",
     name="mri_threshold",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

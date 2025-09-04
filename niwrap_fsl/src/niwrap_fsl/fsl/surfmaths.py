@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFMATHS_METADATA = Metadata(
-    id="127d7002767598077923f23b914e230d8b471f40.boutiques",
+    id="e21fc7a7433f37700b8d049b36be6f3120b8b9c3.boutiques",
     name="surfmaths",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

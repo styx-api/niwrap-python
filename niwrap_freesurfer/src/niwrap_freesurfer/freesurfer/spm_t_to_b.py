@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SPM_T_TO_B_METADATA = Metadata(
-    id="aeb4cbf77424f7a4691e003e7bad0ef280a42842.boutiques",
+    id="afaa77ac1bfe69f2d9daa66647a841a94ca2b7f4.boutiques",
     name="spm_t_to_b",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

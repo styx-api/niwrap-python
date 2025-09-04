@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_REORIENT_LR_CSH_METADATA = Metadata(
-    id="05322ddfbba756994657c542f9080b8197d048b6.boutiques",
+    id="6efdc9d1eda19cd4e86c9f20673956a16ac97b79.boutiques",
     name="mri_reorient_LR.csh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

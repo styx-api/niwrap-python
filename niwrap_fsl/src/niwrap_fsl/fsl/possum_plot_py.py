@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 POSSUM_PLOT_PY_METADATA = Metadata(
-    id="19ab21ede9c348f44ba5e2d815ff44745892ba05.boutiques",
+    id="0b8991c6499202313265a91e3ebc3df1ba7da4d8.boutiques",
     name="possum_plot.py",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

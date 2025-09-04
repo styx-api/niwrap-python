@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ORIENT_LAS_METADATA = Metadata(
-    id="b3e62899eafe42b95670c2b16590844cb54f8b91.boutiques",
+    id="bf21dfa61b8f78898dd05f089d55ed40743032e8.boutiques",
     name="orientLAS",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

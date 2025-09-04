@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MAKE_EXVIVO_FILLED_METADATA = Metadata(
-    id="ea9e6e6bb03c9eb7e7861ad8386b4df6348f9898.boutiques",
+    id="7ee5fe2318131f79440c68789b7f04a126f5b450.boutiques",
     name="make_exvivo_filled",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

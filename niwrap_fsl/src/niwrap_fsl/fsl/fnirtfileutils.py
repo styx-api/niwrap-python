@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FNIRTFILEUTILS_METADATA = Metadata(
-    id="6f393c9c8a9942f1704b3749760c580ba99a3823.boutiques",
+    id="73625369dfdb0fb4ad4ccc9bf7c6bfab9934ca02.boutiques",
     name="fnirtfileutils",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RCA_CONFIG2CSH_METADATA = Metadata(
-    id="7da3f443ce243dae4e35d8db7f6e15691dc59ca6.boutiques",
+    id="14b4009919a087ddbdec70bbbbc62ee544d46b4c.boutiques",
     name="rca-config2csh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 XHEMI_TAL_METADATA = Metadata(
-    id="75297464bbd5b47449915f4f1464c80da7860766.boutiques",
+    id="79cc5e58c638bd8ad97c8290e29d9c646128e5ba.boutiques",
     name="xhemi-tal",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

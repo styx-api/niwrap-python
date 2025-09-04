@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 XHEMIREG_METADATA = Metadata(
-    id="261a80c05a860c7fffc88a2e8009768ff040fc71.boutiques",
+    id="017ee566ff5f9f666189c049c2c6a8988842f2cd.boutiques",
     name="xhemireg",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

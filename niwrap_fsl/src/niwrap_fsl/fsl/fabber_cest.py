@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FABBER_CEST_METADATA = Metadata(
-    id="1aa5c99d2a652e0cc5f029f1cc2d6e83c0cbf3b1.boutiques",
+    id="a60d5831e1e86f659c02557a4cf9fa96af5f7477.boutiques",
     name="fabber_cest",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

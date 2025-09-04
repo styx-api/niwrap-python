@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 HIST2PROB_METADATA = Metadata(
-    id="9a0694f1331e41c1803a820e366b78bb807361a8.boutiques",
+    id="49774cb945b300ccb8be0fea8ede0b51c09f7ccd.boutiques",
     name="hist2prob",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

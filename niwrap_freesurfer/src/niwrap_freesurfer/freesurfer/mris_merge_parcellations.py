@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_MERGE_PARCELLATIONS_METADATA = Metadata(
-    id="59eb13227975afaa7a05e9947ae25c61de64b8ec.boutiques",
+    id="a05f2598fc622c439488b0d5084f9127865f9812.boutiques",
     name="mris_merge_parcellations",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_XVOLAVG_METADATA = Metadata(
-    id="59e2b553a940c4fdb7f3dcfd7c0ee7148a4cce23.boutiques",
+    id="b74f56f50aae77b8cd6b4541c5e9927405e67b6b.boutiques",
     name="mri_xvolavg",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

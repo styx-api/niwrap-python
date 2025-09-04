@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_MAKE_BEM_SURFACES_METADATA = Metadata(
-    id="f15ad3572c7efcd0a17897026f83786a0d0aab19.boutiques",
+    id="bf604b98772344df00f9c5bf8df0b04b2b8ed831.boutiques",
     name="mri_make_bem_surfaces",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

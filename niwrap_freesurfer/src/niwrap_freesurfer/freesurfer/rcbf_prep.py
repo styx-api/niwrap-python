@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RCBF_PREP_METADATA = Metadata(
-    id="e9a80bb420160c8fc88ce713a6923335171436f0.boutiques",
+    id="a2a794e834812de03067fdf1855b089c743ba4de.boutiques",
     name="rcbf-prep",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

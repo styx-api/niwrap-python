@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_SEGMENT_THALAMIC_NUCLEI_DTI_CNN_METADATA = Metadata(
-    id="d893715e795f9e42e07a8cb788e3c2e50b141260.boutiques",
+    id="8675d879f5b1fc6d976850ad2d53d373f9368464.boutiques",
     name="mri_segment_thalamic_nuclei_dti_cnn",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

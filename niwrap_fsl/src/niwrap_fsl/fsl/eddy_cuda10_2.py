@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 EDDY_CUDA10_2_METADATA = Metadata(
-    id="295b40bf963e0bd25532d15e781718df2280cfca.boutiques",
+    id="87a124eb6a7aba31a37f4beabdc6fd44d40b0d98.boutiques",
     name="eddy_cuda10.2",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

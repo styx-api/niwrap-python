@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CONCAT_BVARS_METADATA = Metadata(
-    id="6f64cfc692ee24e6924520999cf2ed114061671e.boutiques",
+    id="7c1a8704e0e73764e6811bca2423e274d04cb632.boutiques",
     name="concat_bvars",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

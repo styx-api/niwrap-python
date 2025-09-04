@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_FSLMAT_TO_LTA_METADATA = Metadata(
-    id="43d6ea5a8918dcf72ca72861a59575adb4671e75.boutiques",
+    id="652c7278bbf588b572170b8876e93b2e9013d33f.boutiques",
     name="mri_fslmat_to_lta",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TCALC_METADATA = Metadata(
-    id="b90f3e8d94066494e83987f63d64dfe7893d281c.boutiques",
+    id="c1af3184476f37042ab87b31f619c4b8e166337d.boutiques",
     name="tcalc",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

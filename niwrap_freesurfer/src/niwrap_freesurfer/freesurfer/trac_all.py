@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TRAC_ALL_METADATA = Metadata(
-    id="4b02da6d23bbdf1aadba4f7ad8effbf91cb48ef5.boutiques",
+    id="530692c9924a90e814f01e102b101913b4b800ea.boutiques",
     name="trac-all",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

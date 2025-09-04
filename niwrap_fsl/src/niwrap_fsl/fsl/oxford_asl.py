@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 OXFORD_ASL_METADATA = Metadata(
-    id="8194742c3b2dbb22df251463ae2d8e61be1ce31d.boutiques",
+    id="fe0d63019591f8ae03ae261b27014e8219b5729d.boutiques",
     name="oxford_asl",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MKMNC_INDEX_TCL_METADATA = Metadata(
-    id="39f69e657a2149c0bb1bf748e98c328cb84fde74.boutiques",
+    id="a3e1a6ec38b7ba691a9575b1adcc081ab15b3fda.boutiques",
     name="mkmnc_index.tcl",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

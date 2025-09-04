@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MKIMA_INDEX_TCL_METADATA = Metadata(
-    id="d22dfd37da5b994e6395a605a77c2fb31a66cdd0.boutiques",
+    id="86be0aef995f956ba52b06d4b0b72917946939dd.boutiques",
     name="mkima_index.tcl",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

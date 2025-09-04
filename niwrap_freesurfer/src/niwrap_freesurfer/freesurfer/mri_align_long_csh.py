@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_ALIGN_LONG_CSH_METADATA = Metadata(
-    id="3dac0db504b68600ee6128715087b3a1f9eb17a0.boutiques",
+    id="4bae878c31921dc1bc5894fe96ef08d84e6b8aff.boutiques",
     name="mri_align_long.csh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

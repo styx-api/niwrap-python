@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ATLASQUERY_METADATA = Metadata(
-    id="0d022e73cfae9cb93ff3b9cca233367e5050b8e6.boutiques",
+    id="5415e5c1b8ace5de01581c450d44675ee6346541.boutiques",
     name="atlasquery",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

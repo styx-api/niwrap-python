@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MMPPSP_METADATA = Metadata(
-    id="ed33242168bcb8e40435e7c590174310c28760c1.boutiques",
+    id="a458598bfb10337a371df949596a84de46846b3b.boutiques",
     name="mmppsp",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

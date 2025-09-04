@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_SMOOTH_INTRACORTICAL_METADATA = Metadata(
-    id="16c978d0be4edfbf1259b9d1d78597ac7ee81f24.boutiques",
+    id="0d8141b48c8789db47136b6c9b336006cfc8494d.boutiques",
     name="mris_smooth_intracortical",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RBBR_METADATA = Metadata(
-    id="83d2a121d87ec0c6e66a4604bc69ecd4e43a3343.boutiques",
+    id="5e0ee9517ee4fe28c65009a4f647776480e43eb8.boutiques",
     name="rbbr",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

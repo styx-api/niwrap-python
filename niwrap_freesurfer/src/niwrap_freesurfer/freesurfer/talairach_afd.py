@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TALAIRACH_AFD_METADATA = Metadata(
-    id="c212fee328b550929bd0ddd93fe736d0f0ccddac.boutiques",
+    id="e308ee40df66730e1c82a9701897a920e168ea5e.boutiques",
     name="talairach_afd",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

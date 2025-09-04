@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SLICETIMER_METADATA = Metadata(
-    id="4c58bd416c438fc3d8b3664e317bd8eaaa5287b6.boutiques",
+    id="9f5dcc0c4411b6d29a75cd9ff4a356b3f7c1a0b6.boutiques",
     name="slicetimer",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

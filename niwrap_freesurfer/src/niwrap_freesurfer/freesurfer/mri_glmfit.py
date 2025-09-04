@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_GLMFIT_METADATA = Metadata(
-    id="e58e49e39c8f756f6ea924bf51ff894384fe5aff.boutiques",
+    id="9bb5b7f2411737a2aa71418a6c6225bccd298876.boutiques",
     name="mri_glmfit",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

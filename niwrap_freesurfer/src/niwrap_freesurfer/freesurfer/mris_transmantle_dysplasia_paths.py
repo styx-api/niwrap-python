@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_TRANSMANTLE_DYSPLASIA_PATHS_METADATA = Metadata(
-    id="8ef0c4c13a7437b6d7549718b592c920d9aec6bf.boutiques",
+    id="6c1501436959b09276745921386660fe7b7fc0fb.boutiques",
     name="mris_transmantle_dysplasia_paths",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

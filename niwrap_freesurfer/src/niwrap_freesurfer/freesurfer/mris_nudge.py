@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_NUDGE_METADATA = Metadata(
-    id="5f454aae29ceb9c63bd2c4fefab5025548bdb2e0.boutiques",
+    id="248273cfa5785567fee638e109250d6fc7e73335.boutiques",
     name="mris_nudge",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

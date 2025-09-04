@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 OPTSEQ2_METADATA = Metadata(
-    id="7c0799dd0a1ffd018ca41b11e7c2ba518f9578e8.boutiques",
+    id="604a56ca2527f0a6a85cab4ef77dd22f8fa8bd55.boutiques",
     name="optseq2",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

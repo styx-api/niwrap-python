@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ESTNOISE_METADATA = Metadata(
-    id="74c91e5fc724cad783f43637929dab6a13041d08.boutiques",
+    id="59d04049b700bc048b0b5ee4a48ddcf7b833de44.boutiques",
     name="estnoise",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

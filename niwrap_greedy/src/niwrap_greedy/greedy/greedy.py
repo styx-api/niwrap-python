@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 GREEDY_METADATA = Metadata(
-    id="8773061e4151d52c79dfd7c67e140eb0646f36ba.boutiques",
+    id="d2b2cd75881251964bd1af5bd8f198093a5b74b9.boutiques",
     name="greedy",
     package="greedy",
     container_image_tag="pyushkevich/itksnap:v3.8.2",

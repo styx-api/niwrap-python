@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MKSUBJDIRS_METADATA = Metadata(
-    id="72f40759596bf85f3287dd70895a2c0cec8c9366.boutiques",
+    id="5a4b4fa4ad4e76639de872219fc283fdb7e306a6.boutiques",
     name="mksubjdirs",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

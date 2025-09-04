@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VSM_SMOOTH_METADATA = Metadata(
-    id="620a6bccb466424ba83ef7108c99f0114a863d88.boutiques",
+    id="e12550ca003ab947235b329f588749bc271132bd.boutiques",
     name="vsm-smooth",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MAKE_SEGVOL_TABLE_METADATA = Metadata(
-    id="b482a517b89a3c5621f48031455d531957274674.boutiques",
+    id="2dee9099ff0b7fdeae8bb8b1fdb070731c25ef0f.boutiques",
     name="make-segvol-table",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

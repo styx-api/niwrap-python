@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 REINFLATE_SUBJECT_RH_METADATA = Metadata(
-    id="9cd92db80be80b0a27f77251253c9b44f8012411.boutiques",
+    id="8d00ab3e958503c8e81a9bba5b706de4a1f36f3e.boutiques",
     name="reinflate_subject-rh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

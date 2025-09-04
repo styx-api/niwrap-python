@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_INIT_GLOBAL_TRACTOGRAPHY_METADATA = Metadata(
-    id="67eb4585ff3c986788ed4212a3618bb647f3bf08.boutiques",
+    id="a059ef9d0e995ea737c7310599f97a06d9d11dff.boutiques",
     name="mris_init_global_tractography",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

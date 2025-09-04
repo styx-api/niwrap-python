@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PARC_ATLAS_JACKKNIFE_TEST_METADATA = Metadata(
-    id="50939a30caa9f5468a5adf510e908cc63f9ceb3a.boutiques",
+    id="f32e0caa24c7fb5cc656fa8604f60ca73245c93d.boutiques",
     name="parc_atlas_jackknife_test",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

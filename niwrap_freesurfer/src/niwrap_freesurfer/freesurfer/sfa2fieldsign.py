@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SFA2FIELDSIGN_METADATA = Metadata(
-    id="bde229caa86ae6d08eb65062d2de74295dadea9c.boutiques",
+    id="a31f34e180604d273b75695a96957bbe9c820533.boutiques",
     name="sfa2fieldsign",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

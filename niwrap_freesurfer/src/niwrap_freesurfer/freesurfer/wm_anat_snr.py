@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 WM_ANAT_SNR_METADATA = Metadata(
-    id="720d73c797ea6b11df6f56d663b8a31bbc7866b2.boutiques",
+    id="3893529b0bfaaaa154cf69dfd9caf679b5ffd38a.boutiques",
     name="wm-anat-snr",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

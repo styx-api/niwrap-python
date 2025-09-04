@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSLINTERLEAVE_METADATA = Metadata(
-    id="214e7be443b411fb9ce6dd8471f2c49ae690f698.boutiques",
+    id="e5ab771dd6b7f221b7a51aff621125b9682136b8.boutiques",
     name="fslinterleave",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

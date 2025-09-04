@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MCCUTUP_METADATA = Metadata(
-    id="0f68e863495d6d4c5b17f7f5ba43e003d866fab3.boutiques",
+    id="0954c418194fa7980077e0178aff1ed71a69af8e.boutiques",
     name="mccutup",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

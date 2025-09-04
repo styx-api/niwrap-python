@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 AFF2RIGID_METADATA = Metadata(
-    id="1c5bd7f0035a88c49ed0e7fc0bc2b90357a5176f.boutiques",
+    id="d0d509179394a363831303d1ec819c729bcc7701.boutiques",
     name="aff2rigid",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

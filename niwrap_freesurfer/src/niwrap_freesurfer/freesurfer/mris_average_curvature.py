@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_AVERAGE_CURVATURE_METADATA = Metadata(
-    id="7bf37b20bf1ca60685f16918f26ebdbff5c07b09.boutiques",
+    id="3655395907a83c7871c6765bc6caba944ea08664.boutiques",
     name="mris_average_curvature",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

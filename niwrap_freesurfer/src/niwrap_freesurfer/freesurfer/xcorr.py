@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 XCORR_METADATA = Metadata(
-    id="a7f1ff8dc4d4bbe9012bab5846d66d5b73222d26.boutiques",
+    id="f8b9dd638b9f5e8810aaa75fbf39dd6dbf704d0c.boutiques",
     name="xcorr",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

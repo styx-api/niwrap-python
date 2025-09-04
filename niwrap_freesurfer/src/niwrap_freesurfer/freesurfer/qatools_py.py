@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 QATOOLS_PY_METADATA = Metadata(
-    id="6830cf95e0c05f1ec7fd4998d49b50f118ce2b30.boutiques",
+    id="be8bffcb0766232f6ad42ad88f6d89654a43fdb4.boutiques",
     name="qatools.py",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

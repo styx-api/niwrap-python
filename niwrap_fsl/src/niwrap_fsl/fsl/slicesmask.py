@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SLICESMASK_METADATA = Metadata(
-    id="c12e83472678f19208ada5767d7c5b418c33dce1.boutiques",
+    id="a68d0c940cf7925c94a73dce46a552c162fb9ed1.boutiques",
     name="slicesmask",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PREDICT_V1_SH_METADATA = Metadata(
-    id="a2a49b8ffc476b3fa2e75490295c5f01b94168c0.boutiques",
+    id="a30a6b09004e916461882f1652d289e2a24e590a.boutiques",
     name="predict_v1.sh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

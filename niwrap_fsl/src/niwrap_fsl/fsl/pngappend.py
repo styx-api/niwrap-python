@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PNGAPPEND_METADATA = Metadata(
-    id="99f67fe0688b60f25c052763d14f04c8c451c98b.boutiques",
+    id="abf2da782c965891a47789a1b9ff766a250b204a.boutiques",
     name="pngappend",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

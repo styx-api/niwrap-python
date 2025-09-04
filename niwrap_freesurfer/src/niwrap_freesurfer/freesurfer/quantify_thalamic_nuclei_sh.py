@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 QUANTIFY_THALAMIC_NUCLEI_SH_METADATA = Metadata(
-    id="c597d875efd70402af0d29eccadf64e0e07bc431.boutiques",
+    id="becd71f526ddb334a82ac57838edfe920def004a.boutiques",
     name="quantifyThalamicNuclei.sh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

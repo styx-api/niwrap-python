@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CLUSTER_METADATA = Metadata(
-    id="dc6e00e2143aabe03722abc3629250d0dce2e99d.boutiques",
+    id="5e4458d53853f135b5d7216d3f33a3233e324e5c.boutiques",
     name="cluster",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

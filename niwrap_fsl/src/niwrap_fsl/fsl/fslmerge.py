@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSLMERGE_METADATA = Metadata(
-    id="5c7e125aae2c87781c9bc766698b6dc0c18bd9e1.boutiques",
+    id="acdddf24252447cc2c7bf472678cd573adad7658.boutiques",
     name="fslmerge",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

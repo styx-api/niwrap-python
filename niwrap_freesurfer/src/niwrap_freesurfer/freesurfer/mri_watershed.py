@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_WATERSHED_METADATA = Metadata(
-    id="354efa340bc804305241e0c76919e7c308f1c870.boutiques",
+    id="9bb7e9db1af91a3ea8abfd151b5e5e53143c30fe.boutiques",
     name="mri_watershed",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

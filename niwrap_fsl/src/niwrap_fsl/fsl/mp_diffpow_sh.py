@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MP_DIFFPOW_SH_METADATA = Metadata(
-    id="01bf70e2032d7f966a3cd42ea33f66cf2252d515.boutiques",
+    id="bde8aff6821625350c5744058479f934140e2dcf.boutiques",
     name="mp_diffpow.sh",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

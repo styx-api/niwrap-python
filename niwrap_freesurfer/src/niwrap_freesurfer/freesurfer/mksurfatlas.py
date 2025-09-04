@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MKSURFATLAS_METADATA = Metadata(
-    id="352862e69ae27d49452ecf246e8babe2c6300871.boutiques",
+    id="e10d98c6c732c2691141d0c7ae1e1069fa4646aa.boutiques",
     name="mksurfatlas",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

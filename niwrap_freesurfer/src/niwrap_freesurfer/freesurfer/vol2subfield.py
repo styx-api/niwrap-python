@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VOL2SUBFIELD_METADATA = Metadata(
-    id="691e0cc8560feeb387d8f3217fe9bed3e94cc38e.boutiques",
+    id="8e87dfdca63dc2f907be01af6c0939094847bf88.boutiques",
     name="vol2subfield",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

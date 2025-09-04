@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSL_MOTION_OUTLIERS_METADATA = Metadata(
-    id="c30ccf4645a9bdf2514d99c51c04eb1b98052f7f.boutiques",
+    id="f18cbc5202296cebe79755786c77cab45770bd5f.boutiques",
     name="fsl_motion_outliers",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSL_PREPARE_FIELDMAP_METADATA = Metadata(
-    id="7cef925b7167575fdbcee93dbc9c88e2f38b6f09.boutiques",
+    id="61f043e5e2da2d861d4f1f5c416973097f8a54c1.boutiques",
     name="fsl_prepare_fieldmap",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

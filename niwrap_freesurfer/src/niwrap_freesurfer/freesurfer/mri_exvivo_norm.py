@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_EXVIVO_NORM_METADATA = Metadata(
-    id="6c5391f769dffd8415570862d131e1708d93a905.boutiques",
+    id="b28d114a15a0409cf167af6596002e62ad8ed825.boutiques",
     name="mri_exvivo_norm",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

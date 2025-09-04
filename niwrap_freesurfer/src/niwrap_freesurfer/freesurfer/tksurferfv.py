@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TKSURFERFV_METADATA = Metadata(
-    id="bf988123763f896a05fb2580e3b31530c1b73b61.boutiques",
+    id="3630571b1df098223ac9e1925a90b830452d6684.boutiques",
     name="tksurferfv",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

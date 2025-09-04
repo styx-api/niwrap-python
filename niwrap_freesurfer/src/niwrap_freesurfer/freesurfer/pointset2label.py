@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 POINTSET2LABEL_METADATA = Metadata(
-    id="8c0b512eb160ace5a62b2299a47ecd6a1783aaf7.boutiques",
+    id="f4764059902744375dae92014efd3b4f3d42b929.boutiques",
     name="pointset2label",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

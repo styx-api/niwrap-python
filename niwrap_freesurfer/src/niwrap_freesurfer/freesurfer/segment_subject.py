@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SEGMENT_SUBJECT_METADATA = Metadata(
-    id="679ed4c91cc788d07b10afeeceb1fe2dc1fec124.boutiques",
+    id="b0ec4ee6f04e6bda46019b21c2f772b846913353.boutiques",
     name="segment_subject",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

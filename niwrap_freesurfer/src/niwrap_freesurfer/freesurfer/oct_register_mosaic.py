@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 OCT_REGISTER_MOSAIC_METADATA = Metadata(
-    id="2b546a9d749a673358ff3e012b68d84d7dcd2c19.boutiques",
+    id="8de23bd673cf55ea10f2de41e3f5ce24d0006860.boutiques",
     name="oct_register_mosaic",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

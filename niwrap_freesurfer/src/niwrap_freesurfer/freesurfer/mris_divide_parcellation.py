@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_DIVIDE_PARCELLATION_METADATA = Metadata(
-    id="eb4ef7e4768c5312c5386818b3df847302db121f.boutiques",
+    id="073744a9dd46d03ed520a3c051ec5f427a86f468.boutiques",
     name="mris_divide_parcellation",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

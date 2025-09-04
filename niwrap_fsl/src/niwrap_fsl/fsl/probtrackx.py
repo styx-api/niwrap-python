@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PROBTRACKX_METADATA = Metadata(
-    id="aa9e437b3aab55eca9eafad82df0b6b09a7d95cd.boutiques",
+    id="a8e7544d6f5cf962658c8458df2ffe3e70e041b1.boutiques",
     name="probtrackx",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

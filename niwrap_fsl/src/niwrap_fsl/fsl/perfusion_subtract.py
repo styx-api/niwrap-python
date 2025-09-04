@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PERFUSION_SUBTRACT_METADATA = Metadata(
-    id="9feeea7d168f906886e7d401e5314a26027ab52e.boutiques",
+    id="336b7eda814a659c8f2b53286d87cc871d367985.boutiques",
     name="perfusion_subtract",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

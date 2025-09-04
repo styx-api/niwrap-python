@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_CVS_REGISTER_METADATA = Metadata(
-    id="3bb422fbeb829e6f72b0b527bc53abe39a30f29d.boutiques",
+    id="3bcacd58a1c587ed63709bef81d5c23ed19ba677.boutiques",
     name="mri_cvs_register",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

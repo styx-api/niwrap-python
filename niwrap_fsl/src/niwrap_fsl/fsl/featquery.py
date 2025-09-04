@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FEATQUERY_METADATA = Metadata(
-    id="58190adc00caa3074855d702497875cc7254a360.boutiques",
+    id="064c21b08fd6f2c812d97dd62eadbdebce72aa0e.boutiques",
     name="featquery",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_EDIT_SEGMENTATION_WITH_SURFACES_METADATA = Metadata(
-    id="a07dbe3f54a2bf4361caa352e1837e905659430d.boutiques",
+    id="614cbaf4e68b2c661673f9ec5cc63e68fd4c73fe.boutiques",
     name="mri_edit_segmentation_with_surfaces",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
