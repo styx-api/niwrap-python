@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRGRID_METADATA = Metadata(
-    id="1eddeb4fb3bc79e836b008569bb2a01abc609c8e.boutiques",
+    id="62aab6d384f12d5080514505c5f5b4c9d7d75bc0.boutiques",
     name="mrgrid",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TCK2CONNECTOME_METADATA = Metadata(
-    id="738d3835f7defdf440eba97b62da7245751874db.boutiques",
+    id="a66d5312bce1284177c4cf9ad60b3718c4a1a2b0.boutiques",
     name="tck2connectome",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

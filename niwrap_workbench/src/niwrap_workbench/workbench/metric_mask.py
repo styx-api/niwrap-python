@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 METRIC_MASK_METADATA = Metadata(
-    id="b1a128a500fff453736eee82c2631018faa45511.boutiques",
+    id="63170647bafcd7131594caf978d3951bd09b8dc0.boutiques",
     name="metric-mask",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

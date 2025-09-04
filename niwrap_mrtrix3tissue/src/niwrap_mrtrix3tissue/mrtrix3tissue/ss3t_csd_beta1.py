@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SS3T_CSD_BETA1_METADATA = Metadata(
-    id="02df08185e6be9ec2c2813ee30e45a9daebade1a.boutiques",
+    id="1232a653007a6a29f9cc9f7f319bd002a791411a.boutiques",
     name="ss3t_csd_beta1",
     package="mrtrix3tissue",
     container_image_tag="brainlife/3tissue:5.2.8",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VOLUME_LABEL_PROBABILITY_METADATA = Metadata(
-    id="2d6d4ac3b8d96329f9d27f7650dfd51e3598d23b.boutiques",
+    id="b0631ce968096664259df70f04f3e4b719f4e66d.boutiques",
     name="volume-label-probability",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

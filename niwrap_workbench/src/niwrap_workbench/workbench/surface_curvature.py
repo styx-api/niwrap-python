@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFACE_CURVATURE_METADATA = Metadata(
-    id="26d231c70d4cfdd6ea0dac8bd1a39770dcd11b07.boutiques",
+    id="959b1a4fb2add4507cd3f4cc23eb187ef2dc3681.boutiques",
     name="surface-curvature",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

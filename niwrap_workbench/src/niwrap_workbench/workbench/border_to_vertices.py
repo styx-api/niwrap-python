@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BORDER_TO_VERTICES_METADATA = Metadata(
-    id="2569d9476b55f3dd1e0346e6b1eb8c522834da48.boutiques",
+    id="da3e39f9997664c91376607d199e377db4a87475.boutiques",
     name="border-to-vertices",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

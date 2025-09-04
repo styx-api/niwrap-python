@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANNOTATION_RESAMPLE_METADATA = Metadata(
-    id="2c6cadad264ac128829e478e77f82b0c84d405b7.boutiques",
+    id="d27a061127258ae972e19d738c9377d395c2db20.boutiques",
     name="annotation-resample",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

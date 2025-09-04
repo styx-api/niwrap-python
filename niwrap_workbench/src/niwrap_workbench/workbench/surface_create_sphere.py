@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFACE_CREATE_SPHERE_METADATA = Metadata(
-    id="c18b118a2072dd39d41e5c3a49f7806fd4c7ac95.boutiques",
+    id="e9b682a64a3a4ad0a40ee2b17e295fcee37251d0.boutiques",
     name="surface-create-sphere",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SET_STRUCTURE_METADATA = Metadata(
-    id="b34214858feec5e1f1ef5db8d7db2f2cbe0976d1.boutiques",
+    id="60f5a5ba046998d47b40d412b42f09c1a0bf64b8.boutiques",
     name="set-structure",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

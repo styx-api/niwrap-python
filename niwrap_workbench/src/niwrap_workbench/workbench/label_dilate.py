@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LABEL_DILATE_METADATA = Metadata(
-    id="f13d48e1ee86c178e477319da5d6697b9ee6436d.boutiques",
+    id="73edd274bc940fb62891aa8ff3534fdafc214402.boutiques",
     name="label-dilate",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

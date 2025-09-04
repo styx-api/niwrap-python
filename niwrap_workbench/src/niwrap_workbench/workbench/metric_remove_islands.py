@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 METRIC_REMOVE_ISLANDS_METADATA = Metadata(
-    id="15ae108d4f612ce0ee6a8fbe3429120b6dc77b46.boutiques",
+    id="e985bca06df5a5d0c37e22c118468bf7cef4f5d3.boutiques",
     name="metric-remove-islands",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

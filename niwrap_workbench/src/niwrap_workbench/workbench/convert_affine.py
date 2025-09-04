@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CONVERT_AFFINE_METADATA = Metadata(
-    id="448dc27f1589458b110e4df61c90c24f558f2974.boutiques",
+    id="4cd37f69e7dc378d87a51d9e406bdba4fef416e6.boutiques",
     name="convert-affine",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

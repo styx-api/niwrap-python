@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRTHRESHOLD_METADATA = Metadata(
-    id="63955d6506c219775e9ca4df901c67a97355416d.boutiques",
+    id="c55432e6110a1d139e985a99eec2382bb7a91c6e.boutiques",
     name="mrthreshold",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

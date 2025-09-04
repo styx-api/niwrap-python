@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DIRFLIP_METADATA = Metadata(
-    id="1bc40c1342a5e6b2fe13e011f0393b92cd599ded.boutiques",
+    id="d8812d8343a227a55e2791ff77c8b329d1aaf85d.boutiques",
     name="dirflip",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_5TT2GMWMI_METADATA = Metadata(
-    id="a49652340948d08ac441b652a0e867f85d70f9ef.boutiques",
+    id="9364810c76c939f13c428191716ed63148337a9a.boutiques",
     name="5tt2gmwmi",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

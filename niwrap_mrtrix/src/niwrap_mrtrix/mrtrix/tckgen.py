@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TCKGEN_METADATA = Metadata(
-    id="14b8283e2f566ed63503a0f4d3dae99649fc54d2.boutiques",
+    id="49bb9108a82b9af72391f635d21ece29154ff9f6.boutiques",
     name="tckgen",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

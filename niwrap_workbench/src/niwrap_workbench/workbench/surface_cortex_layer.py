@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFACE_CORTEX_LAYER_METADATA = Metadata(
-    id="71faa5a4ca1d525020040bf9f35226bb32dd6fd8.boutiques",
+    id="0a46e1e069f0f2907566d8c22a87a309eba5009b.boutiques",
     name="surface-cortex-layer",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

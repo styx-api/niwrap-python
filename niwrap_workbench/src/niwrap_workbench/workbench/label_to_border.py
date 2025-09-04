@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LABEL_TO_BORDER_METADATA = Metadata(
-    id="73d4d8e81dee3be463cf016c882b4dcf98d7acf2.boutiques",
+    id="d4004186995df7f49b52041b9843cbc52cd71c97.boutiques",
     name="label-to-border",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

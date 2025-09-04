@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DWIGRADCHECK_METADATA = Metadata(
-    id="b63fbe847bb47d08242042634d2e24c551124586.boutiques",
+    id="da91c0d77a46dd23fc98bad56497487a81e19371.boutiques",
     name="dwigradcheck",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VOLUME_COPY_EXTENSIONS_METADATA = Metadata(
-    id="15bd4bf09907740c91e320c20d0befcf9efd3068.boutiques",
+    id="1105ee211cb759964c59c0d9326f8fd29db4b9a2.boutiques",
     name="volume-copy-extensions",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

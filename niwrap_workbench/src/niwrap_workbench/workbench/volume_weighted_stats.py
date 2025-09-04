@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VOLUME_WEIGHTED_STATS_METADATA = Metadata(
-    id="66bc4ec89f256e7bb03b0225dc3e9b7668e61837.boutiques",
+    id="cc98b5f18ee1944d35c3bdc722bfbd19a6850252.boutiques",
     name="volume-weighted-stats",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

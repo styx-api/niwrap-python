@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 GIFTI_CONVERT_METADATA = Metadata(
-    id="1119deb060240b3e26f7bbfea7cf6ac914e82758.boutiques",
+    id="00ca05307d704bb4b72ca8d609e922d80aac69c0.boutiques",
     name="gifti-convert",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

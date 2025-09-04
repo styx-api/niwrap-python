@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFACE_VERTEX_AREAS_METADATA = Metadata(
-    id="802d1bdc28544caa099fcfea45e6844873faa914.boutiques",
+    id="2ce95b755322be2b857b320aad4cfef1152d88c0.boutiques",
     name="surface-vertex-areas",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

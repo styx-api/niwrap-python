@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VOLUME_FILL_HOLES_METADATA = Metadata(
-    id="725b5c73221db0c7e169a6d533ca30608a523ba9.boutiques",
+    id="b215833557d957fc6f98c6569e125d6daf82e9b8.boutiques",
     name="volume-fill-holes",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

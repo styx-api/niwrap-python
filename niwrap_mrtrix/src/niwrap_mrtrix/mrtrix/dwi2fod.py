@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DWI2FOD_METADATA = Metadata(
-    id="f90ba900231375ab5ce1f13e4939fae9c3c04d95.boutiques",
+    id="6d16386fcfa6e4701ad68f4333de7173683fda45.boutiques",
     name="dwi2fod",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

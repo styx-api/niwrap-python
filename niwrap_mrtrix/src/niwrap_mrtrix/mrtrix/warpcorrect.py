@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 WARPCORRECT_METADATA = Metadata(
-    id="0f830221bdd17e83588ad92fc905ee407c4292f6.boutiques",
+    id="d93e432b2c126575958a3ff19d36f91ad4461c2e.boutiques",
     name="warpcorrect",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFACE_RESAMPLE_METADATA = Metadata(
-    id="45889f352801600ebb433c32da51dd8e365ecf27.boutiques",
+    id="41e7032c2642e2cae7204e42a36f44dcbf767095.boutiques",
     name="surface-resample",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

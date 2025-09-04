@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VOLUME_LABEL_MODIFY_KEYS_METADATA = Metadata(
-    id="d5c948e79609bac6e3ad1be6e829d33b4b2d3d16.boutiques",
+    id="1bcb2eb82887a4d5a5737e8b723dfa3e56ab0d0b.boutiques",
     name="volume-label-modify-keys",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

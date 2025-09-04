@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VOLUME_GRADIENT_METADATA = Metadata(
-    id="b2e05ab6596432670887376c65ab980a6d39579c.boutiques",
+    id="73cff8885780496a9b94b061ae3494c8870f981c.boutiques",
     name="volume-gradient",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

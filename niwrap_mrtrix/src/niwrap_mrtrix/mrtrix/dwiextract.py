@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DWIEXTRACT_METADATA = Metadata(
-    id="cfdd0fbff60bc028e2f545665cde0943392c2e41.boutiques",
+    id="0021ca6ba5d653dd2d95adc256257bec0ea68206.boutiques",
     name="dwiextract",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

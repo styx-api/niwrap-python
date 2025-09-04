@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFACE_SPHERE_PROJECT_UNPROJECT_METADATA = Metadata(
-    id="062eb2c5f765c5bdc3efb7aef9ccb8d1149a7818.boutiques",
+    id="ec00569346766fa83a8b274b19856b08f237baba.boutiques",
     name="surface-sphere-project-unproject",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

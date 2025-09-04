@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 METRIC_GRADIENT_METADATA = Metadata(
-    id="6b8b44cf2edc0d0beb9f5b6c405682896098ce0d.boutiques",
+    id="394970baf2c81170ff2934ce439704993af8638b.boutiques",
     name="metric-gradient",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

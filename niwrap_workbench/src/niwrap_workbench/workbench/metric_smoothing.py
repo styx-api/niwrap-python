@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 METRIC_SMOOTHING_METADATA = Metadata(
-    id="4f14656dd6ab628d3a1c0f939c116c14d52d2e2a.boutiques",
+    id="0a396b41d5717355e9d6de5fcc33e96e22014d30.boutiques",
     name="metric-smoothing",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

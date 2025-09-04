@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DWI2RESPONSE_METADATA = Metadata(
-    id="5d77f6a3345b62f3c24a0d777ee55aa027113b39.boutiques",
+    id="a5bba2228d610c2212f7a54e18b1cd513bb93b58.boutiques",
     name="dwi2response",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

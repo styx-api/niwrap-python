@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VOLUME_ERODE_METADATA = Metadata(
-    id="4ac0d4ccac9419431d55b6e2a0cd4ad69eed4f20.boutiques",
+    id="e745724b943117f1bea44203e23d97dc9e188367.boutiques",
     name="volume-erode",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

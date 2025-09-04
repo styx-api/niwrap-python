@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VOLUME_DILATE_METADATA = Metadata(
-    id="e67a2472d4d16fc78b4706c10eae4883b780ed15.boutiques",
+    id="c7cf27ddf3bd9107f4ebe78ae6eb1975ae7f12ba.boutiques",
     name="volume-dilate",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

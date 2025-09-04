@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 METADATA_REMOVE_PROVENANCE_METADATA = Metadata(
-    id="477bbc80e00e51f900e75625d9c13d64da765e46.boutiques",
+    id="4800e85a5fdc741153c992271baa48d72065973e.boutiques",
     name="metadata-remove-provenance",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

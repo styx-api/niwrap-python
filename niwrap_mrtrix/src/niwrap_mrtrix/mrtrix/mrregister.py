@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRREGISTER_METADATA = Metadata(
-    id="8b9c1c18dd4e1792249b2b0db264ebab8365011a.boutiques",
+    id="33094a24a1ceaa262f78a671f02e86741a74a3db.boutiques",
     name="mrregister",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

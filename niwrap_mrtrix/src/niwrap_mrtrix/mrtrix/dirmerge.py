@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DIRMERGE_METADATA = Metadata(
-    id="b2c0d4c611fef0c99c4fd927498667a5d14a0534.boutiques",
+    id="40d07b2a5fb8d4016b42c7968c68cb8ea4d70a1a.boutiques",
     name="dirmerge",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

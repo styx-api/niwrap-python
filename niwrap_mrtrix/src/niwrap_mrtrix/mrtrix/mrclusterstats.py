@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRCLUSTERSTATS_METADATA = Metadata(
-    id="c57e5e73fb4141a5486cb8917fc726340ee4455f.boutiques",
+    id="3cccb6a587fcc1d359cee16156cb510a9fec0521.boutiques",
     name="mrclusterstats",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

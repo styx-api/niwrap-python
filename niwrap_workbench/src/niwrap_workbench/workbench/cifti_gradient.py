@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CIFTI_GRADIENT_METADATA = Metadata(
-    id="f39faf9e44389b76874a4aaef665f54cb7870989.boutiques",
+    id="a8e5c3ed0a78482d9c66120c39db3f77c9a52343.boutiques",
     name="cifti-gradient",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

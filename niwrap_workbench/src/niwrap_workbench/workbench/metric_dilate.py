@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 METRIC_DILATE_METADATA = Metadata(
-    id="282a4511febb7319b4f30912bc37cef4227b8d67.boutiques",
+    id="228bae2c95e281c1ed3d0fb17aed811d10a80e3b.boutiques",
     name="metric-dilate",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

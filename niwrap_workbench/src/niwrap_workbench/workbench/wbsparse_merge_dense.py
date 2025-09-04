@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 WBSPARSE_MERGE_DENSE_METADATA = Metadata(
-    id="af1749f9ad1bdf4a9e5257d7439ccb891c9cff12.boutiques",
+    id="678d6e48841edbd3b84295894b5e17d9b4f6d090.boutiques",
     name="wbsparse-merge-dense",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

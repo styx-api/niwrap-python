@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CONVERT_MATRIX4_TO_WORKBENCH_SPARSE_METADATA = Metadata(
-    id="abdabbace9026c54a8d4304b491e29eb70af1964.boutiques",
+    id="9de14d1819ec9b8a462cc20406cc4824564bd8e3.boutiques",
     name="convert-matrix4-to-workbench-sparse",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

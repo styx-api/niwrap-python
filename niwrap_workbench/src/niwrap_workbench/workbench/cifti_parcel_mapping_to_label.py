@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CIFTI_PARCEL_MAPPING_TO_LABEL_METADATA = Metadata(
-    id="b44cc01ba36b557b2f850042074db9952a76ba43.boutiques",
+    id="0bf15c8c4c3f06d434147770f8cfca4d5d152ae9.boutiques",
     name="cifti-parcel-mapping-to-label",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

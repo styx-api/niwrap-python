@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LABEL_ERODE_METADATA = Metadata(
-    id="7906584e69081c776c13880cdd7ac9a11eb1e602.boutiques",
+    id="99712b5dfa61e349e4c3839ddd13dfb8b7032631.boutiques",
     name="label-erode",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

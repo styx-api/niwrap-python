@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 AMP2SH_METADATA = Metadata(
-    id="3ffc8e2dc7b2cc939f7521568d9e286d5b4007ad.boutiques",
+    id="b1deae186542fe482c4a2e51622f124fe000c4fc.boutiques",
     name="amp2sh",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

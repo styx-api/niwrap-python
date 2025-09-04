@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VOLUME_TO_SURFACE_MAPPING_METADATA = Metadata(
-    id="abd765683fad9b7a544e4ef214a36cb0c3e6853a.boutiques",
+    id="677cb03d3aef10ca7afb17c714f6c3c6f70b3a93.boutiques",
     name="volume-to-surface-mapping",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LABEL2COLOUR_METADATA = Metadata(
-    id="b27f3ed9ad207fb471639dd9e4b52130d8a534ac.boutiques",
+    id="9c64d87e6b80097d51226570fbf47cc009d84140.boutiques",
     name="label2colour",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

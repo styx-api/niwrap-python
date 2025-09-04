@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BACKEND_AVERAGE_DENSE_ROI_METADATA = Metadata(
-    id="8daccd3e1d4e01fd363a65e41aec0093bc0081b4.boutiques",
+    id="b14d4ef91f39d8749a47f7c791bcd6bf8525bc4d.boutiques",
     name="backend-average-dense-roi",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

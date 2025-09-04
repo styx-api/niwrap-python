@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 GIFTI_LABEL_TO_ROI_METADATA = Metadata(
-    id="fbd577d7a4881455906a02f5415f91e4912c0e7b.boutiques",
+    id="5c48bae6e2e86735376fa584af53363f5564f875.boutiques",
     name="gifti-label-to-roi",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

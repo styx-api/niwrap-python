@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 METRIC_TFCE_METADATA = Metadata(
-    id="4b86809eb4d1a8a2706ce2a6a30283a52e23dd9a.boutiques",
+    id="924978b01979428d340e99932f7ca7e01166c2fb.boutiques",
     name="metric-tfce",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

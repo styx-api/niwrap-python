@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFACE_APPLY_AFFINE_METADATA = Metadata(
-    id="9bf7ecb744d56a009750909055803b77fd3ffca0.boutiques",
+    id="cbfa656451c57232ac09b2c71b92b95ea9448401.boutiques",
     name="surface-apply-affine",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

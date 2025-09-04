@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ZIP_SCENE_FILE_METADATA = Metadata(
-    id="c2269a40324a5898de409cfe8846aebde70d328f.boutiques",
+    id="85d5fb1af707c34c6db735360187816616cc1dda.boutiques",
     name="zip-scene-file",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

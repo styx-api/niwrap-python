@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFACE_SPHERE_TRIANGULAR_PATCHES_METADATA = Metadata(
-    id="0041e957f3f86307d53f30986bba8e52c79c3ab8.boutiques",
+    id="cb66e6f1207807e8529312a550ed72acdff594ee.boutiques",
     name="surface-sphere-triangular-patches",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

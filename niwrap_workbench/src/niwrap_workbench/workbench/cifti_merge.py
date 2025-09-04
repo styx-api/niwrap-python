@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CIFTI_MERGE_METADATA = Metadata(
-    id="4d282f9c70868b6c676ce722c7cf68c4b8aa1f6f.boutiques",
+    id="a4ffb5e806ff58cf992a8408091b306432b7db9b.boutiques",
     name="cifti-merge",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

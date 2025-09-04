@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CIFTI_CREATE_SCALAR_SERIES_METADATA = Metadata(
-    id="c23315ac8d1d841daeb78900199e05dbce252755.boutiques",
+    id="89382f5dba10644cb62354103467cd5b9bd291f2.boutiques",
     name="cifti-create-scalar-series",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

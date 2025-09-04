@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CONNECTOMEEDIT_METADATA = Metadata(
-    id="a299cc4eb27663a67fd9b0e7c142c297b8c23d7f.boutiques",
+    id="7462d968f7a03c022c8bae779dc4c0ddb21e6a0f.boutiques",
     name="connectomeedit",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DIRGEN_METADATA = Metadata(
-    id="c60059a08fda0ae43d6c84d28c511d2352efa309.boutiques",
+    id="cda69ea8a57022773ddb6022ca8ca9caa5cc0e2b.boutiques",
     name="dirgen",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

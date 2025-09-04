@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 METRIC_FILL_HOLES_METADATA = Metadata(
-    id="2a113ff44bea5d14595099ce0bbbde3440ec8eb4.boutiques",
+    id="ac7f75738ed2f6a51844159ab8a7e0af250545a8.boutiques",
     name="metric-fill-holes",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

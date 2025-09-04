@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LABEL_EXPORT_TABLE_METADATA = Metadata(
-    id="aa538a6947b1a8c4309745c17b03fe0e989c4686.boutiques",
+    id="685eb5ec17a869040ae1ee0ac3283a5b460783d0.boutiques",
     name="label-export-table",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

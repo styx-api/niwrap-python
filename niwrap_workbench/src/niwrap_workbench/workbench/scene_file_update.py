@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SCENE_FILE_UPDATE_METADATA = Metadata(
-    id="f9b22dcadcb7db5be68079d8abd1b5b77a8b1255.boutiques",
+    id="b53f9555bf7b49feaf8c70bbf947464884f01049.boutiques",
     name="scene-file-update",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CONVERT_FIBER_ORIENTATIONS_METADATA = Metadata(
-    id="d8e6b76fdb3e3cb8fd337470f0e083e13b7df64d.boutiques",
+    id="848dea6b577ee4b94a5e883dc7976a17d71a95af.boutiques",
     name="convert-fiber-orientations",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LABELSTATS_METADATA = Metadata(
-    id="320ec0010567d702a48cec5fa615ccb045cd158a.boutiques",
+    id="df8064dca9e1446035277a06d1872158b80f29f1.boutiques",
     name="labelstats",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

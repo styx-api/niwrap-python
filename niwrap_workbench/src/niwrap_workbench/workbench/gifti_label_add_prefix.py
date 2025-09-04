@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 GIFTI_LABEL_ADD_PREFIX_METADATA = Metadata(
-    id="76b8a9079ea9cac8c55f45c7a4b9a912c3dd3ded.boutiques",
+    id="b2a8a58ea9018d7169641e6e86ac24e4e6afcab8.boutiques",
     name="gifti-label-add-prefix",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CIFTI_ALL_LABELS_TO_ROIS_METADATA = Metadata(
-    id="f96435e7501aa62ecc81c3219e63fb0bc975f3b5.boutiques",
+    id="6faa7bc1774fe5d690eab193fadb4498d97e0945.boutiques",
     name="cifti-all-labels-to-rois",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

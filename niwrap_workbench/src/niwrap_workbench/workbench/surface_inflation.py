@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFACE_INFLATION_METADATA = Metadata(
-    id="52fbef0aa8fba4f9a9a072fba44a8b1d1157b05d.boutiques",
+    id="8d8e7af8d80a5930fe793979c523d20e13520896.boutiques",
     name="surface-inflation",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

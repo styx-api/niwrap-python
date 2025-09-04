@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFACE_FLIP_NORMALS_METADATA = Metadata(
-    id="c13eef26d25b6206aec404413aebea46e79bb7a8.boutiques",
+    id="8c4d88c8e5e251d057b6e23e7ae572f3f1462cc3.boutiques",
     name="surface-flip-normals",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

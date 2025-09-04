@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VOLUME_PARCEL_SMOOTHING_METADATA = Metadata(
-    id="36a7b69f25d89c982a0bd6b5f93ad16e2648b1ff.boutiques",
+    id="d9e82f37b708bec47857be4b7298c862173c768b.boutiques",
     name="volume-parcel-smoothing",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

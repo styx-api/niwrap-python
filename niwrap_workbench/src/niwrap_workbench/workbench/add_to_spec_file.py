@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ADD_TO_SPEC_FILE_METADATA = Metadata(
-    id="8d95258c4b8b7da6fe7fb5dd7fbf6d4b4129e340.boutiques",
+    id="70700f2e4a649b189d35240af30e2fe156a782f2.boutiques",
     name="add-to-spec-file",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

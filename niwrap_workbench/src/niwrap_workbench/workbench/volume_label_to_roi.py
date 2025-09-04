@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VOLUME_LABEL_TO_ROI_METADATA = Metadata(
-    id="8cac1dca5a1e955b87cb24ad3af270642d5857c8.boutiques",
+    id="8d2d6d169e7d55ce67c45c7e3bd6312716996961.boutiques",
     name="volume-label-to-roi",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

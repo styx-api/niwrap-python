@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFACE_CLOSEST_VERTEX_METADATA = Metadata(
-    id="b247f4f20d018925392cfcdef99f6eaa3f24d896.boutiques",
+    id="1424c0e261ad28fcc53735d9c94a66297aa77546.boutiques",
     name="surface-closest-vertex",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

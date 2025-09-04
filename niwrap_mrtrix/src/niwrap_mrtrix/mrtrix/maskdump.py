@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MASKDUMP_METADATA = Metadata(
-    id="3cb50f33bf33aebf8bfc348f927db251f908e51a.boutiques",
+    id="2eb2e4e159fba58b9701608239b0227569dc91cd.boutiques",
     name="maskdump",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

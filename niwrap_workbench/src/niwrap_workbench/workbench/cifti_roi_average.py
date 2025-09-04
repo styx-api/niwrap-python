@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CIFTI_ROI_AVERAGE_METADATA = Metadata(
-    id="1b13bf5892e798c2e102f4545e49286ec743589d.boutiques",
+    id="d3bb8cff36344df781b7dd9dbdd7df47c80190d5.boutiques",
     name="cifti-roi-average",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

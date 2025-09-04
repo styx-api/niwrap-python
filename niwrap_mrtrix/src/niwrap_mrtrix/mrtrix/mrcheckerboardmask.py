@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRCHECKERBOARDMASK_METADATA = Metadata(
-    id="a3b0ea1bbc979f69d0d7f7f9d44b33ccf51605d8.boutiques",
+    id="f1aa53a7b6030f421a6e8c4455b70ae4ec643303.boutiques",
     name="mrcheckerboardmask",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

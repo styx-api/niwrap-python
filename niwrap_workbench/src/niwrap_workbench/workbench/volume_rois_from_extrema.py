@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VOLUME_ROIS_FROM_EXTREMA_METADATA = Metadata(
-    id="da73bea4d1a691afc0fd8fd88e3a81f0b1c7e507.boutiques",
+    id="fff039813d35484e8dfeace02e6d5c8748973490.boutiques",
     name="volume-rois-from-extrema",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

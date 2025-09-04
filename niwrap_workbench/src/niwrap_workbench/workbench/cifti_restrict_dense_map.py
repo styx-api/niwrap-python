@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CIFTI_RESTRICT_DENSE_MAP_METADATA = Metadata(
-    id="047b027dcd2506209c56cee9639f87ee0959f1b1.boutiques",
+    id="4fdac7bf03188fb3145cd70863d71f8655ef81bf.boutiques",
     name="cifti-restrict-dense-map",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

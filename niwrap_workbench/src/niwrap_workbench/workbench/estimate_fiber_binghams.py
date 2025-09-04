@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ESTIMATE_FIBER_BINGHAMS_METADATA = Metadata(
-    id="3306ec1bd81313c82c8f949725c330afcc33ca8a.boutiques",
+    id="2c33f5d971543b2fe7a2401a0a23b45df09ab673.boutiques",
     name="estimate-fiber-binghams",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

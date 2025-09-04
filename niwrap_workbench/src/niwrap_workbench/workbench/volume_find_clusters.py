@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VOLUME_FIND_CLUSTERS_METADATA = Metadata(
-    id="3d464f6633e735fc66ea1c33780eea75db2262f3.boutiques",
+    id="363fad6e10e9a750a43bad790cd94f3805484d5d.boutiques",
     name="volume-find-clusters",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

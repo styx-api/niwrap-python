@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CIFTI_CREATE_LABEL_METADATA = Metadata(
-    id="2bf058c43e7a0c065eaedc3a853fa58976abb094.boutiques",
+    id="3a1aca58ce90234c63b19e3c0451b3cb7f90d16b.boutiques",
     name="cifti-create-label",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

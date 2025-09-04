@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FOCI_GET_PROJECTION_VERTEX_METADATA = Metadata(
-    id="28cf0856b5a3b450830b791c515e9e522ca10f04.boutiques",
+    id="fa9f290a6c602982e012db429ea537b40f61be20.boutiques",
     name="foci-get-projection-vertex",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

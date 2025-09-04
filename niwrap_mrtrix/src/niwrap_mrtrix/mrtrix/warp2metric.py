@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 WARP2METRIC_METADATA = Metadata(
-    id="eefc64bdbf00cdc4394ee65fe8d05cf1a06e7ae9.boutiques",
+    id="6239916d39fe990e43c4b408dab7798207712e0c.boutiques",
     name="warp2metric",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

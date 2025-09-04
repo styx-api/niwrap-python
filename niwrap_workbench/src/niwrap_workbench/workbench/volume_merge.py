@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VOLUME_MERGE_METADATA = Metadata(
-    id="59466d755606ff946abb15ca7506a7d3307f8537.boutiques",
+    id="0484245a1d35b7ed32a01a9b8363c20b753b6141.boutiques",
     name="volume-merge",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

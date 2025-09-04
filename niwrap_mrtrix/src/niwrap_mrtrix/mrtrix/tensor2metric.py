@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TENSOR2METRIC_METADATA = Metadata(
-    id="fee96ebf896c02832ff2ab23a9d2e2132129e3d5.boutiques",
+    id="27f4e9c1379c830bcec96cfb3c8b321a7c99c245.boutiques",
     name="tensor2metric",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

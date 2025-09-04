@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VOLUME_DISTORTION_METADATA = Metadata(
-    id="b6969af4c6a2ac910fce40183351dd0ba7c7cbd4.boutiques",
+    id="84c6e150f3059b96bf719ca37696b114cc3add00.boutiques",
     name="volume-distortion",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

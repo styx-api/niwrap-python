@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BORDER_EXPORT_COLOR_TABLE_METADATA = Metadata(
-    id="b07356bd59a7014a0150a342d7a8af84716e878d.boutiques",
+    id="c4fae465526913da9084677d6ed578ea3f03a993.boutiques",
     name="border-export-color-table",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VOLUME_REORIENT_METADATA = Metadata(
-    id="64a53eb5b1219001c981ca04003ea946af095932.boutiques",
+    id="993d128d1b8587b85bf89235de06096fbfc8baea.boutiques",
     name="volume-reorient",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
